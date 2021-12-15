@@ -122,6 +122,12 @@ nav {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	transition: 0.35s;
+}
+
+.blog-post:active {
+	transform: scale(0.98);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
 }
 
 .right-aside {
