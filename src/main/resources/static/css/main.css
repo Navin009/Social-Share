@@ -75,6 +75,14 @@ nav {
 .post-title {
 	font-family: 'Readex Pro';
 	font-size: xx-large;
+	display: flex;
+	justify-content: space-between;
+}
+
+.post-title > span:nth-child(2) {
+	font-family: 'Lora';
+	font-size: medium;
+	font-style: italic;
 }
 
 .post-content {
@@ -93,7 +101,7 @@ nav {
 	grid-auto-flow: column;
 	gap: 1vh;
 	margin: 0 1vw;
-	font-family: "Poppins";
+	font-family: 'Poppins';
 	align-items: center;
 }
 

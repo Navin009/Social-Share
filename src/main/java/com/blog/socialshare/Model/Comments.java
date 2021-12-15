@@ -1,5 +1,6 @@
 package com.blog.socialshare.Model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -8,6 +9,7 @@ public class Comments {
 
     @Id
     private String id;
+    @Column(name = "name")
     private String name;
     private String email;
     private String comment;
