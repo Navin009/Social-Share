@@ -60,7 +60,6 @@ nav {
 	display: flex;
 	justify-content: space-between;
 	min-height: 140vh;
-	/* padding: 2vh; */
 }
 
 .post-container {
@@ -94,6 +93,8 @@ nav {
 	grid-auto-flow: column;
 	gap: 1vh;
 	margin: 0 1vw;
+	font-family: "Poppins";
+	align-items: center;
 }
 
 .post-footer-block:nth-child(4) {
@@ -129,7 +130,7 @@ nav {
 }
 
 .left-side-block {
-	background: white;
+	background: rgba(255 255 255 / 65%);
 	width: 15vw;
 	height: 100%;
 }
