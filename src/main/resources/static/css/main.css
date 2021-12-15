@@ -49,8 +49,13 @@ header {
 	text-shadow: 0 0 3px rgb(55, 63, 71);
 }
 
+.header-option i {
+	font-size: 2rem;
+	margin: 0 1vw;
+}
+
 nav {
-	background: blue;
+	background: #dadff7;
 	padding: 10px;
 	display: flex;
 	justify-content: space-between;

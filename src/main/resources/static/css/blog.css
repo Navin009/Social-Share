@@ -3,7 +3,6 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif&display=swap');
 
 body {
-	/* background: wheat; */
 	display: flex;
 	justify-content: center;
 }
@@ -11,7 +10,6 @@ body {
 .container {
 	width: 100%;
 	max-width: 60vw;
-	background: white;
 	border-radius: 10px;
 	padding: 20px;
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
@@ -37,4 +35,46 @@ body {
 .content {
 	font-family: 'Poppins';
 	font-size: 1em;
+}
+
+.create-comment > form {
+	display: flex;
+	flex-direction: column;
+}
+
+.comments {
+	padding: 2vh;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.comment {
+	border: 1px solid #ccc;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.comment-details {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 5px;
+}
+
+.comment-details > div:first-child {
+	font-size: small;
+}
+
+.comment-details > span {
+	font-family: 'Poppins';
+}
+
+.comment-details > div:last-child {
+	font-size: small;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.comment > span:nth-child(2) {
+	font-size: 16px;
 }
