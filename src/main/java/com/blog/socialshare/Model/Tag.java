@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Tags {
+public class Tag {
     @Id
     private int id;
     private String name;

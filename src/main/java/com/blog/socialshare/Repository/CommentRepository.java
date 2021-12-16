@@ -1,0 +1,9 @@
+package com.blog.socialshare.Repository;
+
+import com.blog.socialshare.Model.Comment;
+
+import org.springframework.data.repository.CrudRepository;
+
+public interface CommentRepository extends CrudRepository<Comment, Long> {
+
+}
