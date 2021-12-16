@@ -4,10 +4,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/")
 public class MainController {
 
-    @RequestMapping("/")
+    @RequestMapping(path = {""}, params = "pagestart")
     public String index() {
+        return "index";
+    }
+
+    @RequestMapping(path = { "" }, params = { "pagestart" , "pageend"})
+    public String index1() {
+        System.out.println("index1");
         return "index";
     }
 }

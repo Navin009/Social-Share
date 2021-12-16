@@ -37,9 +37,24 @@ body {
 	font-size: 1em;
 }
 
+.create-comment {
+	padding: 2vh;
+	background: lightgray;
+	margin: 1vh 0;
+	border-radius: 5px;
+}
+
 .create-comment > form {
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	gap: 1vh;
+}
+
+.create-comment > form > input {
+	width: stretch;
+	border-radius: 5px;
+	border: none;
+	padding: 1vh;
+	font-size: 1em;
 }
 
 .comments {
@@ -52,6 +67,7 @@ body {
 	border: 1px solid #ccc;
 	padding: 5px;
 	border-radius: 5px;
+	margin-bottom: 5px;
 }
 
 .comment-details {

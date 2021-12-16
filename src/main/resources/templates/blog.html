@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/blog.css">
+    <link rel="stylesheet" href="/css/blog.css">
     <title>Blog Title</title>
 </head>
 
 <body>
     <div class="container">
         <div class="title">
-            This is Blog Title
+            This is Blog Title <p th:text="${title}"></p>
         </div>
         <div class="subtitle">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure ipsum enim ullam hic ad. Placeat provident cum
@@ -48,6 +49,26 @@
         </div>
 
         <div class="comments">
+            <div class="comment">
+                <div class="comment-details">
+                    <div>Navin Kumar : myself.navinkumar@gmail.com</div>
+                    <span>This is comment</span>
+                    <div>
+                        <span>Created At : 9:00</span>
+                        <span>Updated At : 10:00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="comment">
+                <div class="comment-details">
+                    <div>Navin Kumar : myself.navinkumar@gmail.com</div>
+                    <span>This is comment</span>
+                    <div>
+                        <span>Created At : 9:00</span>
+                        <span>Updated At : 10:00</span>
+                    </div>
+                </div>
+            </div>
             <div class="comment">
                 <div class="comment-details">
                     <div>Navin Kumar : myself.navinkumar@gmail.com</div>
