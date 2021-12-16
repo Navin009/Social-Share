@@ -7,14 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class MainController {
 
-    @RequestMapping(path = {""}, params = "pagestart")
+    @RequestMapping("")
     public String index() {
-        return "index";
-    }
-
-    @RequestMapping(path = { "" }, params = { "pagestart" , "pageend"})
-    public String index1() {
-        System.out.println("index1");
         return "index";
     }
 }

@@ -9,14 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/blog")
 public class BlogController {
 
-    @RequestMapping(path = "", params = "page")
+    @RequestMapping(path = "", params = "postid")
     public String pageblog(@RequestParam(value = "page") int val, Model model) {
-
-        return "blog";
-    }
-
-    @RequestMapping(path = "", params = "page1")
-    public String postblog(@RequestParam(value = "page1") int val, Model model) {
 
         return "blog";
     }
