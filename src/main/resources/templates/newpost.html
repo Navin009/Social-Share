@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write Blog</title>
+    <link rel="stylesheet" href="/css/newpost.css">
+    <link rel="stylesheet" href="../static/css/newpost.css">
+</head>
+
+<body>
+    <form class="container" action="/newpost/save" method="post">
+        <div class="title">
+            <textarea type="text" name="title" id="" placeholder="Title" required></textarea>
+        </div>
+        <div class="subtitle">
+            <textarea type="text" name="excerpt" placeholder="Sub-title" required></textarea>
+        </div>
+        <div class="content">
+            <textarea name="content" id="blog-content" cols="30" rows="1" placeholder="Write you Content"
+                required></textarea>
+        </div>
+        <button type="submit">Post Blog</button>
+    </form>
+</body>
+
+</html>

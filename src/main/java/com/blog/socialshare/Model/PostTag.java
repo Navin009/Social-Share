@@ -9,6 +9,8 @@ public class PostTag {
     @Id
     private String postId;
     private String tagId;
+    private String createdAt;
+    private String updatedAt;
 
     public String getPostId() {
         return postId;
@@ -42,6 +44,4 @@ public class PostTag {
         this.updatedAt = updatedAt;
     }
 
-    private String createdAt;
-    private String updatedAt;
 }

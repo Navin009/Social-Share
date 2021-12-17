@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital@0;1&display=swap');
+
+body {
+	display: grid;
+	margin: 3vh 0;
+	justify-content: center;
+}
+
+.container {
+	padding: 1vh;
+	width: 60vw;
+	display: grid;
+}
+
+.title > textarea {
+	width: 100%;
+	border: none;
+	outline: none;
+	font-family: 'Readex Pro';
+	font-size: xx-large;
+	color: #000;
+	text-align: center;
+	resize: none;
+}
+
+.subtitle > textarea {
+	width: 100%;
+	border: none;
+	outline: none;
+	font-family: 'Lora';
+	font-style: italic;
+	font-weight: bold;
+	font-size: x-large;
+	color: dimgray;
+	resize: none;
+}
+
+.content > textarea {
+	width: 98%;
+	margin-bottom: 5vh;
+	min-height: 80vh;
+	border: none;
+	padding: 1vh;
+	outline: none;
+	font-family: 'Poppins';
+	font-size: medium;
+	resize: vertical;
+	border-radius: 1vh;
+}
