@@ -1,5 +1,6 @@
 package com.blog.socialshare.Model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -9,7 +10,9 @@ public class Post {
     @Id
     private int id;
     private String title;
+    @Column(length = 1000)
     private String excerpt;
+    @Column(length = 10000)
     private String content;
     private String author;
     private String publishedAt;
