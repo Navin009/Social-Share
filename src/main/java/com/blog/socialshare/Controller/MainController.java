@@ -1,7 +1,11 @@
 package com.blog.socialshare.Controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 
+import com.blog.socialshare.Dao.PostDao;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +24,7 @@ public class MainController {
 
     @GetMapping(params = "search")
     public String searchPost(@RequestParam(value = "search") String search, Model model) {
-        model.addAttribute("search", search);
+        // model.addAttribute( "posts", posts);
         return "index";
     }
 
@@ -29,12 +33,21 @@ public class MainController {
         return "newpost";
     }
 
+    @Autowired
+    PostDao postDao;
+
     @PostMapping(path = "newpost/save")
     public String savePost(HttpServletRequest request) {
         String title = request.getParameter("title");
         String excerpt = request.getParameter("excerpt");
         String content = request.getParameter("content");
+        postDao.savePost(title, excerpt, content);
         return "redirect:/newpost";
+    }
+
+    @GetMapping(path = "{postid}")
+    public String getPost(@PathParam("postid") String postId) {
+        return "index";
     }
 
 }
