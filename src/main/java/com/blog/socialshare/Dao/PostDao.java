@@ -1,7 +1,7 @@
 package com.blog.socialshare.Dao;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import com.blog.socialshare.Model.Post;
 import com.blog.socialshare.Repository.PostRepository;
@@ -25,15 +25,18 @@ public class PostDao {
         post.setExcerpt(excerpt);
         post.setContent(content);
         post.setPublished(true);
+        post.setCreatedAt(new Date());
+        post.setAuthor("Navin Kumar");
+        post.setPublishedAt("hold");
+        post.setUpdatedAt(new Date());
         postRepository.save(post);
         return false;
     }
 
-    public Optional<Post> getPostById(Integer id) {
-        return postRepository.findById(id);
-    }
-
-    public Post findById(Integer postId) {
+    public Post getPostById(Integer id) {
+        if (postRepository.findById(id).isPresent()) {
+            return postRepository.findById(id).get();
+        }
         return null;
     }
 }

@@ -1,5 +1,7 @@
 package com.blog.socialshare.Model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,40 +9,40 @@ import javax.persistence.Id;
 public class PostTag {
 
     @Id
-    private String postId;
-    private String tagId;
-    private String createdAt;
-    private String updatedAt;
+    private Integer postId;
+    private Integer tagId;
+    private Date createdAt;
+    private Date updatedAt;
 
-    public String getPostId() {
+    public Integer getPostId() {
         return postId;
     }
 
-    public void setPostId(String postId) {
+    public void setPostId(Integer postId) {
         this.postId = postId;
     }
 
-    public String getTagId() {
+    public Integer getTagId() {
         return tagId;
     }
 
-    public void setTagId(String tagId) {
+    public void setTagId(Integer tagId) {
         this.tagId = tagId;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 

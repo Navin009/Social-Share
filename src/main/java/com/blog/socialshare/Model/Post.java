@@ -1,16 +1,20 @@
 package com.blog.socialshare.Model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Post {
 
     @Id
-    @GeneratedValue
-    private int id;
+    @SequenceGenerator(name = "post_seq", sequenceName = "post_seq", allocationSize = 1)
+    @GeneratedValue(generator = "post_seq")
+    private Integer id;
     private String title;
     @Column(length = 1000)
     private String excerpt;
@@ -19,14 +23,14 @@ public class Post {
     private String author;
     private String publishedAt;
     private boolean isPublished;
-    private String createdAt;
-    private String updatedAt;
+    private Date createdAt;
+    private Date updatedAt;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -78,19 +82,19 @@ public class Post {
         this.isPublished = isPublished;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 

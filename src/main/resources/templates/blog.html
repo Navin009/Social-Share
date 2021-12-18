@@ -15,27 +15,9 @@
         <div class="title" th:text="${post.getTitle()}"></div>
         <div class="subtitle" th:text="${post.getExcerpt()}"></div>
         <div class="content" id="blog-content-view" th:text="${post.getContent()}"></div>
+
         <div class="comments">
-            <div class="comment">
-                <div class="comment-details">
-                    <div>Navin Kumar : myself.navinkumar@gmail.com</div>
-                    <span>This is comment</span>
-                    <div>
-                        <span>Created At : 9:00</span>
-                        <span>Updated At : 10:00</span>
-                    </div>
-                </div>
-            </div>
-            <div class="comment">
-                <div class="comment-details">
-                    <div>Navin Kumar : myself.navinkumar@gmail.com</div>
-                    <span>This is comment</span>
-                    <div>
-                        <span>Created At : 9:00</span>
-                        <span>Updated At : 10:00</span>
-                    </div>
-                </div>
-            </div>
+
             <div class="comment">
                 <div class="comment-details">
                     <div>Navin Kumar : myself.navinkumar@gmail.com</div>
@@ -48,7 +30,8 @@
             </div>
         </div>
         <div class="create-comment">
-            <form action="">
+            <form action="commit/save" method="post">
+                <input type="hidden" name="postid" th:value="${postid}">
                 <label for="name">Name </label>
                 <input type="text" id="name" name="name" placeholder="Write your Name Here">
                 <label for="email">Email </label>
