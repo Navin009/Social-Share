@@ -24,6 +24,11 @@ body {
 	text-align: center;
 }
 
+.author-name {
+	font-family: "Poppins";
+	text-align: end;
+}
+
 .subtitle {
 	font-family: 'PT Serif';
 	font-weight: bold;
@@ -35,13 +40,16 @@ body {
 .content {
 	font-family: 'Poppins';
 	font-size: 1em;
+	white-space: pre-wrap;
+	margin-bottom: 5vh;
 }
 
 .create-comment {
 	padding: 2vh;
-	background: lightgray;
-	margin: 1vh 0;
+	background: rgb(0 0 0 / 7%);
+	margin: 3vh 5vw;
 	border-radius: 5px;
+	font-family: 'Poppins';
 }
 
 .create-comment > form {
@@ -61,11 +69,12 @@ body {
 	padding: 2vh;
 	border: 1px solid #ccc;
 	border-radius: 5px;
+	width: max-content;
 }
 
 .comment {
 	border: 1px solid #ccc;
-	padding: 5px;
+	padding: 1vh;
 	border-radius: 5px;
 	margin-bottom: 5px;
 }
@@ -78,19 +87,30 @@ body {
 
 .comment-details > div:first-child {
 	font-size: small;
+	padding-right: 3vh;
 }
 
 .comment-details > span {
 	font-family: 'Poppins';
+	white-space: pre-wrap;
+	padding: 1vh;
 }
 
-.comment-details > div:last-child {
+.comment-footer {
 	font-size: small;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
 }
+.comment-footer span {
+	margin-left: 1vw;
+}
 
 .comment > span:nth-child(2) {
 	font-size: 16px;
+}
+
+.create-comment button {
+	width: max-content;
+	justify-self: center;
 }

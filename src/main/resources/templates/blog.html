@@ -13,31 +13,32 @@
 <body>
     <div class="container">
         <div class="title" th:text="${post.getTitle()}"></div>
+        <div class="author-name" th:inline="text">Author : [[${post.getAuthor()}]]</div>
         <div class="subtitle" th:text="${post.getExcerpt()}"></div>
         <div class="content" id="blog-content-view" th:text="${post.getContent()}"></div>
 
         <div class="comments">
-
-            <div class="comment">
+            <div th:each="comment : ${comments}" class="comment">
                 <div class="comment-details">
-                    <div>Navin Kumar : myself.navinkumar@gmail.com</div>
-                    <span>This is comment</span>
-                    <div>
-                        <span>Created At : 9:00</span>
-                        <span>Updated At : 10:00</span>
+                    <div class="comment-header" th:text="${comment.getName() +' : ' + comment.getEmail()}"></div>
+                    <span th:text="${comment.getComment()}"></span>
+                    <div class="comment-footer">
+                        <span th:text="${'Created At : ' + comment.getCreatedAt()}"></span>
+                        <span th:text="${'Updated At : ' + comment.getUpdatedAt()}"></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="create-comment">
-            <form action="commit/save" method="post">
+            <form action="comment/save" method="post">
                 <input type="hidden" name="postid" th:value="${postid}">
                 <label for="name">Name </label>
                 <input type="text" id="name" name="name" placeholder="Write your Name Here">
                 <label for="email">Email </label>
                 <input type="text" id="email" name="email" placeholder="Write your Email Here">
                 <label for="comment">Comment </label>
-                <textarea name="comment" id="comment" cols="30" placeholder="Write your Comment Here"></textarea>
+                <textarea name="comment" id="comment" cols="30" rows="5"
+                    placeholder="Write your Comment Here"></textarea>
                 <button type="submit">Submit</button>
             </form>
         </div>

@@ -45,11 +45,12 @@ public class BlogController {
 
     @PostMapping("/comment/save")
     public String saveComment(HttpServletRequest request) {
+        System.out.println(request.getParameter("postid"));
         Integer postId = Integer.parseInt(request.getParameter("postid"));
         String comment = request.getParameter("comment");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
-        commentDao.saveComment(postId, comment, name, email);
+        commentDao.saveComment(postId, name, email, comment);
         return "redirect:/blog/" + postId;
     }
 
