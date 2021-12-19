@@ -40,19 +40,12 @@
             <div class="left-side-block"></div>
         </aside>
         <section class="post-container">
-            <div class="blog-post" id="1" onclick="window.location.href='blog/1'">
+            <div th:each="post : ${posts}" class="blog-post" th:id="${post.getId()}" th:href="@{/blog/{id}(id=${post.getId()})}">
                 <div class="post-title">
-                    <span>
-                        This is title
-                    </span>
-                    <span>Published : Today</span>
+                    <span th:text="${post.getTitle()}"></span>
+                    <span th:inline="text">Published : [[${post.getCreatedAt()}]]</span>
                 </div>
-                <div class="post-content">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, assumenda
-                    natus neque optio fugiat facere cumque voluptas? Vero vitae quos sapiente, assumenda nam sint cumque
-                    porro, nemo expedita incidunt quas! Temporibus nemo dignissimos adipisci sequi odio ipsam tempore
-                    exercitationem beatae! Totam libero corrupti mollitia non itaque
-                </div>
+                <div class="post-content" th:text="${post.getExcerpt()}">kjhadslkfjhadskf</div>
                 <div class="post-footer">
                     <div class="post-footer-block">
                         <i class="fas fa-comment"></i>
@@ -71,7 +64,7 @@
                     </div>
                     <div class="post-footer-block">
                         <span>Author : </span>
-                        <span>Navin Kumar</span>
+                        <span th:text="${post.getAuthor()}"></span>
                     </div>
                 </div>
             </div>

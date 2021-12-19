@@ -15,6 +15,10 @@ public class PostDao {
     @Autowired
     PostRepository postRepository;
 
+    public List<Post> getPosts() {
+        return postRepository.findPosts();
+    }
+
     public List<Post> searchPost(String query) {
         return null;
     }

@@ -95,6 +95,7 @@ nav {
 	font-style: italic;
 	text-align: justify;
 	font-size: large;
+	overflow: hidden;
 }
 
 .post-footer {

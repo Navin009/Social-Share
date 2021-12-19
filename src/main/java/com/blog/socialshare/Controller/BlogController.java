@@ -16,15 +16,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/blog")
 public class BlogController {
 
-    @RequestMapping(path = "", params = "postid")
-    public String pageblog(@RequestParam(value = "page") int val, Model model) {
-        return "blog";
+    @RequestMapping(path = "")
+    public String pageblog(Model model) {
+        return "redirect:/";
     }
 
     @Autowired
