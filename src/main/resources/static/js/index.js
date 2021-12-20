@@ -8,3 +8,7 @@ searchInput.addEventListener('keydown', (e) => {
 		}
 	}
 });
+
+function openPost(postId) {
+	window.location.href = `/blog/${postId}`;
+}

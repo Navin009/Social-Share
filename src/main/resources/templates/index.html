@@ -40,7 +40,7 @@
             <div class="left-side-block"></div>
         </aside>
         <section class="post-container">
-            <div th:each="post : ${posts}" class="blog-post" th:id="${post.getId()}" th:href="@{/blog/{id}(id=${post.getId()})}">
+            <div th:each="post : ${posts}" class="blog-post" th:id="${post.getId()}" onclick="openPost(this.id)">
                 <div class="post-title">
                     <span th:text="${post.getTitle()}"></span>
                     <span th:inline="text">Published : [[${post.getCreatedAt()}]]</span>
@@ -81,7 +81,9 @@
     <footer>
         this is footer
     </footer>
+    <script th:src="@{/js/index.js}"></script>
     <script src="../static/js/index.js"></script>
+
 </body>
 
 </html>

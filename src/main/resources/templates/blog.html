@@ -33,12 +33,12 @@
             <form action="comment/save" method="post">
                 <input type="hidden" name="postid" th:value="${postid}">
                 <label for="name">Name </label>
-                <input type="text" id="name" name="name" placeholder="Write your Name Here">
+                <input type="text" id="name" name="name" placeholder="Write your Name Here" required>
                 <label for="email">Email </label>
-                <input type="text" id="email" name="email" placeholder="Write your Email Here">
+                <input type="text" id="email" name="email" placeholder="Write your Email Here" required>
                 <label for="comment">Comment </label>
-                <textarea name="comment" id="comment" cols="30" rows="5"
-                    placeholder="Write your Comment Here"></textarea>
+                <textarea name="comment" id="comment" cols="30" rows="5" placeholder="Write your Comment Here"
+                    required></textarea>
                 <button type="submit">Submit</button>
             </form>
         </div>

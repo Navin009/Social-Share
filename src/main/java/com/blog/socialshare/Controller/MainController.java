@@ -22,16 +22,23 @@ public class MainController {
     @Autowired
     PostDao postDao;
 
-    @RequestMapping(path = "")
+    @GetMapping(path = "")
     public String indexPage(Model model) {
         List<Post> posts = postDao.getPosts();
         model.addAttribute("posts", posts);
         return "index";
     }
 
+    @GetMapping(params = { "start", "limit"})
+    public String paginateIndexPage(@RequestParam("start") int start, @RequestParam("limit") int limit, Model model) {
+        List<Post> posts = postDao.getPosts(start, limit);
+        model.addAttribute("posts", posts);
+        return "index";
+    }
+
     @GetMapping(params = "search")
     public String searchPost(@RequestParam(value = "search") String search, Model model) {
-        // model.addAttribute( "posts", posts);
+        model.addAttribute("posts", postDao.searchPost(search));
         return "index";
     }
 
