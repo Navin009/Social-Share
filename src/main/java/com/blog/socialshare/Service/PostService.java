@@ -1,4 +1,4 @@
-package com.blog.socialshare.Dao;
+package com.blog.socialshare.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PostDao {
+public class PostService {
     private static final int ID = 0;
     private static final int TITLE = 1;
     private static final int EXCERPT = 2;
@@ -37,8 +37,8 @@ public class PostDao {
         return postList;
     }
 
-    public List<Post> getPosts(int start, int end) {
-        List<Object[]> posts = postRepository.findPosts(start, end);
+    public List<Post> getPosts(int start, int limit) {
+        List<Object[]> posts = postRepository.findPosts(start, limit);
         List<Post> postList = new ArrayList<>();
         for (Object[] post : posts) {
             Post p = new Post();
@@ -56,17 +56,12 @@ public class PostDao {
         return null;
     }
 
-    public boolean savePost(String title, String excerpt, String content) {
-        Post post = new Post();
-        post.setTitle(title);
-        post.setExcerpt(excerpt);
-        post.setContent(content);
-        post.setPublished(true);
+    public boolean savePost(Post post) {
         post.setCreatedAt(new Date());
-        post.setAuthor("Navin Kumar");
-        post.setPublishedAt("hold");
+        post.setPublishedAt(new Date());
         post.setUpdatedAt(new Date());
-        postRepository.save(post);
+        Post savedPost = postRepository.save(post);
+        System.out.println(savedPost.getId());
         return false;
     }
 
@@ -75,5 +70,14 @@ public class PostDao {
             return postRepository.findById(id).get();
         }
         return null;
+    }
+
+    public boolean deletePost(Integer id) {
+
+        if (postRepository.findById(id).isPresent()) {
+            postRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

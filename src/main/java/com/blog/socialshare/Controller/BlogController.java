@@ -4,18 +4,20 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.blog.socialshare.Dao.CommentDao;
-import com.blog.socialshare.Dao.PostDao;
 import com.blog.socialshare.Model.Comment;
 import com.blog.socialshare.Model.Post;
+import com.blog.socialshare.Service.CommentService;
+import com.blog.socialshare.Service.PostService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/blog")
@@ -27,15 +29,15 @@ public class BlogController {
     }
 
     @Autowired
-    PostDao postDao;
+    PostService postService;
 
     @Autowired
-    CommentDao commentDao;
+    CommentService commentService;
 
     @GetMapping("/{postid}")
     public String getPostById(@PathVariable("postid") Integer postId, Model model) {
-        Post post = postDao.getPostById(postId);
-        List<Comment> comments = commentDao.getCommentsByPostId(postId);
+        Post post = postService.getPostById(postId);
+        List<Comment> comments = commentService.getCommentsByPostId(postId);
         model.addAttribute("postid", postId);
         model.addAttribute("post", post);
         model.addAttribute("comments", comments);
@@ -49,8 +51,15 @@ public class BlogController {
         String comment = request.getParameter("comment");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
-        commentDao.saveComment(postId, name, email, comment);
+        commentService.saveComment(postId, name, email, comment);
         return "redirect:/blog/" + postId;
+    }
+
+    @DeleteMapping("/delete/{postid}")
+    @ResponseBody
+    public String deletePost(@PathVariable("postid") Integer postId) {
+        postService.deletePost(postId);
+        return "success";
     }
 
 }

@@ -2,16 +2,14 @@ package com.blog.socialshare.Controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
-
-import com.blog.socialshare.Dao.PostDao;
 import com.blog.socialshare.Model.Post;
+import com.blog.socialshare.Service.PostService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,25 +18,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/")
 public class MainController {
     @Autowired
-    PostDao postDao;
+    PostService postService;
 
     @GetMapping(path = "")
     public String indexPage(Model model) {
-        List<Post> posts = postDao.getPosts();
+        List<Post> posts = postService.getPosts();
         model.addAttribute("posts", posts);
-        return "index";
+        return "redirect:/?start=0&limit=10";
     }
 
-    @GetMapping(params = { "start", "limit"})
+    @GetMapping(params = { "start", "limit" })
     public String paginateIndexPage(@RequestParam("start") int start, @RequestParam("limit") int limit, Model model) {
-        List<Post> posts = postDao.getPosts(start, limit);
+        List<Post> posts = postService.getPosts(start, limit);
         model.addAttribute("posts", posts);
+        int currentPage = start / limit + 1;
+        model.addAttribute("page", currentPage);
+        model.addAttribute("prevDisabled", currentPage <= 1);
+        model.addAttribute("nextDisabled", currentPage >= 3);
         return "index";
     }
 
     @GetMapping(params = "search")
     public String searchPost(@RequestParam(value = "search") String search, Model model) {
-        model.addAttribute("posts", postDao.searchPost(search));
+        model.addAttribute("posts", postService.searchPost(search));
         return "index";
     }
 
@@ -48,17 +50,10 @@ public class MainController {
     }
 
     @PostMapping(path = "newpost/save")
-    public String savePost(HttpServletRequest request) {
-        String title = request.getParameter("title");
-        String excerpt = request.getParameter("excerpt");
-        String content = request.getParameter("content");
-        postDao.savePost(title, excerpt, content);
+    public String savePost(@ModelAttribute("post") Post post, Model model) {
+        model.addAttribute("postSaved", true);
+        postService.savePost(post);
         return "redirect:/newpost";
-    }
-
-    @GetMapping(path = "{postid}")
-    public String getPost(@PathParam("postid") String postId) {
-        return "index";
     }
 
 }

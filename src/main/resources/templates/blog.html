@@ -5,12 +5,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/blog.css">
     <link rel="stylesheet" href="/css/blog.css">
     <title>Blog Title</title>
 </head>
 
 <body>
+    <div class="post-details">
+        <span th:inline="text">Author Name : [[${post.getAuthor()}]]</span>
+        <span th:inline="text">Published Date : [[${post.getUpdatedAt()}]] : [[${post.isPublished()}]]</span>
+        <div class="post-tags">
+            <span class="post-tag">first tag</span>
+            <span class="post-tag">seconap tag</span>
+            <span class="post-tag">;a;jsd tag</span>
+            <span class="post-tag">alksdjf;lakdj tag</span>
+            <span class="post-tag">lakjdf tag</span>
+        </div>
+        <div class="post-update-delete">
+            <button onclick="updatePost()">Update</button>
+            <button onclick="deletePost()">Delete</button>
+        </div>
+    </div>
     <div class="container">
         <div class="title" th:text="${post.getTitle()}"></div>
         <div class="author-name" th:inline="text">Author : [[${post.getAuthor()}]]</div>
@@ -43,8 +57,7 @@
             </form>
         </div>
     </div>
-    <script>
-    </script>
+    <script th:src="@{/js/blog.js}"></script>
 </body>
 
 </html>

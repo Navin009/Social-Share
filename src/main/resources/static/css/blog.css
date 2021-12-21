@@ -4,7 +4,55 @@
 
 body {
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
+}
+
+.post-details {
+	border: 1px solid lightgray;
+	border-radius: 1vh;
+	padding: 1vh;
+	margin: 0 1vw;
+	margin-top: 30vh;
+	display: grid;
+	gap: 1vh;
+	height: max-content;
+	font-family: 'Poppins';
+}
+
+.post-tags::before {
+	position: absolute;
+	content: 'Tags';
+	background: white;
+	top: -14px;
+	left: 12px;
+}
+
+.post-tags {
+	margin: 2vh 0;
+	padding: 1vh 0;
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(2, auto);
+	border: 1px solid lightgray;
+	border-radius: 1vh;
+}
+
+.post-tag {
+	background-color: lightgray;
+	border-radius: 999px;
+	text-align: center;
+	margin: 1vh;
+	padding: 0 5px;
+}
+
+.post-update-delete {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.post-update-delete button {
+	height: 5vh;
+	width: 5vw;
 }
 
 .container {
@@ -25,7 +73,7 @@ body {
 }
 
 .author-name {
-	font-family: "Poppins";
+	font-family: 'Poppins';
 	text-align: end;
 }
 

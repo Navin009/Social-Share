@@ -7,14 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Share</title>
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="../static/css/main.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 </head>
 
 <body>
     <header>
-        <img src="" alt="logo">
+        <img th:src="@{/images/logo.png}" alt="logo">
         <div class="header-search">
             <input type="text" placeholder="Search" id="search-input">
             <button>Search</button>
@@ -28,7 +27,13 @@
         <div>
             <a href="/newpost" style="font-family: 'Poppins';">Create Blog</a>
         </div>
+        <div class="pagination-block">
+            <button class="prev-btn" onclick="prevPage()" th:disabled="${prevDisabled}">Prev</button>
+            <span id="curr-page" th:text="${page}"></span>
+            <button class="next-btn" onclick="nextPage()" th:disabled="${nextDisabled}">Next</button>
+        </div>
         <select>
+            <option value="none" selected disabled>Select Filter </option>
             <option>By Published Date</option>
             <option>By Author</option>
             <option>By Created Date</option>
@@ -45,7 +50,7 @@
                     <span th:text="${post.getTitle()}"></span>
                     <span th:inline="text">Published : [[${post.getCreatedAt()}]]</span>
                 </div>
-                <div class="post-content" th:text="${post.getExcerpt()}">kjhadslkfjhadskf</div>
+                <div class="post-content" th:text="${post.getExcerpt()}"></div>
                 <div class="post-footer">
                     <div class="post-footer-block">
                         <i class="fas fa-comment"></i>
@@ -55,10 +60,7 @@
                         <i class="fas fa-thumbs-up"></i>
                         <span>100</span>
                     </div>
-                    <div class="post-footer-block">
-                        <i class="fas fa-eye"></i>
-                        <span>100</span>
-                    </div>
+
                     <div class="post-footer-block">
                         <span>tags</span>
                     </div>
@@ -82,8 +84,6 @@
         this is footer
     </footer>
     <script th:src="@{/js/index.js}"></script>
-    <script src="../static/js/index.js"></script>
-
 </body>
 
 </html>

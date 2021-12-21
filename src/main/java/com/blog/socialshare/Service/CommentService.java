@@ -1,4 +1,4 @@
-package com.blog.socialshare.Dao;
+package com.blog.socialshare.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CommentDao {
+public class CommentService {
     @Autowired
     CommentRepository commentRepository;
 

@@ -8,7 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Post {
 
     @Id
@@ -21,7 +26,7 @@ public class Post {
     @Column(length = 10000)
     private String content;
     private String author;
-    private String publishedAt;
+    private Date publishedAt;
     private boolean isPublished;
     private Date createdAt;
     private Date updatedAt;
@@ -66,11 +71,11 @@ public class Post {
         this.author = author;
     }
 
-    public String getPublishedAt() {
+    public Date getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(String publishedAt) {
+    public void setPublishedAt(Date publishedAt) {
         this.publishedAt = publishedAt;
     }
 

@@ -14,9 +14,9 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
 
     Optional<Post> findById(Integer id);
 
-    @Query(value = "SELECT id,title,excerpt, author, created_at FROM post limit 10", nativeQuery = true)
+    @Query(value = "SELECT id,title,excerpt, author, created_at FROM post where is_published = true limit 10", nativeQuery = true)
     List<Object[]> findPosts();
 
-    @Query(value = "SELECT id,title,excerpt, author, created_at FROM post limit :limit offset :start ", nativeQuery = true)
+    @Query(value = "SELECT id,title,excerpt, author, created_at FROM post where is_published = true limit :limit offset :start ", nativeQuery = true)
     List<Object[]> findPosts(int start, int limit);
 }
