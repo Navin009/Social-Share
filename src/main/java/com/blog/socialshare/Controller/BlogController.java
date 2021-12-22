@@ -23,16 +23,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/blog")
 public class BlogController {
 
-    @RequestMapping(path = "")
-    public String pageblog(Model model) {
-        return "redirect:/";
-    }
-
     @Autowired
     PostService postService;
 
     @Autowired
     CommentService commentService;
+
+    @RequestMapping(path = "")
+    public String pageblog(Model model) {
+        return "redirect:/";
+    }
 
     @GetMapping("/{postid}")
     public String getPostById(@PathVariable("postid") Integer postId, Model model) {

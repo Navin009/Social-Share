@@ -16,12 +16,14 @@ public class CommentService {
 
     public boolean saveComment(Integer postId, String name, String email, String commentData) {
         Comment comment = new Comment();
+
         comment.setPostId(postId);
         comment.setName(name);
         comment.setEmail(email);
         comment.setComment(commentData);
         comment.setCreatedAt(new Date());
         comment.setUpdatedAt(new Date());
+
         commentRepository.save(comment);
         return true;
     }
@@ -29,6 +31,7 @@ public class CommentService {
     public List<Comment> getCommentsByPostId(Integer postId) {
         try {
             return commentRepository.findByPostId(postId);
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;

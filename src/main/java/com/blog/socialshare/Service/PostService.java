@@ -40,6 +40,7 @@ public class PostService {
     public List<Post> getPosts(int start, int limit) {
         List<Object[]> posts = postRepository.findPosts(start, limit);
         List<Post> postList = new ArrayList<>();
+
         for (Object[] post : posts) {
             Post p = new Post();
             p.setId((Integer) post[ID]);
@@ -60,8 +61,8 @@ public class PostService {
         post.setCreatedAt(new Date());
         post.setPublishedAt(new Date());
         post.setUpdatedAt(new Date());
-        Post savedPost = postRepository.save(post);
-        System.out.println(savedPost.getId());
+
+        postRepository.save(post);
         return false;
     }
 
