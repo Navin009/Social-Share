@@ -66,6 +66,7 @@ public class PostService {
     }
 
     public Post getPostById(Integer id) {
+
         if (postRepository.findById(id).isPresent()) {
             return postRepository.findById(id).get();
         }
@@ -79,5 +80,18 @@ public class PostService {
             return true;
         }
         return false;
+    }
+
+    public boolean updatePost(Post post) {
+        post.setUpdatedAt(new Date());
+        postRepository.updatePost(post.getId(),
+                post.getTitle(),
+                post.getExcerpt(),
+                post.getContent(),
+                post.getAuthor(),
+                post.isPublished(),
+                post.getUpdatedAt());
+        return true;
+
     }
 }

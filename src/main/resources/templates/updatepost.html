@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write Blog</title>
+    <link rel="stylesheet" href="/css/newpost.css">
+</head>
+
+<body>
+    <form class="container" action="/updatepost/update" method="post" th:object="${post}">
+        <input type="hidden" name="id" th:value="${post.getId()}">
+        <div class="input-post-details">
+            <input type="text" name="author" id="author" placeholder="Author Name" th:value="${post.getAuthor()}"
+                required>
+            <label for="is_published">Do you want to publish this post?</label>
+            <select name="published" id="is_published">
+                <option value="true" th:selected="${post.isPublished() == true}">True</option>
+                <option value="false" th:selected="${post.isPublished() == false}">False</option>
+            </select>
+            <label for="tags">Enter tags with newline</label>
+            <textarea name="tags" id="tags" cols="30" rows="10" placeholder="Tags" required></textarea>
+        </div>
+
+        <div class="title">
+            <textarea type="text" name="title" id="" placeholder="Title" th:text="${post.getTitle()}"
+                required></textarea>
+        </div>
+        <div class="subtitle">
+            <textarea type="text" name="excerpt" placeholder="Sub-title" th:text="${post.getExcerpt()}"
+                required></textarea>
+        </div>
+        <div class="content">
+            <textarea name="content" id="blog-content" cols="30" rows="1" placeholder="Write you Content"
+                th:text="${post.getContent()}" required></textarea>
+        </div>
+        <button class="post-btn" type="submit">Update
+            Post</button>
+    </form>
+    <script th:src="@{/js/newpost.js}"></script>
+</body>
+
+</html>

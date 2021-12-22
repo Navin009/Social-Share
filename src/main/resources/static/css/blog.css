@@ -138,10 +138,11 @@ body {
 	padding-right: 3vh;
 }
 
-.comment-details > span {
+.comment-content {
 	font-family: 'Poppins';
 	white-space: pre-wrap;
-	padding: 1vh;
+	border: none;
+	outline: none;
 }
 
 .comment-footer {

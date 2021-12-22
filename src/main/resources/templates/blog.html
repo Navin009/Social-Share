@@ -12,13 +12,13 @@
 <body>
     <div class="post-details">
         <span th:inline="text">Author Name : [[${post.getAuthor()}]]</span>
-        <span th:inline="text">Published Date : [[${post.getUpdatedAt()}]] : [[${post.isPublished()}]]</span>
+        <span th:inline="text">Published Date : [[${post.getUpdatedAt()}]] </span>
         <div class="post-tags">
             <span class="post-tag">first tag</span>
             <span class="post-tag">seconap tag</span>
-            <span class="post-tag">;a;jsd tag</span>
-            <span class="post-tag">alksdjf;lakdj tag</span>
-            <span class="post-tag">lakjdf tag</span>
+            <span class="post-tag">third tag</span>
+            <span class="post-tag">forth tag</span>
+            <span class="post-tag">fifth tag</span>
         </div>
         <div class="post-update-delete">
             <button onclick="updatePost()">Update</button>
@@ -35,10 +35,14 @@
             <div th:each="comment : ${comments}" class="comment">
                 <div class="comment-details">
                     <div class="comment-header" th:text="${comment.getName() +' : ' + comment.getEmail()}"></div>
-                    <span th:text="${comment.getComment()}"></span>
+                    <textarea class="comment-content" th:text="${comment.getComment()}" readonly></textarea>
                     <div class="comment-footer">
                         <span th:text="${'Created At : ' + comment.getCreatedAt()}"></span>
                         <span th:text="${'Updated At : ' + comment.getUpdatedAt()}"></span>
+                    </div>
+                    <div class="update-delete-comment">
+                        <button th:value="${comment.getId()}" onclick="updateComment(this.value)">Update</button>
+                        <button th:value="${comment.getId()}" onclick="deleteComment(this.value)">Delete</button>
                     </div>
                 </div>
             </div>
