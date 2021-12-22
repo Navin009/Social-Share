@@ -41,7 +41,7 @@
                         <span th:text="${'Updated At : ' + comment.getUpdatedAt()}"></span>
                     </div>
                     <div class="update-delete-comment">
-                        <button th:value="${comment.getId()}" onclick="updateComment(this.value)">Update</button>
+                        <button th:value="${comment.getId()}" onclick="updateComment(this.value, this)">Update</button>
                         <button th:value="${comment.getId()}" onclick="deleteComment(this.value)">Delete</button>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                 <label for="email">Email </label>
                 <input type="text" id="email" name="email" placeholder="Write your Email Here" required>
                 <label for="comment">Comment </label>
-                <textarea name="comment" id="comment" cols="30" rows="5" placeholder="Write your Comment Here"
+                <textarea name="comment" id="comment" cols="30" placeholder="Write your Comment Here"
                     required></textarea>
                 <button type="submit">Submit</button>
             </form>

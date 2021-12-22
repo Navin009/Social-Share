@@ -15,27 +15,32 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
-    @Query(value = "SELECT id,title,excerpt, author, created_at FROM post where is_published = true limit 10", nativeQuery = true)
-    List<Object[]> findPosts();
+        @Query(value = "SELECT id,title,excerpt, author, created_at FROM post where is_published = true limit 10", nativeQuery = true)
+        List<Object[]> findPosts();
 
-    @Query(value = "SELECT id,title,excerpt, author, created_at FROM post where is_published = true limit :limit offset :start ", nativeQuery = true)
-    List<Object[]> findPosts(int start, int limit);
+        @Query(value = "SELECT id,title,excerpt, author, created_at FROM post where is_published = true limit :limit offset :start ", nativeQuery = true)
+        List<Object[]> findPosts(int start, int limit);
 
-    @Modifying
-    @Transactional
-    @Query(value = "UPDATE post SET is_published = :ispublished," +
-            "title = :title," +
-            "excerpt = :excerpt," +
-            "author = :author," +
-            "updated_at = :updated_at," +
-            "content = :content " +
-            " WHERE id = :id", nativeQuery = true)
-    void updatePost(@Param("id") int id,
-            @Param("title") String title,
-            @Param("excerpt") String excerpt,
-            @Param("content") String content,
-            @Param("author") String author,
-            @Param("ispublished") boolean ispublished,
-            @Param("updated_at") Date updated_at);
+        @Modifying
+        @Transactional
+        @Query(value = "UPDATE post SET is_published = :ispublished," +
+                        "title = :title," +
+                        "excerpt = :excerpt," +
+                        "author = :author," +
+                        "updated_at = :updated_at," +
+                        "content = :content " +
+                        " WHERE id = :id", nativeQuery = true)
+        void updatePost(@Param("id") int id,
+                        @Param("title") String title,
+                        @Param("excerpt") String excerpt,
+                        @Param("content") String content,
+                        @Param("author") String author,
+                        @Param("ispublished") boolean ispublished,
+                        @Param("updated_at") Date updated_at);
 
+        @Query(value = "select * from post where title like '%'||:query||'%' or " +
+                        " content like '%'||:query||'%' or " +
+                        " excerpt like '%'||:query||'%' or " +
+                        " author like '%'||:query||'%' ", nativeQuery = true)
+        List<Post> searchPostByWord(@Param("query") String query);
 }

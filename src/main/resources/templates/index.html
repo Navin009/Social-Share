@@ -27,11 +27,6 @@
         <div>
             <a href="/newpost" style="font-family: 'Poppins';">Create Blog</a>
         </div>
-        <div class="pagination-block">
-            <button class="prev-btn" onclick="prevPage()" th:disabled="${prevDisabled}">Prev</button>
-            <span id="curr-page" th:text="${page}"></span>
-            <button class="next-btn" onclick="nextPage()" th:disabled="${nextDisabled}">Next</button>
-        </div>
         <select>
             <option value="none" selected disabled>Select Filter </option>
             <option>By Published Date</option>
@@ -69,6 +64,11 @@
                         <span th:text="${post.getAuthor()}"></span>
                     </div>
                 </div>
+            </div>
+            <div class="pagination-block">
+                <button class="prev-btn" onclick="prevPage()" th:disabled="${prevDisabled}">Prev</button>
+                <span id="curr-page" th:text="${page}"></span>
+                <button class="next-btn" onclick="nextPage()" th:disabled="${nextDisabled}">Next</button>
             </div>
         </section>
         <aside class="right-aside">

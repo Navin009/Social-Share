@@ -3,23 +3,31 @@ package com.blog.socialshare.Controller;
 import java.util.List;
 
 import com.blog.socialshare.Model.Post;
+import com.blog.socialshare.Service.CommentService;
 import com.blog.socialshare.Service.PostService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
     @Autowired
     PostService postService;
+
+    @Autowired
+    CommentService commentService;
 
     @GetMapping(path = "")
     public String indexPage(Model model) {
@@ -41,7 +49,8 @@ public class MainController {
 
     @GetMapping(params = "search")
     public String searchPost(@RequestParam(value = "search") String search, Model model) {
-        model.addAttribute("posts", postService.searchPost(search));
+        List<Post> posts = postService.searchPost(search);
+        model.addAttribute("posts", posts);
         return "index";
     }
 
@@ -68,6 +77,21 @@ public class MainController {
     public String updatePost(@ModelAttribute("post") Post post, Model model) {
         postService.updatePost(post);
         return "redirect:/blog/" + post.getId();
+    }
+
+    @PutMapping(path = "updatecomment/{commentId}")
+    @ResponseBody
+    public String updateComment(@PathVariable("commentId") Integer commentId, @RequestBody String comment) {
+        System.out.println(comment);
+        commentService.updateComment(commentId, comment);
+        return "success";
+    }
+
+    @DeleteMapping(path = "deletecomment/{commentId}")
+    @ResponseBody
+    public String deleteComment(@PathVariable("commentId") Integer commentId) {
+        commentService.deleteComment(commentId);
+        return "success";
     }
 
 }

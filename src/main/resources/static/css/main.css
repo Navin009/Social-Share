@@ -62,7 +62,16 @@ nav {
 }
 
 .pagination-block {
+	position: sticky;
+	width: stretch;
+	background: rgba(255 255 255 / 45%);
+	border-radius: 1vh;
+	overflow: hidden;
+	bottom: 0;
 	display: flex;
+	justify-content: center;
+	height: max-content;
+	padding: 1vh;
 	align-items: center;
 }
 
@@ -85,10 +94,13 @@ nav {
 }
 
 .post-container {
+	position: relative;
 	width: 100%;
 	margin: 2vh 2vh;
 	max-height: 140vh;
 	overflow: scroll;
+	display: grid;
+	align-content: space-between;
 }
 
 .post-container::-webkit-scrollbar {

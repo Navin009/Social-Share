@@ -24,33 +24,51 @@ function updatePost() {
 	}
 }
 
-function updateComment(commentId) {
+function updateCommentToDatabase(commentId, commentElement, buttonElement) {
+	let commentData = commentElement.value;
+	let xhr = new XMLHttpRequest();
+	xhr.open('PUT', '../updatecomment/' + commentId);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.onload = function () {
+		if (xhr.status === 200) {
+			commentElement.innerHTML = commentData;
+			commentElement.readOnly = true;
+			commentElement.style.border = 'none';
+			buttonElement.innerHTML = 'Update';
+			buttonElement.onclick = () => updateComment(commentId, buttonElement);
+			alert('Comment updated');
+			window.location.reload();
+		} else {
+			alert('An error occurred');
+		}
+	};
+	xhr.send(commentData);
+}
+
+function updateComment(commentId, buttonElement) {
 	if (confirm('Are you sure you want to update this comment?')) {
+		let commentElement = buttonElement.parentNode.parentNode.getElementsByTagName('textarea')[0];
+		commentElement.readOnly = false;
+		commentElement.style.border = '1px solid black';
+		buttonElement.innerHTML = 'Save Changes';
+		buttonElement.onclick = () => updateCommentToDatabase(commentId, commentElement, buttonElement);
+	}
+}
+
+function deleteComment(commentId) {
+	if (confirm('Are you sure you want to delete this comment?')) {
 		let xhr = new XMLHttpRequest();
-		xhr.open('PUT', '/comment/update' + commentId);
+		xhr.open('DELETE', '../deletecomment/' + commentId);
+		xhr.setRequestHeader('Content-Type', 'application/json');
 		xhr.onload = function () {
 			if (xhr.status === 200) {
-				let comment = JSON.parse(xhr.responseText);
-				document.getElementById('comment-id').value = comment.id;
-				document.getElementById('comment-author').value = comment.author;
-				document.getElementById('comment-content').value = comment.content;
-				document.getElementById('comment-update').style.display = 'block';
-				document.getElementById('comment-submit').style.display = 'none';
+				alert('Comment deleted');
+				window.location.reload();
 			} else {
 				alert('An error occurred');
 			}
 		};
 		xhr.send();
-	}
-}
-
-function deleteComment() {
-	if (confirm('Are you sure you want to delete this comment?')) {
-		let commentId = window.location.pathname.split('/')[3];
-		let xhr = new XMLHttpRequest();
-		xhr.open('DELETE', '/blog/deletecomment/' + commentId);
-		xhr.setRequestHeader('Content-Type', 'application/json');
-		xhr.onload = function () {};
 	}
 }
 

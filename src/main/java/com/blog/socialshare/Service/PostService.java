@@ -53,7 +53,7 @@ public class PostService {
     }
 
     public List<Post> searchPost(String query) {
-        return null;
+        return postRepository.searchPostByWord(query);
     }
 
     public boolean savePost(Post post) {

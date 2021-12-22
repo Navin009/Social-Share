@@ -34,4 +34,12 @@ public class CommentService {
             return null;
         }
     }
+
+    public void updateComment(Integer commentId, String comment) {
+        commentRepository.updateComment(commentId, comment, new Date());
+    }
+
+    public void deleteComment(Integer commentId) {
+        commentRepository.deleteById(commentId);
+    }
 }

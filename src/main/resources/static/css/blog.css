@@ -143,6 +143,8 @@ body {
 	white-space: pre-wrap;
 	border: none;
 	outline: none;
+	resize: none;
+	height: 100px;
 }
 
 .comment-footer {
