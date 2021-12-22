@@ -40,28 +40,31 @@
             <div class="left-side-block"></div>
         </aside>
         <section class="post-container">
-            <div th:each="post : ${posts}" class="blog-post" th:id="${post.getId()}" onclick="openPost(this.id)">
-                <div class="post-title">
-                    <span th:text="${post.getTitle()}"></span>
-                    <span th:inline="text">Published : [[${post.getCreatedAt()}]]</span>
-                </div>
-                <div class="post-content" th:text="${post.getExcerpt()}"></div>
-                <div class="post-footer">
-                    <div class="post-footer-block">
-                        <i class="fas fa-comment"></i>
-                        <span>100</span>
-                    </div>
-                    <div class="post-footer-block">
-                        <i class="fas fa-thumbs-up"></i>
-                        <span>100</span>
-                    </div>
+            <div>
 
-                    <div class="post-footer-block">
-                        <span>tags</span>
+                <div th:each="post : ${posts}" class="blog-post" th:id="${post.getId()}" onclick="openPost(this.id)">
+                    <div class="post-title">
+                        <span th:text="${post.getTitle()}"></span>
+                        <span th:inline="text">Published : [[${post.getCreatedAt()}]]</span>
                     </div>
-                    <div class="post-footer-block">
-                        <span>Author : </span>
-                        <span th:text="${post.getAuthor()}"></span>
+                    <div class="post-content" th:text="${post.getExcerpt()}"></div>
+                    <div class="post-footer">
+                        <div class="post-footer-block">
+                            <i class="fas fa-comment"></i>
+                            <span>100</span>
+                        </div>
+                        <div class="post-footer-block">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span>100</span>
+                        </div>
+
+                        <div class="post-footer-block">
+                            <span>tags</span>
+                        </div>
+                        <div class="post-footer-block">
+                            <span>Author : </span>
+                            <span th:text="${post.getAuthor()}"></span>
+                        </div>
                     </div>
                 </div>
             </div>
