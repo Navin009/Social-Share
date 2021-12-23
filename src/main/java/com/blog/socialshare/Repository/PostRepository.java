@@ -16,7 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
         @Query("SELECT title, author.name , excerpt, content, createdAt FROM Post where isPublished = true ")
-        List<Object[]> getPosts();
+        List<Object[]> getAllPosts();
+
+        @Query(value = "select id, title , excerpt , author, created_at from post where is_published = true limit :limit offset :start", nativeQuery = true)
+        List<Object[]> getPosts(@Param("start") int start, @Param("limit") int limit);
 
         @Modifying
         @Transactional
@@ -38,7 +41,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
         @Query("select p from Post p where lower(p.title) like lower(concat('%',:query,'%')) " +
                         "or lower(p.content) like lower(concat('%',:query,'%')) " +
                         "or lower(p.excerpt) like lower(concat('%',:query,'%')) " +
-                        "or lower(p.author) like lower(concat('%',:query,'%')) ")
+                        "or lower(p.author.name) like lower(concat('%',:query,'%')) ")
         List<Post> searchPostsByWord(@Param("query") String query);
 
 }

@@ -14,11 +14,7 @@
         <span th:inline="text">Author Name : [[${post.getAuthor().getName()}]]</span>
         <span th:inline="text">Published Date : [[${post.getUpdatedAt()}]] </span>
         <div class="post-tags">
-            <span class="post-tag">first tag</span>
-            <span class="post-tag">seconap tag</span>
-            <span class="post-tag">third tag</span>
-            <span class="post-tag">forth tag</span>
-            <span class="post-tag">fifth tag</span>
+            <span class="post-tag" th:each="tag : ${tags}" th:text="${tag.getName()}"></span>
         </div>
         <div class="post-update-delete">
             <button onclick="updatePost()">Update</button>
@@ -48,7 +44,7 @@
             </div>
         </div>
         <div class="create-comment">
-            <form action="comment/save" method="post">
+            <form action="../comment/save" method="post">
                 <input type="hidden" name="postid" th:value="${postid}">
                 <label for="name">Name </label>
                 <input type="text" id="name" name="name" placeholder="Write your Name Here" required>

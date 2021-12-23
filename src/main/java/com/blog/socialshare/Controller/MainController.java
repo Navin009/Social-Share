@@ -30,6 +30,7 @@ public class MainController {
         model.addAttribute("posts", posts);
         return "index";
     }
+   
 
     @GetMapping(params = { "start", "limit" })
     public String paginateIndexPage(@RequestParam("start") int start,
@@ -37,7 +38,7 @@ public class MainController {
         List<Post> posts = postService.getPosts(start, limit);
         model.addAttribute("posts", posts);
         int currentPage = start / limit + 1;
-
+        
         model.addAttribute("page", currentPage);
         model.addAttribute("prevDisabled", currentPage <= 1);
         model.addAttribute("nextDisabled", currentPage >= 3);

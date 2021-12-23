@@ -1,9 +1,14 @@
 package com.blog.socialshare.Controller;
 
+import java.util.List;
+
 import com.blog.socialshare.Model.Post;
+import com.blog.socialshare.Model.Tag;
 import com.blog.socialshare.Model.User;
 import com.blog.socialshare.Repository.UserRepository;
 import com.blog.socialshare.Service.PostService;
+import com.blog.socialshare.Service.PostTagService;
+import com.blog.socialshare.Service.TagService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,17 +30,25 @@ public class PostController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    TagService tagService;
+
+    @Autowired
+    PostTagService postTagService;
+
     @GetMapping(path = "newpost")
     public String newPost() {
         return "newpost";
     }
 
     @PostMapping(path = "newpost/save")
-    public String savePost(@ModelAttribute("post") Post post, @RequestParam("tag") String tag, Model model) {
-        User user = userRepository.findById(1).get();
+    public String savePost(@ModelAttribute("post") Post post, @RequestParam("tags") String tagsList, Model model) {
+        User user = userRepository.findById(3).get();
         post.setAuthor(user);
         Post savedPost = postService.savePost(post);
-        String[] tags = tag.split("\n");
+        String[] tagtokens = tagsList.split("\n");
+        List<Tag> tags = tagService.saveTag(tagtokens, savedPost.getId());
+        postTagService.savePostTag(tags, savedPost);
         model.addAttribute("postSaved", true);
         return "redirect:/";
     }

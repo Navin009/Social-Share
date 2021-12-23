@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface CommentRepository extends CrudRepository<Comment, Integer> {
 
-    @Query("select name, email, comment from Comment c where postId = :post_id")
-    List<Comment[]> getCommentsByPostId(@Param("post_id") Post postId);
+    @Query("select c from Comment c where postId = :post_id")
+    List<Comment> getCommentsByPostId(@Param("post_id") Post postId);
 
     @Modifying
     @Transactional

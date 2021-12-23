@@ -17,22 +17,22 @@ public class CommentService {
 
     public boolean saveComment(Integer postId, String name, String email, String commentData) {
         Comment comment = new Comment();
+        Post post = new Post();
+        post.setId(postId);
+        comment.setPostId(post);
+        comment.setName(name);
+        comment.setEmail(email);
+        comment.setComment(commentData);
+        comment.setCreatedAt(new Date());
+        comment.setUpdatedAt(new Date());
 
-        // comment.setPostId(postId);
-        // comment.setName(name);
-        // comment.setEmail(email);
-        // comment.setComment(commentData);
-        // comment.setCreatedAt(new Date());
-        // comment.setUpdatedAt(new Date());
-
-        // commentRepository.save(comment);
+        commentRepository.save(comment);
         return true;
     }
 
-    public List<Comment[]> getCommentsByPostId(Post postId) {
+    public List<Comment> getCommentsByPostId(Post postId) {
         try {
             return commentRepository.getCommentsByPostId(postId);
-
         } catch (Exception e) {
             e.printStackTrace();
             return null;

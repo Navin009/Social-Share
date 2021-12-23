@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 public class Post {
 
@@ -30,7 +33,12 @@ public class Post {
     private User author;
 
     @OneToMany(mappedBy = "postId")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<PostTag> postTags;
+
+    @OneToMany(mappedBy = "postId")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Comment> comments;
 
     private Date publishedAt;
     private boolean isPublished;

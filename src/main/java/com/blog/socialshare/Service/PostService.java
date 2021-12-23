@@ -7,11 +7,9 @@ import java.util.List;
 import com.blog.socialshare.Model.Post;
 import com.blog.socialshare.Model.User;
 import com.blog.socialshare.Repository.PostRepository;
+import com.blog.socialshare.Repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,18 +23,18 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public List<Post> getPosts() {
-        List<Object[]> posts = postRepository.getPosts();
+        List<Object[]> posts = postRepository.getAllPosts();
         List<Post> postList = new ArrayList<>();
         for (Object[] post : posts) {
             Post p = new Post();
             p.setId((int) post[ID]);
             p.setTitle((String) post[TITLE]);
             p.setExcerpt((String) post[EXCERPT]);
-
-            User user = new User();
-            user.setName((String) post[AUTHOR]);
-
+            User user = userRepository.findById((Integer) post[AUTHOR]).get();
             p.setAuthor(user);
             p.setCreatedAt((Date) post[CREATED_AT]);
             postList.add(p);
@@ -45,9 +43,20 @@ public class PostService {
     }
 
     public List<Post> getPosts(int start, int limit) {
-        Pageable pageable = PageRequest.of(start, limit);
-        Page<Post> posts = postRepository.findAll(pageable);
-        return posts.getContent();
+        List<Object[]> posts = postRepository.getPosts(start, limit);
+        List<Post> postList = new ArrayList<>();
+        for (Object[] post : posts) {
+            Post p = new Post();
+            p.setId((int) post[ID]);
+            p.setTitle((String) post[TITLE]);
+            p.setExcerpt((String) post[EXCERPT]);
+
+            User user = userRepository.findById((Integer) post[AUTHOR]).get();
+            p.setAuthor(user);
+            p.setCreatedAt((Date) post[CREATED_AT]);
+            postList.add(p);
+        }
+        return postList;
     }
 
     public List<Post> searchPost(String query) {
@@ -62,7 +71,7 @@ public class PostService {
     }
 
     public Post getPostById(Integer id) {
-        
+
         if (postRepository.findById(id).isPresent()) {
             return postRepository.findById(id).get();
         }
