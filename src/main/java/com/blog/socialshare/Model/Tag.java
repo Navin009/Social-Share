@@ -50,4 +50,12 @@ public class Tag {
         this.updatedAt = updatedAt;
     }
 
+    public List<PostTag> getPostTags() {
+        return postTags;
+    }
+
+    public void setPostTags(List<PostTag> postTags) {
+        this.postTags = postTags;
+    }
+
 }

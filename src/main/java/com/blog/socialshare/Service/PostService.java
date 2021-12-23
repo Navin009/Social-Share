@@ -5,9 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import com.blog.socialshare.Model.Post;
+import com.blog.socialshare.Model.User;
 import com.blog.socialshare.Repository.PostRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,34 +26,28 @@ public class PostService {
     PostRepository postRepository;
 
     public List<Post> getPosts() {
-        List<Object[]> posts = postRepository.findPosts();
+        List<Object[]> posts = postRepository.getPosts();
         List<Post> postList = new ArrayList<>();
-        // for (Object[] post : posts) {
-        //     Post p = new Post();
-        //     p.setId((Integer) post[ID]);
-        //     p.setTitle((String) post[TITLE]);
-        //     p.setExcerpt((String) post[EXCERPT]);
-        //     p.setAuthor((String) post[AUTHOR]);
-        //     p.setCreatedAt((Date) post[CREATED_AT]);
-        //     postList.add(p);
-        // }
+        for (Object[] post : posts) {
+            Post p = new Post();
+            p.setId((int) post[ID]);
+            p.setTitle((String) post[TITLE]);
+            p.setExcerpt((String) post[EXCERPT]);
+
+            User user = new User();
+            user.setName((String) post[AUTHOR]);
+
+            p.setAuthor(user);
+            p.setCreatedAt((Date) post[CREATED_AT]);
+            postList.add(p);
+        }
         return postList;
     }
 
     public List<Post> getPosts(int start, int limit) {
-        List<Object[]> posts = postRepository.findPosts(start, limit);
-        List<Post> postList = new ArrayList<>();
-
-        // for (Object[] post : posts) {
-        //     Post p = new Post();
-        //     p.setId((Integer) post[ID]);
-        //     p.setTitle((String) post[TITLE]);
-        //     p.setExcerpt((String) post[EXCERPT]);
-        //     p.setAuthor((String) post[AUTHOR]);
-        //     p.setCreatedAt((Date) post[CREATED_AT]);
-        //     postList.add(p);
-        // }
-        return postList;
+        Pageable pageable = PageRequest.of(start, limit);
+        Page<Post> posts = postRepository.findAll(pageable);
+        return posts.getContent();
     }
 
     public List<Post> searchPost(String query) {
@@ -60,12 +58,11 @@ public class PostService {
         post.setCreatedAt(new Date());
         post.setPublishedAt(new Date());
         post.setUpdatedAt(new Date());
-
         return postRepository.save(post);
     }
 
     public Post getPostById(Integer id) {
-
+        
         if (postRepository.findById(id).isPresent()) {
             return postRepository.findById(id).get();
         }
@@ -84,12 +81,12 @@ public class PostService {
     public boolean updatePost(Post post) {
         post.setUpdatedAt(new Date());
         // postRepository.updatePost(post.getId(),
-        //         post.getTitle(),
-        //         post.getExcerpt(),
-        //         post.getContent(),
-        //         post.getAuthor(),
-        //         post.isPublished(),
-        //         post.getUpdatedAt());
+        // post.getTitle(),
+        // post.getExcerpt(),
+        // post.getContent(),
+        // post.getAuthor(),
+        // post.isPublished(),
+        // post.getUpdatedAt());
         return true;
 
     }

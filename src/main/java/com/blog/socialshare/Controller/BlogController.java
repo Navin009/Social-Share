@@ -37,7 +37,7 @@ public class BlogController {
     @GetMapping("/{postid}")
     public String getPostById(@PathVariable("postid") Integer postId, Model model) {
         Post post = postService.getPostById(postId);
-        List<Comment> comments = commentService.getCommentsByPostId(postId);
+        List<Comment[]> comments = commentService.getCommentsByPostId(post);
         model.addAttribute("postid", postId);
         model.addAttribute("post", post);
         model.addAttribute("comments", comments);

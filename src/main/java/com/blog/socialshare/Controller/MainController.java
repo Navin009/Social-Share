@@ -20,15 +20,15 @@ public class MainController {
 
     @GetMapping(path = "")
     public String indexPage(Model model) {
-    return "redirect:/?start=0&limit=10";
+        return "redirect:/?start=0&limit=10";
     }
 
     @GetMapping(params = "search")
-    public String searchPost(@RequestParam(value = "search") String search, Model
-    model) {
-    List<Post> posts = postService.searchPost(search);
-    model.addAttribute("posts", posts);
-    return "index";
+    public String searchPost(@RequestParam(value = "search") String search,
+            Model model) {
+        List<Post> posts = postService.searchPost(search);
+        model.addAttribute("posts", posts);
+        return "index";
     }
 
     @GetMapping(params = { "start", "limit" })

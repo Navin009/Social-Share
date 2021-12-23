@@ -15,11 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
-        @Query(value = "SELECT id,title,excerpt, author, created_at FROM post where is_published = true limit 10", nativeQuery = true)
-        List<Object[]> findPosts();
-
-        @Query(value = "SELECT id,title,excerpt, author, created_at FROM post where is_published = true limit :limit offset :start ", nativeQuery = true)
-        List<Object[]> findPosts(int start, int limit);
+        @Query("SELECT title, author.name , excerpt, content, createdAt FROM Post where isPublished = true ")
+        List<Object[]> getPosts();
 
         @Modifying
         @Transactional

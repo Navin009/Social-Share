@@ -11,7 +11,7 @@
 
 <body>
     <div class="post-details">
-        <span th:inline="text">Author Name : [[${post.getAuthor()}]]</span>
+        <span th:inline="text">Author Name : [[${post.getAuthor().getName()}]]</span>
         <span th:inline="text">Published Date : [[${post.getUpdatedAt()}]] </span>
         <div class="post-tags">
             <span class="post-tag">first tag</span>
@@ -27,7 +27,7 @@
     </div>
     <div class="container">
         <div class="title" th:text="${post.getTitle()}"></div>
-        <div class="author-name" th:inline="text">Author : [[${post.getAuthor()}]]</div>
+        <div class="author-name" th:inline="text">Author : [[${post.getAuthor().getName()}]]</div>
         <div class="subtitle" th:text="${post.getExcerpt()}"></div>
         <div class="content" id="blog-content-view" th:text="${post.getContent()}"></div>
 

@@ -53,20 +53,20 @@ public class Comment {
         this.email = email;
     }
 
-    public Post getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Post postId) {
-        this.postId = postId;
-    }
-
     public String getComment() {
         return comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Post getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Post postId) {
+        this.postId = postId;
     }
 
     public Date getCreatedAt() {

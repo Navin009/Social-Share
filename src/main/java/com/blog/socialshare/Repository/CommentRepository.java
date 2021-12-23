@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.blog.socialshare.Model.Comment;
+import com.blog.socialshare.Model.Post;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface CommentRepository extends CrudRepository<Comment, Integer> {
-    List<Comment> findByPostId(Integer postId);
+
+    @Query("select name, email, comment from Comment c where postId = :post_id")
+    List<Comment[]> getCommentsByPostId(@Param("post_id") Post postId);
 
     @Modifying
     @Transactional

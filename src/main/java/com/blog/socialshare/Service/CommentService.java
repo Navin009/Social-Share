@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.blog.socialshare.Model.Comment;
+import com.blog.socialshare.Model.Post;
 import com.blog.socialshare.Repository.CommentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,9 @@ public class CommentService {
         return true;
     }
 
-    public List<Comment> getCommentsByPostId(Integer postId) {
+    public List<Comment[]> getCommentsByPostId(Post postId) {
         try {
-            return commentRepository.findByPostId(postId);
+            return commentRepository.getCommentsByPostId(postId);
 
         } catch (Exception e) {
             e.printStackTrace();

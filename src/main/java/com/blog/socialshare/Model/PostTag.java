@@ -27,6 +27,14 @@ public class PostTag {
     private Date createdAt;
     private Date updatedAt;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Post getPostId() {
         return postId;
     }

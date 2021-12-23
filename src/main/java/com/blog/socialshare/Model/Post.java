@@ -12,10 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-import org.springframework.stereotype.Component;
-
 @Entity
-@Component
 public class Post {
 
     @Id
@@ -79,6 +76,14 @@ public class Post {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public List<PostTag> getPostTags() {
+        return postTags;
+    }
+
+    public void setPostTags(List<PostTag> postTags) {
+        this.postTags = postTags;
     }
 
     public Date getPublishedAt() {
