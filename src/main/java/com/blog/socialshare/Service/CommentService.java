@@ -17,14 +17,14 @@ public class CommentService {
     public boolean saveComment(Integer postId, String name, String email, String commentData) {
         Comment comment = new Comment();
 
-        comment.setPostId(postId);
-        comment.setName(name);
-        comment.setEmail(email);
-        comment.setComment(commentData);
-        comment.setCreatedAt(new Date());
-        comment.setUpdatedAt(new Date());
+        // comment.setPostId(postId);
+        // comment.setName(name);
+        // comment.setEmail(email);
+        // comment.setComment(commentData);
+        // comment.setCreatedAt(new Date());
+        // comment.setUpdatedAt(new Date());
 
-        commentRepository.save(comment);
+        // commentRepository.save(comment);
         return true;
     }
 

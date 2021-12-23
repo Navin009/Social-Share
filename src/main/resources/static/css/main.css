@@ -174,10 +174,13 @@ nav {
 .right-side-block {
 	background: white;
 	width: 25vw;
-	height: 10vh;
+	height: 20vh;
 	border-radius: 2vh;
 	padding: 1vh;
 	margin-bottom: 2vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .left-side-block {
@@ -189,4 +192,30 @@ nav {
 footer {
 	background: rgb(75, 83, 91);
 	height: 40vh;
+}
+
+.tag-block {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	overflow: auto;
+	max-height: 15vh;
+}
+
+.tag {
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 99px;
+	width: fit-content;
+
+	margin: 5px;
+	padding: 3px 1vw;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.tags-input-block input {
+	width: 100%;
+	height: 5vh;
+	border: none;
+	border-bottom: 1px solid rgb(55, 63, 71);
+	outline: none;
+	font-family: 'Poppins';
 }

@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <form class="container" action="/newpost/save" method="post" th:object="${post}">
+    <form class="container" action="/newpost/save" onsubmit="saveNewPost(event)" method="post" th:object="${post}">
         <div class="input-post-details">
             <input type="text" name="author" id="author" placeholder="Author Name" required>
             <label for="is_published">Do you want to publish this post?</label>
@@ -18,8 +18,14 @@
                 <option value="true">True</option>
                 <option value="false">False</option>
             </select>
-            <label for="tags">Enter tags with newline</label>
-            <textarea name="tags" id="tags" cols="30" rows="10" placeholder="Tags" required></textarea>
+            <label for="tags">Insert tags with Enter</label>
+            <input type="search" name="" id="tag-input" list="tags-list" placeholder="Enter Tags">
+            <datalist id="tags-list">
+                <option value="tag1">
+                <option value="tag2">
+                <option value="tag3">
+            </datalist>
+            <textarea name="tag" id="tags" cols="30" rows="10" placeholder="Tags" readonly required></textarea>
         </div>
 
         <div class="title">
@@ -34,9 +40,8 @@
         </div>
         <button class="post-btn" type="submit">Post Blog</button>
     </form>
-    <script th:if="${postSaved} == true">
-        alert("Post saved Successfully! ");
-    </script>
+
+    <script th:src="@{/js/newpost.js}"></script>
 </body>
 
 </html>

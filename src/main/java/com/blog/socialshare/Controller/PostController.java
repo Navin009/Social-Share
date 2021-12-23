@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
@@ -25,10 +26,11 @@ public class PostController {
     }
 
     @PostMapping(path = "newpost/save")
-    public String savePost(@ModelAttribute("post") Post post, Model model) {
+    public String savePost(@ModelAttribute("post") Post post, @RequestParam("tag") String tag, Model model) {
         model.addAttribute("postSaved", true);
-        postService.savePost(post);
-        return "redirect:/newpost";
+        String[] tags = tag.split("\n");
+        Post savedPost = postService.savePost(post);
+        return "redirect:/";
     }
 
     @GetMapping(path = "updatepost/{postId}")

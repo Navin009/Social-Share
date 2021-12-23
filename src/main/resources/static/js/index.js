@@ -26,3 +26,11 @@ function nextPage() {
 	let limit = urlParams.get('limit');
 	window.location.href = `?start=${Number(start) + Number(limit)}&limit=${limit}`;
 }
+
+document.getElementById('tag-input').addEventListener('keydown', (e) => {
+	if (e.code === 'Enter' && e.target.value.length > 0) {
+		let tagBlock = document.getElementById('tag-block');
+		tagBlock.innerHTML += `<span class='tag'>${e.target.value}</span>`;
+		e.target.value = '';
+	}
+});

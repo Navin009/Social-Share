@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -19,7 +21,11 @@ public class Comment {
     private String name;
     private String email;
     private String comment;
-    private Integer postId;
+
+    @OneToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    private Post postId;
+
     private Date createdAt;
     private Date updatedAt;
 
@@ -47,20 +53,20 @@ public class Comment {
         this.email = email;
     }
 
+    public Post getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Post postId) {
+        this.postId = postId;
+    }
+
     public String getComment() {
         return comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public Integer getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Integer postId) {
-        this.postId = postId;
     }
 
     public Date getCreatedAt() {
@@ -78,4 +84,5 @@ public class Comment {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
 }

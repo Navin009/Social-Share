@@ -3,30 +3,43 @@ package com.blog.socialshare.Model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class PostTag {
 
     @Id
-    private Integer postId;
-    private Integer tagId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post postId;
+
+    @ManyToOne
+    @JoinColumn(name = "tag_id")
+    private Tag tagId;
+
     private Date createdAt;
     private Date updatedAt;
 
-    public Integer getPostId() {
+    public Post getPostId() {
         return postId;
     }
 
-    public void setPostId(Integer postId) {
+    public void setPostId(Post postId) {
         this.postId = postId;
     }
 
-    public Integer getTagId() {
+    public Tag getTagId() {
         return tagId;
     }
 
-    public void setTagId(Integer tagId) {
+    public void setTagId(Tag tagId) {
         this.tagId = tagId;
     }
 

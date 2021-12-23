@@ -24,16 +24,15 @@ public class PostService {
     public List<Post> getPosts() {
         List<Object[]> posts = postRepository.findPosts();
         List<Post> postList = new ArrayList<>();
-
-        for (Object[] post : posts) {
-            Post p = new Post();
-            p.setId((Integer) post[ID]);
-            p.setTitle((String) post[TITLE]);
-            p.setExcerpt((String) post[EXCERPT]);
-            p.setAuthor((String) post[AUTHOR]);
-            p.setCreatedAt((Date) post[CREATED_AT]);
-            postList.add(p);
-        }
+        // for (Object[] post : posts) {
+        //     Post p = new Post();
+        //     p.setId((Integer) post[ID]);
+        //     p.setTitle((String) post[TITLE]);
+        //     p.setExcerpt((String) post[EXCERPT]);
+        //     p.setAuthor((String) post[AUTHOR]);
+        //     p.setCreatedAt((Date) post[CREATED_AT]);
+        //     postList.add(p);
+        // }
         return postList;
     }
 
@@ -41,29 +40,28 @@ public class PostService {
         List<Object[]> posts = postRepository.findPosts(start, limit);
         List<Post> postList = new ArrayList<>();
 
-        for (Object[] post : posts) {
-            Post p = new Post();
-            p.setId((Integer) post[ID]);
-            p.setTitle((String) post[TITLE]);
-            p.setExcerpt((String) post[EXCERPT]);
-            p.setAuthor((String) post[AUTHOR]);
-            p.setCreatedAt((Date) post[CREATED_AT]);
-            postList.add(p);
-        }
+        // for (Object[] post : posts) {
+        //     Post p = new Post();
+        //     p.setId((Integer) post[ID]);
+        //     p.setTitle((String) post[TITLE]);
+        //     p.setExcerpt((String) post[EXCERPT]);
+        //     p.setAuthor((String) post[AUTHOR]);
+        //     p.setCreatedAt((Date) post[CREATED_AT]);
+        //     postList.add(p);
+        // }
         return postList;
     }
 
     public List<Post> searchPost(String query) {
-        return postRepository.searchPostByWord(query);
+        return postRepository.searchPostsByWord(query);
     }
 
-    public boolean savePost(Post post) {
+    public Post savePost(Post post) {
         post.setCreatedAt(new Date());
         post.setPublishedAt(new Date());
         post.setUpdatedAt(new Date());
 
-        postRepository.save(post);
-        return false;
+        return postRepository.save(post);
     }
 
     public Post getPostById(Integer id) {
@@ -85,13 +83,13 @@ public class PostService {
 
     public boolean updatePost(Post post) {
         post.setUpdatedAt(new Date());
-        postRepository.updatePost(post.getId(),
-                post.getTitle(),
-                post.getExcerpt(),
-                post.getContent(),
-                post.getAuthor(),
-                post.isPublished(),
-                post.getUpdatedAt());
+        // postRepository.updatePost(post.getId(),
+        //         post.getTitle(),
+        //         post.getExcerpt(),
+        //         post.getContent(),
+        //         post.getAuthor(),
+        //         post.isPublished(),
+        //         post.getUpdatedAt());
         return true;
 
     }

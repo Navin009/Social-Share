@@ -1,19 +1,21 @@
 package com.blog.socialshare.Model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Component
 public class Post {
 
     @Id
@@ -25,9 +27,17 @@ public class Post {
     private String excerpt;
     @Column(length = 10000)
     private String content;
-    private String author;
+
+    @ManyToOne
+    @JoinColumn(name = "author", referencedColumnName = "id")
+    private User author;
+
+    @OneToMany(mappedBy = "postId")
+    private List<PostTag> postTags;
+
     private Date publishedAt;
     private boolean isPublished;
+
     private Date createdAt;
     private Date updatedAt;
 
@@ -63,11 +73,11 @@ public class Post {
         this.content = content;
     }
 
-    public String getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 

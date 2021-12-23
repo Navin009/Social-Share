@@ -1,20 +1,22 @@
 package com.blog.socialshare.Model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import lombok.Data;
+import javax.persistence.OneToMany;
 
 @Entity
-@Data
 public class Tag {
     @Id
     private int id;
     private String name;
     private Date createdAt;
     private Date updatedAt;
+
+    @OneToMany(mappedBy = "tagId")
+    private List<PostTag> postTags;
 
     public int getId() {
         return id;

@@ -38,9 +38,10 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         @Param("ispublished") boolean ispublished,
                         @Param("updated_at") Date updated_at);
 
-        @Query(value = "select * from post where title ilike '%'||:query||'%' or " +
-                        " content ilike '%'||:query||'%' or " +
-                        " excerpt ilike '%'||:query||'%' or " +
-                        " author ilike '%'||:query||'%' ", nativeQuery = true)
-        List<Post> searchPostByWord(@Param("query") String query);
+        @Query("select p from Post p where lower(p.title) like lower(concat('%',:query,'%')) " +
+                        "or lower(p.content) like lower(concat('%',:query,'%')) " +
+                        "or lower(p.excerpt) like lower(concat('%',:query,'%')) " +
+                        "or lower(p.author) like lower(concat('%',:query,'%')) ")
+        List<Post> searchPostsByWord(@Param("query") String query);
+
 }

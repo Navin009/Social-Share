@@ -8,7 +8,6 @@ function deletePost() {
 			if (xhr.status === 200) {
 				alert('Post deleted');
 				window.location.href = '/';
-				location.reload();
 			} else {
 				alert('An error occurred');
 			}
