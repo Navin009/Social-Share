@@ -150,9 +150,9 @@ public class PostService {
         return postRepository.getPostsByAuthorIdAndTagId(authorId, tagId, pageable).getContent();
     }
 
-    public List<Post> getPostsBySearchAndTagId(String search, List<Integer> tagId, Integer start, Integer limit) {
+    public List<Post> getPostsBySearchAndTagId(String search, List<Integer> tagIds, Integer start, Integer limit) {
         Pageable pageable = PageRequest.of(start / limit, limit);
-        return postRepository.getPostsBySearchAndTagId(search, tagId, pageable).getContent();
+        return postRepository.getPostsBySearchAndTagId(search, tagIds, pageable).getContent();
     }
 
     public List<Post> getPostsBySearchAndAuthorId(String search, List<Integer> authorId, Integer start, Integer limit) {

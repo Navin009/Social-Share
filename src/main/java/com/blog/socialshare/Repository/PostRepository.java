@@ -76,30 +76,30 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
         @Query("select p from Post p, PostTag pt, Tag t " +
                         "where p.id = pt.postId and t.id = pt.tagId and " +
-                        "lower(p.auther.name) like concat('%', :search,'%') or " +
-                        "lower(p.title) like concat('%', :search,'%') or " +
-                        "lower(p.content) like concat('%', :search,'%') or " +
-                        "lower(p.excerpt) like concat('%', :search,'%') and " +
+                        "(lower(p.author.name) like lower(concat('%', :search,'%')) or " +
+                        "lower(p.title) like lower(concat('%', :search,'%')) or " +
+                        "lower(p.content) like lower(concat('%', :search,'%')) or " +
+                        "lower(p.excerpt) like lower(concat('%', :search,'%')) ) and " +
                         "t.id in (:tagIds)")
         Page<Post> getPostsBySearchAndTagId(@Param("search") String search,
                         @Param("tagIds") List<Integer> tagId, Pageable pageable);
 
         @Query("select p from Post p, PostTag pt, Tag t " +
                         "where p.id = pt.postId and t.id = pt.tagId and " +
-                        "lower(p.auther.name) like concat('%', :search,'%') or " +
-                        "lower(p.title) like concat('%', :search,'%') or " +
-                        "lower(p.content) like concat('%', :search,'%') or " +
-                        "lower(p.excerpt) like concat('%', :search,'%') and " +
+                        "(lower(p.author.name) like lower(concat('%', :search,'%')) or " +
+                        "lower(p.title) like lower(concat('%', :search,'%')) or " +
+                        "lower(p.content) like lower(concat('%', :search,'%')) or " +
+                        "lower(p.excerpt) like lower(concat('%', :search,'%')) ) and " +
                         "p.author.id in (:authorIds)")
         Page<Post> getPostsBySearchAndAuthorId(@Param("search") String search,
                         @Param("authorIds") List<Integer> authorId, Pageable pageable);
 
         @Query("select p from Post p, PostTag pt, Tag t " +
                         "where p.id = pt.postId and t.id = pt.tagId and " +
-                        "lower(p.auther.name) like concat('%', :search,'%') or " +
-                        "lower(p.title) like concat('%', :search,'%') or " +
-                        "lower(p.content) like concat('%', :search,'%') or " +
-                        "lower(p.excerpt) like concat('%', :search,'%') and " +
+                        "(lower(p.author.name) like lower(concat('%', :search,'%')) or " +
+                        "lower(p.title) like lower(concat('%', :search,'%')) or " +
+                        "lower(p.content) like lower(concat('%', :search,'%')) or " +
+                        "lower(p.excerpt) like lower(concat('%', :search,'%')) ) and " +
                         "p.author.id in (:authorIds) and t.id in (:tagIds)")
         Page<Post> getPostsBySearchAndAuthorIdAndTagId(@Param("search") String search,
                         @Param("authorIds") List<Integer> authorId,

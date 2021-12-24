@@ -100,6 +100,7 @@ public class MainController {
         HashMap<Post, List<String>> postWithTags = new HashMap<>();
         if (searchQuery.equals("")) {
             if (sortField.equals("author_name"))
+            
                 posts = postService.getPostsAndSorted(start, limit, "author.name", order);
             else
                 posts = postService.getPostsAndSorted(start, limit, "publishedAt", order);
