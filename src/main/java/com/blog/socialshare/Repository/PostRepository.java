@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.blog.socialshare.Model.Post;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -41,7 +43,15 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
         @Query("select p from Post p where lower(p.title) like lower(concat('%',:query,'%')) " +
                         "or lower(p.content) like lower(concat('%',:query,'%')) " +
                         "or lower(p.excerpt) like lower(concat('%',:query,'%')) " +
+                        "or lower(p.author.name) like lower(concat('%',:query,'%'))")
+        Page<Post> searchPostsByWord(@Param("query") String query, Pageable pageable);
+
+        Page<Post> findAll(Pageable pageable);
+
+        @Query("select p from Post p where lower(p.title) like lower(concat('%',:query,'%')) " +
+                        "or lower(p.content) like lower(concat('%',:query,'%')) " +
+                        "or lower(p.excerpt) like lower(concat('%',:query,'%')) " +
                         "or lower(p.author.name) like lower(concat('%',:query,'%')) ")
-        List<Post> searchPostsByWord(@Param("query") String query);
+        Page<Post> searchPostsByWordAndSort(@Param("query") String query, Pageable pageable);
 
 }

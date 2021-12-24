@@ -10,6 +10,9 @@ import com.blog.socialshare.Repository.PostRepository;
 import com.blog.socialshare.Repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -59,8 +62,9 @@ public class PostService {
         return postList;
     }
 
-    public List<Post> searchPost(String query) {
-        return postRepository.searchPostsByWord(query);
+    public List<Post> getPostsBySearch(String query, Integer start, Integer limit) {
+        Pageable pageable = PageRequest.of(start / limit, limit);
+        return postRepository.searchPostsByWord(query, pageable).getContent();
     }
 
     public Post savePost(Post post) {
@@ -99,4 +103,28 @@ public class PostService {
         return true;
 
     }
+
+    public List<Post> getPostsAndSorted(Integer start, Integer limit, String sortField, String order) {
+        Sort sort;
+        if (order.equals("asc")) {
+            sort = Sort.by(sortField).ascending();
+        } else {
+            sort = Sort.by(sortField).descending();
+        }
+        Pageable pageable = PageRequest.of(start / limit, limit, sort);
+        return postRepository.findAll(pageable).getContent();
+    }
+
+    public List<Post> getPostsBySearchAndSorted(
+            String searchQuery, Integer start, Integer limit, String sortField, String order) {
+        Sort sort;
+        if (order.equals("asc")) {
+            sort = Sort.by(sortField).ascending();
+        } else {
+            sort = Sort.by(sortField).descending();
+        }
+        Pageable pageable = PageRequest.of(start / limit, limit, sort);
+        return postRepository.searchPostsByWordAndSort(searchQuery, pageable).getContent();
+    }
+
 }

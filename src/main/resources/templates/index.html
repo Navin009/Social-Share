@@ -9,11 +9,12 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <script th:src="@{/js/jquery-3.6.0.js}"></script>
 </head>
 
 <body>
     <header>
-        <img th:src="@{/images/logo.png}" alt="logo">
+        <img th:src="@{/images/logo.png}" onclick="location.href='/'" alt="logo">
         <div class="header-search">
             <input type="text" placeholder="Search" id="search-input">
             <button>Search</button>
@@ -27,13 +28,17 @@
         <div>
             <a href="/newpost" style="font-family: 'Poppins';">Create Blog</a>
         </div>
-        <select>
-            <option value="none" selected disabled>Select Filter </option>
-            <option>By Published Date</option>
-            <option>By Author</option>
-            <option>By Created Date</option>
-            <option>By Updated Date</option>
-        </select>
+        <div>
+            <select onchange="searchSort()" id="sort-field">
+                <option value="none" disabled selected>Select Sort Field </option>
+                <option value="published_date">By Published Date</option>
+                <option value="author_name">By Author Name</option>
+            </select>
+            <select id="sort-order" onchange="searchSort()">
+                <option value="desc">Desc</option>
+                <option value="asc">Asc</option>
+            </select>
+        </div>
     </nav>
     <div class="container">
         <aside class="left-side">
@@ -81,7 +86,7 @@
                     </div>
                 </div>
                 <div class="tags-input-block">
-                    <input type="search" list="tags-list" name="" id="tag-input" placeholder="Tags">
+                    <input type="search" list="tags-list" id="tag-input" placeholder="Tags">
                     <datalist id="tags-list">
                         <option value="Java">
                         <option value="C++">
