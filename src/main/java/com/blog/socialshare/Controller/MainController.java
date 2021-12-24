@@ -26,17 +26,50 @@ public class MainController {
 
     @GetMapping(params = { "start", "limit" })
     public String searchPost(
-            @RequestParam(value = "search", required = false, defaultValue = "") String search,
             @RequestParam("start") Integer start,
             @RequestParam("limit") Integer limit,
+            @RequestParam(value = "search", required = false, defaultValue = "") String search,
+            @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagId,
+            @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorId,
             Model model) {
-
         List<Post> posts;
+
         HashMap<Post, List<String>> postWithTags = new HashMap<>();
-        if (search == "") {
-            posts = postService.getPosts(start, limit);
+        if (search.equals("")) {
+
+            if (authorId.size() == 0) {
+
+                if (tagId.size() == 0) {
+                    posts = postService.getPosts(start, limit);
+                } else {
+                    posts = postService.getPostsByTagId(tagId, start, limit);
+                }
+
+            } else {
+
+                if (tagId.size() == 0) {
+                    posts = postService.getPostsByAuthorId(authorId, start, limit);
+                } else {
+                    posts = postService.getPostsByAuthorIdAndTagId(authorId, tagId, start, limit);
+                }
+            }
+
         } else {
-            posts = postService.getPostsBySearch(search, start, limit);
+
+            if (authorId.size() == 0) {
+
+                if (tagId.size() == 0) {
+                    posts = postService.getPostsBySearch(search, start, limit);
+                } else {
+                    posts = postService.getPostsBySearchAndTagId(search, tagId, start, limit);
+                }
+            } else {
+                if (tagId.size() == 0) {
+                    posts = postService.getPostsBySearchAndAuthorId(search, authorId, start, limit);
+                } else {
+                    posts = postService.getPostsBySearchAndAuthorIdAndTagId(search, authorId, tagId, start, limit);
+                }
+            }
         }
 
         for (Post post : posts) {
@@ -59,10 +92,13 @@ public class MainController {
             @RequestParam("sortField") String sortField,
             @RequestParam(value = "search", required = false, defaultValue = "") String searchQuery,
             @RequestParam(value = "order", required = false, defaultValue = "desc") String order,
+            @RequestParam(value = "tagId", required = false, defaultValue = "") Integer[] tagId,
+            @RequestParam(value = "authorId", required = false, defaultValue = "") Integer authorId,
             Model model) {
 
         List<Post> posts;
-        if (searchQuery == "") {
+        HashMap<Post, List<String>> postWithTags = new HashMap<>();
+        if (searchQuery.equals("")) {
             if (sortField.equals("author_name"))
                 posts = postService.getPostsAndSorted(start, limit, "author.name", order);
             else
@@ -74,6 +110,10 @@ public class MainController {
             else
                 posts = postService.getPostsBySearchAndSorted(searchQuery, start, limit, "publishedAt", order);
         }
+        for (Post post : posts) {
+            postWithTags.put(post, postService.getTags(post.getId()));
+        }
+        model.addAttribute("postWithTags", postWithTags);
         model.addAttribute("posts", posts);
         return "index";
     }
