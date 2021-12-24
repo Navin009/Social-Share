@@ -1,5 +1,6 @@
 package com.blog.socialshare.Controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.blog.socialshare.Model.Post;
@@ -31,12 +32,19 @@ public class MainController {
             Model model) {
 
         List<Post> posts;
-        if (search == "")
+        HashMap<Post, List<String>> postWithTags = new HashMap<>();
+        if (search == "") {
             posts = postService.getPosts(start, limit);
-        else
+        } else {
             posts = postService.getPostsBySearch(search, start, limit);
+        }
+
+        for (Post post : posts) {
+            postWithTags.put(post, postService.getTags(post.getId()));
+        }
 
         model.addAttribute("posts", posts);
+        model.addAttribute("postWithTags", postWithTags);
         int currentPage = start / limit + 1;
         model.addAttribute("page", currentPage);
         model.addAttribute("prevDisabled", currentPage <= 1);
@@ -54,7 +62,7 @@ public class MainController {
             Model model) {
 
         List<Post> posts;
-        if (searchQuery != "") {
+        if (searchQuery == "") {
             if (sortField.equals("author_name"))
                 posts = postService.getPostsAndSorted(start, limit, "author.name", order);
             else

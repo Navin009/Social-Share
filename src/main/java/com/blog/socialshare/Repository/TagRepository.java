@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Integer> {
 
-    @Query("Select t from Tag t where upper(t.name) like :name")
+    @Query("Select t from Tag t where name like :name")
     Tag findOneByName(@Param("name") String tagName);
 
 }

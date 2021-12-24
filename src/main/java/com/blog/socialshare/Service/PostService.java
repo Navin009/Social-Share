@@ -127,4 +127,9 @@ public class PostService {
         return postRepository.searchPostsByWordAndSort(searchQuery, pageable).getContent();
     }
 
+    public List<String> getTags(Integer postId) {
+        List<String> tags = postRepository.getTags(postId);
+        return tags;
+    }
+
 }

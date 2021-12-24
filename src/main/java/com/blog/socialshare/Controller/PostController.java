@@ -46,7 +46,7 @@ public class PostController {
         User user = userRepository.findById(3).get();
         post.setAuthor(user);
         Post savedPost = postService.savePost(post);
-        String[] tagtokens = tagsList.split("\n");
+        String[] tagtokens = tagsList.split("\r\n");
         List<Tag> tags = tagService.saveTag(tagtokens, savedPost.getId());
         postTagService.savePostTag(tags, savedPost);
         model.addAttribute("postSaved", true);

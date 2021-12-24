@@ -20,7 +20,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
         @Query("SELECT title, author.name , excerpt, content, createdAt FROM Post where isPublished = true ")
         List<Object[]> getAllPosts();
 
-        @Query(value = "select id, title , excerpt , author, created_at from post where is_published = true limit :limit offset :start", nativeQuery = true)
+        @Query(value = "select id, title , excerpt , author,  created_at from post where is_published = true limit :limit offset :start", nativeQuery = true)
         List<Object[]> getPosts(@Param("start") int start, @Param("limit") int limit);
 
         @Modifying
@@ -53,5 +53,11 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         "or lower(p.excerpt) like lower(concat('%',:query,'%')) " +
                         "or lower(p.author.name) like lower(concat('%',:query,'%')) ")
         Page<Post> searchPostsByWordAndSort(@Param("query") String query, Pageable pageable);
+
+        @Query(value = "select distinct tag.name from post " +
+                        "left join post_tag on post.id = post_tag.post_id " +
+                        "left join tag on post_tag.tag_id= tag.id " +
+                        "where post.id= :postId", nativeQuery = true)
+        List<String> getTags(@Param("postId") Integer postId);
 
 }
