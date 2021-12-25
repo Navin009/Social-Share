@@ -1,5 +1,7 @@
 package com.blog.socialshare.Repository;
 
+import java.util.List;
+
 import com.blog.socialshare.Model.Tag;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,5 +14,8 @@ public interface TagRepository extends JpaRepository<Tag, Integer> {
 
     @Query("Select t from Tag t where name like :name")
     Tag findOneByName(@Param("name") String tagName);
+
+    @Query("select t from Tag t where upper(name) like upper(concat('%',:name,'%'))")
+    List<Tag> findTagByName(@Param("name") String tagName);
 
 }

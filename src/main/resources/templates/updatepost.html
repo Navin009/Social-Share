@@ -13,8 +13,8 @@
     <form class="container" action="/updatepost/update" method="post" th:object="${post}">
         <input type="hidden" name="id" th:value="${post.getId()}">
         <div class="input-post-details">
-            <input type="text" name="author0" id="author0" placeholder="Author Name"
-                th:value="${post.getAuthor().getName()}" required>
+            <input type="text" name="authorName" id="author" placeholder="Author Name"
+                th:value="${post.getAuthor().getName()}" readonly required>
             <label for="is_published">Do you want to publish this post?</label>
             <select name="published" id="is_published">
                 <option value="true" th:selected="${post.isPublished() == true}">True</option>

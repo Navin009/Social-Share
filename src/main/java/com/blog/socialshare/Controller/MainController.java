@@ -92,25 +92,90 @@ public class MainController {
             @RequestParam("sortField") String sortField,
             @RequestParam(value = "search", required = false, defaultValue = "") String searchQuery,
             @RequestParam(value = "order", required = false, defaultValue = "desc") String order,
-            @RequestParam(value = "tagId", required = false, defaultValue = "") Integer[] tagId,
-            @RequestParam(value = "authorId", required = false, defaultValue = "") Integer authorId,
+            @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagIds,
+            @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorIds,
             Model model) {
 
         List<Post> posts;
         HashMap<Post, List<String>> postWithTags = new HashMap<>();
         if (searchQuery.equals("")) {
-            if (sortField.equals("author_name"))
-            
-                posts = postService.getPostsAndSorted(start, limit, "author.name", order);
-            else
-                posts = postService.getPostsAndSorted(start, limit, "publishedAt", order);
+            if (sortField.equals("author_name")) {
+                if (authorIds.size() == 0) {
+                    if (tagIds.size() == 0) {
+                        posts = postService.getPostsAndSorted(start, limit, "author.name", order);
+                    } else {
+                        posts = postService.getPostsByTagIdAndSorted(start, limit, "author.name", tagIds, order);
+                    }
+
+                } else {
+                    if (tagIds.size() == 0) {
+                        posts = postService.getPostsByAuthorIdAndSorted(start, limit, "author.name", authorIds, order);
+                    } else {
+                        posts = postService.getPostsByAuthorIdAndTagIdAndSorted(start, limit, "author.name", authorIds,
+                                tagIds, order);
+                    }
+                }
+            } else {
+
+                if (authorIds.size() == 0) {
+                    if (tagIds.size() == 0) {
+                        posts = postService.getPostsAndSorted(start, limit, "publishedAt", order);
+                    } else {
+                        posts = postService.getPostsByTagIdAndSorted(start, limit, "publishedAt", tagIds, order);
+                    }
+
+                } else {
+                    if (tagIds.size() == 0) {
+                        posts = postService.getPostsByAuthorIdAndSorted(start, limit, "publishedAt", authorIds, order);
+                    } else {
+                        posts = postService.getPostsByAuthorIdAndTagIdAndSorted(start, limit, "publishedAt", authorIds,
+                                tagIds, order);
+                    }
+                }
+            }
 
         } else {
-            if (sortField.equals("author_name"))
-                posts = postService.getPostsBySearchAndSorted(searchQuery, start, limit, "author.name", order);
-            else
-                posts = postService.getPostsBySearchAndSorted(searchQuery, start, limit, "publishedAt", order);
+            if (sortField.equals("author_name")) {
+                if (authorIds.size() == 0) {
+                    if (tagIds.size() == 0) {
+                        posts = postService.getPostsBySearchAndSorted(searchQuery, start, limit, "author.name", order);
+                    } else {
+                        posts = postService.getPostsBySearchAndTagIdAndSorted(searchQuery, start, limit, "author.name",
+                                tagIds, order);
+                    }
+
+                } else {
+                    if (tagIds.size() == 0) {
+                        posts = postService.getPostsBySearchAndAuthorIdAndSorted(searchQuery, start, limit,
+                                "author.name", authorIds, order);
+                    } else {
+                        posts = postService.getPostsBySearchAndAuthorIdAndTagIdAndSorted(searchQuery, start, limit,
+                                "author.name", authorIds,
+                                tagIds, order);
+                    }
+                }
+            } else {
+
+                if (authorIds.size() == 0) {
+                    if (tagIds.size() == 0) {
+                        posts = postService.getPostsBySearchAndSorted(searchQuery, start, limit, "publishedAt", order);
+                    } else {
+                        posts = postService.getPostsBySearchAndTagIdAndSorted(searchQuery, start, limit, "publishedAt",
+                                tagIds, order);
+                    }
+
+                } else {
+                    if (tagIds.size() == 0) {
+                        posts = postService.getPostsBySearchAndAuthorIdAndSorted(searchQuery, start, limit,
+                                "publishedAt", authorIds, order);
+                    } else {
+                        posts = postService.getPostsBySearchAndAuthorIdAndTagIdAndSorted(searchQuery, start, limit,
+                                "publishedAt", authorIds, tagIds, order);
+                    }
+                }
+            }
         }
+
         for (Post post : posts) {
             postWithTags.put(post, postService.getTags(post.getId()));
         }

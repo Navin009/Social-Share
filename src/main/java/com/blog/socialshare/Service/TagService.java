@@ -33,4 +33,8 @@ public class TagService {
         return tags;
     }
 
+    public List<Tag> getTagsByName(String tagName) {
+        return tagRepository.findTagByName(tagName);
+    }
+
 }

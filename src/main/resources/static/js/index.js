@@ -33,9 +33,10 @@ function nextPage() {
 
 let availableTags = ["Java", "C++"];
 let tagsList = [];
+
 document.getElementById("tag-input").addEventListener("keydown", (e) => {
+	let tagBlock = document.getElementById("tag-block");
 	if (e.code === "Enter" && e.target.value.length > 0) {
-		let tagBlock = document.getElementById("tag-block");
 		let tagIndex = availableTags.indexOf(e.target.value);
 		if (tagIndex !== -1) {
 			tagBlock.innerHTML += `<span class='tag'>${e.target.value}</span>`;
@@ -46,6 +47,18 @@ document.getElementById("tag-input").addEventListener("keydown", (e) => {
 		}
 		e.target.value = "";
 	}
+	// if (e.target.value.length >= 2) {
+	// 	$.ajax({
+	// 		url: "/tag/search",
+	// 		type: "GET",
+	// 		data: {
+	// 			tag: e.target.value,
+	// 		},
+	// 		success: (data) => {
+	// 			console.log(data);
+	// 		},
+	// 	});
+	// }
 });
 
 let tagBlock = document.getElementById("tag-block");
