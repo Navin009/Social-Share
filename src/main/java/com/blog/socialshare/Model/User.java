@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -22,6 +24,7 @@ public class User {
     private String email;
     private String password;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "author")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Post> post;

@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -29,13 +32,16 @@ public class Post {
     private String content;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "author", referencedColumnName = "id")
     private User author;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "postId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<PostTag> postTags;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "postId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Comment> comments;

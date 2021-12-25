@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class PostTag {
 
@@ -17,10 +19,12 @@ public class PostTag {
     private Integer id;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "post_id")
     private Post postId;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "tag_id")
     private Tag tagId;
 

@@ -11,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -24,8 +27,10 @@ public class Tag {
     private Date createdAt;
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "tagId", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @JsonIncludeProperties("id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "tagId", cascade = CascadeType.ALL)
     private List<PostTag> postTags;
 
     public Integer getId() {

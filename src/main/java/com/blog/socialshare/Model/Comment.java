@@ -10,12 +10,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Comment {
 
     @Id
-    @SequenceGenerator(name = "comment_seq", sequenceName = "comment_seq", allocationSize = 1)
     @GeneratedValue(generator = "comment_seq")
+    @SequenceGenerator(name = "comment_seq", sequenceName = "comment_seq", allocationSize = 1)
     private Integer id;
     @Column(name = "name")
     private String name;
@@ -23,6 +25,7 @@ public class Comment {
     private String comment;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post postId;
 
