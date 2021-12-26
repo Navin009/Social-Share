@@ -1,12 +1,11 @@
 let searchInput = document.getElementById("search-input");
 
-searchInput.addEventListener("keydown", (e) => {
+searchInput.addEventListener("keyup", (e) => {
 	if (e.code === "Enter") {
 		let searchTerm = searchInput.value;
 		if (searchTerm.length > 0) {
-			let url = new URL(window.location);
-			url.searchParams.set("search", searchTerm);
-			window.location.href = url;
+			let url = new URL(window.location.origin);
+			window.location.href = url + `?start=0&limit=10&search=${searchTerm}`;
 		}
 	}
 });
