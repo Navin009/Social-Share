@@ -110,3 +110,22 @@ function searchSort() {
 	url.searchParams.set("order", sortOrder);
 	window.location.href = url;
 }
+
+function removeTag(tagId) {
+	let url = new URL(window.location);
+	let params = removeParam(url.search, "tagId", tagId);
+	window.location.href = url.origin + params;
+}
+
+function removeAuthor(authorId) {
+	let url = new URL(window.location);
+	let params = removeParam(url.search, "authorId", authorId);
+	window.location.href = url.origin + params;
+}
+
+function removeParam(sourceURL, key, value) {
+	var params = sourceURL.replace("?", "").split("&");
+	let removeParam = key + "=" + value;
+	params = params.filter((param) => param !== removeParam);
+	return "/?" + params.join("&");
+}

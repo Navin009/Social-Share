@@ -137,8 +137,7 @@ public class MainController {
 
         if (sortField.equals("published_date"))
             sortFieldColumn = "publishedAt";
-        List<Tag> tags = tagService.getTags(tagIds);
-        Iterable<User> authors = userService.getUsers(authorIds);
+
         if (authorIds.size() == 0) {
             if (tagIds.size() == 0) {
                 posts = postService.getPostsAndSorted(start, limit, sortFieldColumn, order);
@@ -181,7 +180,7 @@ public class MainController {
             Model model) {
 
         List<Post> posts;
-        HashMap<Post, List<String>> postWithTags = new HashMap<>();
+        Map<Post, List<String>> postWithTags = new HashMap<>();
         String sortFieldColumn = "author.name";
 
         if (sortField.equals("published_date"))

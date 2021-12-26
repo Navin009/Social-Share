@@ -79,7 +79,11 @@
             <div class="right-side-block">
                 <div class="chip-container">
                     <div class="chip-block" id="tag-block">
-                        <span class='chip' th:each="tag : ${tags}" th:text=" ${tag.getName()}"></span>
+                        <span class='chip' th:each="tag : ${tags}" th:inline="text">
+                            [[${tag.getName()}]]
+                            <data th:value="${tag.getId()}" class="far fa-times-circle"
+                                onclick="removeTag(this.value)"></data>
+                        </span>
                     </div>
                 </div>
                 <div class="chip-input-block">
@@ -92,7 +96,12 @@
             <div class="right-side-block">
                 <div class="chip-container">
                     <div class="chip-block" id="author-block">
-                        <span class='chip' th:each="author : ${authors}" th:text=" ${author.getName()}"></span>
+                        <span class='chip' th:each="author : ${authors}" th:inlne="text">
+                            [[${author.getName()}]]
+                            <data th:value="author.getId()" class="far fa-times-circle"
+                                onclick="removeAuthor(this.value)"></data>
+                        </span>
+
                     </div>
                 </div>
                 <div class="chip-input-block">
