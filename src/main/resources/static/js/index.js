@@ -34,13 +34,11 @@ function nextPage() {
 let availableTags = [];
 
 document.getElementById("tag-input").addEventListener("keyup", (e) => {
-	let tagBlock = document.getElementById("tag-block");
 	let tagList = $("#tags-list");
 
 	if (e.code === "Enter" && e.target.value.length > 0) {
 		let tagId = availableTags.filter((tag) => tag.name === e.target.value)[0].id;
 		if (tagId !== -1) {
-			tagBlock.innerHTML += `<span class='chip'>${e.target.value}</span>`;
 			let url = new URL(window.location);
 			url.searchParams.append("tagId", tagId);
 			window.location.href = url;
@@ -70,14 +68,12 @@ document.getElementById("tag-input").addEventListener("keyup", (e) => {
 let availableAuthors = [];
 
 $("#author-input").keyup(function (e) {
-	let authorBlock = $("#author-block");
 	let authorList = $("#authors-list");
 
 	if (e.key === "Enter" && e.target.value.length > 0) {
 		debugger;
 		let authorId = availableAuthors.filter((author) => author.name == e.target.value)[0].id;
 		if (authorId !== -1) {
-			authorBlock.append(`<span class='chip'>${e.target.value}</span>`);
 			let url = new URL(window.location);
 			url.searchParams.set("authorId", authorId);
 			window.location.href = url;

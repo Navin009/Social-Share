@@ -37,4 +37,8 @@ public class TagService {
         return tagRepository.findTagByName(tagName);
     }
 
+    public List<Tag> getTags(List<Integer> tagIds) {
+        return tagRepository.findAllById(tagIds);
+    }
+
 }

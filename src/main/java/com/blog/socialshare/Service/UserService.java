@@ -18,4 +18,8 @@ public class UserService {
         return userRepository.findByNameIgnoreCaseContaining(name);
     }
 
+    public Iterable<User> getUsers(List<Integer> authorIds) {
+        return userRepository.findAllById(authorIds);
+    }
+
 }

@@ -59,16 +59,16 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
         List<String> getTags(@Param("postId") Integer postId);
 
         @Query("select p from Post p, PostTag pt, Tag t where p.id = pt.postId and "
-                        + "pt.tagId = t.id and t.id in (:tagids)")
+                        + "pt.tagId = t.id and t.id in (:tagids) group by p.id, p.author.id")
         Page<Post> getPostsByTagId(@Param("tagids") List<Integer> tagIds, Pageable pageable);
 
         @Query("select p from Post p, PostTag pt, Tag t where p.id = pt.postId and " +
-                        "pt.tagId = t.id and p.author.id in (:authorIds)")
+                        "pt.tagId = t.id and p.author.id in (:authorIds) group by p.id, p.author.id")
         Page<Post> getPostsByAuthorId(@Param("authorIds") List<Integer> authorId, Pageable pageable);
 
         @Query("select p from Post p, PostTag pt, Tag t " +
                         "where p.id = pt.postId and pt.tagId = t.id and " +
-                        " p.author.id = (:authorIds) and t.id in (:tagIds)")
+                        " p.author.id = (:authorIds) and t.id in (:tagIds) group by p.id, p.author.id")
         Page<Post> getPostsByAuthorIdAndTagId(@Param("authorIds") List<Integer> authorId,
                         @Param("tagIds") List<Integer> tagId, Pageable pageable);
 
@@ -78,7 +78,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         "lower(p.title) like lower(concat('%', :search,'%')) or " +
                         "lower(p.content) like lower(concat('%', :search,'%')) or " +
                         "lower(p.excerpt) like lower(concat('%', :search,'%')) ) and " +
-                        "t.id in (:tagIds) group by p.id, p.author.name")
+                        "t.id in (:tagIds) group by p.id, p.author.id")
         Page<Post> getPostsBySearchAndTagId(@Param("search") String search,
                         @Param("tagIds") List<Integer> tagId, Pageable pageable);
 
@@ -88,7 +88,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         "lower(p.title) like lower(concat('%', :search,'%')) or " +
                         "lower(p.content) like lower(concat('%', :search,'%')) or " +
                         "lower(p.excerpt) like lower(concat('%', :search,'%')) ) and " +
-                        "p.author.id in (:authorIds) group by p.id, p.author.name")
+                        "p.author.id in (:authorIds) group by p.id, p.author.id")
         Page<Post> getPostsBySearchAndAuthorId(@Param("search") String search,
                         @Param("authorIds") List<Integer> authorId, Pageable pageable);
 
@@ -98,7 +98,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         "lower(p.title) like lower(concat('%', :search,'%')) or " +
                         "lower(p.content) like lower(concat('%', :search,'%')) or " +
                         "lower(p.excerpt) like lower(concat('%', :search,'%')) ) and " +
-                        "p.author.id in (:authorIds) and t.id in (:tagIds) group by p.id, p.author.name")
+                        "p.author.id in (:authorIds) and t.id in (:tagIds) group by p.id, p.author.id")
         Page<Post> getPostsBySearchAndAuthorIdAndTagId(@Param("search") String search,
                         @Param("authorIds") List<Integer> authorId,
                         @Param("tagIds") List<Integer> tagId, Pageable pageable);

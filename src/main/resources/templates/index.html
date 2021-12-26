@@ -79,6 +79,7 @@
             <div class="right-side-block">
                 <div class="chip-container">
                     <div class="chip-block" id="tag-block">
+                        <span class='chip' th:each="tag : ${tags}" th:text=" ${tag.getName()}"></span>
                     </div>
                 </div>
                 <div class="chip-input-block">
@@ -91,6 +92,7 @@
             <div class="right-side-block">
                 <div class="chip-container">
                     <div class="chip-block" id="author-block">
+                        <span class='chip' th:each="author : ${authors}" th:text=" ${author.getName()}"></span>
                     </div>
                 </div>
                 <div class="chip-input-block">

@@ -5,7 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.blog.socialshare.Model.Post;
+import com.blog.socialshare.Model.Tag;
+import com.blog.socialshare.Model.User;
 import com.blog.socialshare.Service.PostService;
+import com.blog.socialshare.Service.TagService;
+import com.blog.socialshare.Service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +24,12 @@ public class MainController {
     @Autowired
     PostService postService;
 
+    @Autowired
+    private TagService tagService;
+
+    @Autowired
+    private UserService userService;
+
     @GetMapping(path = "")
     public String indexPage(Model model) {
         return "redirect:/?start=0&limit=10";
@@ -29,25 +39,25 @@ public class MainController {
     public String getPost(
             @RequestParam("start") Integer start,
             @RequestParam("limit") Integer limit,
-            @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagId,
-            @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorId,
+            @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagIds,
+            @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorIds,
             Model model) {
         List<Post> posts;
 
         HashMap<Post, List<String>> postWithTags = new HashMap<>();
-        if (authorId.size() == 0) {
-            if (tagId.size() == 0) {
+        if (authorIds.size() == 0) {
+            if (tagIds.size() == 0) {
                 posts = postService.getPostsPage(start, limit);
             } else {
-                posts = postService.getPostsPageByTagId(tagId, start, limit);
+                posts = postService.getPostsPageByTagId(tagIds, start, limit);
             }
 
         } else {
 
-            if (tagId.size() == 0) {
-                posts = postService.getPostsPageByAuthorId(authorId, start, limit);
+            if (tagIds.size() == 0) {
+                posts = postService.getPostsPageByAuthorId(authorIds, start, limit);
             } else {
-                posts = postService.getPostsPageByAuthorIdAndTagId(authorId, tagId, start, limit);
+                posts = postService.getPostsPageByAuthorIdAndTagId(authorIds, tagIds, start, limit);
             }
         }
 
@@ -55,6 +65,11 @@ public class MainController {
             postWithTags.put(post, postService.getTagNames(post.getId()));
         }
 
+        List<Tag> tags = tagService.getTags(tagIds);
+        Iterable<User> authors = userService.getUsers(authorIds);
+
+        model.addAttribute("tags", tags);
+        model.addAttribute("authors", authors);
         model.addAttribute("posts", posts);
         model.addAttribute("postWithTags", postWithTags);
         int currentPage = start / limit + 1;
@@ -68,23 +83,23 @@ public class MainController {
     public String getPostBySearch(
             @RequestParam("start") Integer start, @RequestParam("limit") Integer limit,
             @RequestParam("search") String search,
-            @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagId,
-            @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorId,
+            @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagIds,
+            @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorIds,
             Model model) {
         List<Post> posts;
         Map<Post, List<String>> postWithTags = new HashMap<>();
 
-        if (authorId.size() == 0) {
-            if (tagId.size() == 0) {
+        if (authorIds.size() == 0) {
+            if (tagIds.size() == 0) {
                 posts = postService.getPostsBySearch(search, start, limit);
             } else {
-                posts = postService.getPostsBySearchAndTagId(search, tagId, start, limit);
+                posts = postService.getPostsBySearchAndTagId(search, tagIds, start, limit);
             }
         } else {
-            if (tagId.size() == 0) {
-                posts = postService.getPostsBySearchAndAuthorId(search, authorId, start, limit);
+            if (tagIds.size() == 0) {
+                posts = postService.getPostsBySearchAndAuthorId(search, authorIds, start, limit);
             } else {
-                posts = postService.getPostsBySearchAndAuthorIdAndTagId(search, authorId, tagId, start, limit);
+                posts = postService.getPostsBySearchAndAuthorIdAndTagId(search, authorIds, tagIds, start, limit);
             }
         }
 
@@ -92,6 +107,11 @@ public class MainController {
             postWithTags.put(post, postService.getTagNames(post.getId()));
         }
 
+        List<Tag> tags = tagService.getTags(tagIds);
+        Iterable<User> authors = userService.getUsers(authorIds);
+
+        model.addAttribute("tags", tags);
+        model.addAttribute("authors", authors);
         model.addAttribute("posts", posts);
         model.addAttribute("postWithTags", postWithTags);
         int currentPage = start / limit + 1;
@@ -117,7 +137,8 @@ public class MainController {
 
         if (sortField.equals("published_date"))
             sortFieldColumn = "publishedAt";
-
+        List<Tag> tags = tagService.getTags(tagIds);
+        Iterable<User> authors = userService.getUsers(authorIds);
         if (authorIds.size() == 0) {
             if (tagIds.size() == 0) {
                 posts = postService.getPostsAndSorted(start, limit, sortFieldColumn, order);
@@ -137,6 +158,12 @@ public class MainController {
         for (Post post : posts) {
             postWithTags.put(post, postService.getTagNames(post.getId()));
         }
+
+        List<Tag> tags = tagService.getTags(tagIds);
+        Iterable<User> authors = userService.getUsers(authorIds);
+
+        model.addAttribute("tags", tags);
+        model.addAttribute("authors", authors);
         model.addAttribute("postWithTags", postWithTags);
         model.addAttribute("posts", posts);
         return "index";
@@ -181,6 +208,12 @@ public class MainController {
         for (Post post : posts) {
             postWithTags.put(post, postService.getTagNames(post.getId()));
         }
+
+        List<Tag> tags = tagService.getTags(tagIds);
+        Iterable<User> authors = userService.getUsers(authorIds);
+
+        model.addAttribute("tags", tags);
+        model.addAttribute("authors", authors);
         model.addAttribute("postWithTags", postWithTags);
         model.addAttribute("posts", posts);
         return "index";
