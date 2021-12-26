@@ -12,7 +12,8 @@
 <body>
     <form class="container" action="/newpost/save" onsubmit="saveNewPost(event)" method="post" th:object="${post}">
         <div class="input-post-details">
-            <input type="text" name="author0" id="author" placeholder="Author Name" required>
+            <input type="text" name="author0" id="author" th:value="${author.getName()}" placeholder="Author Name"
+                required readonly>
             <label for="is_published">Do you want to publish this post?</label>
             <select name="published" id="is_published">
                 <option value="true">True</option>

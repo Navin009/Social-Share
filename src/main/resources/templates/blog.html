@@ -10,20 +10,21 @@
 </head>
 
 <body>
-    <div class="post-details">
-        <span th:inline="text">Author Name : [[${post.getAuthor().getName()}]]</span>
-        <span th:inline="text">Published Date : [[${post.getUpdatedAt()}]] </span>
-        <div class="post-tags">
-            <span class="post-tag" th:each="tag : ${tags}" th:text="${tag.getName()}"></span>
-        </div>
-        <div class="post-update-delete">
-            <button onclick="updatePost()">Update</button>
-            <button onclick="deletePost()">Delete</button>
-        </div>
-    </div>
     <div class="container">
         <div class="title" th:text="${post.getTitle()}"></div>
-        <div class="author-name" th:inline="text">Author : [[${post.getAuthor().getName()}]]</div>
+        <div class="post-details">
+            <div class="post-meta-data">
+                <span th:inline="text">Author Name : [[${post.getAuthor().getName()}]]</span>
+                <span th:inline="text">Published Date : [[${post.getUpdatedAt()}]] </span>
+            </div>
+            <div class="post-tags">
+                <span class="post-tag" th:each="tag : ${tags}" th:text="${tag.getName()}"></span>
+            </div>
+            <div class="post-update-delete">
+                <button class="btn" onclick="updatePost()">Update</button>
+                <button class="btn" onclick="deletePost()">Delete</button>
+            </div>
+        </div>
         <div class="subtitle" th:text="${post.getExcerpt()}"></div>
         <div class="content" id="blog-content-view" th:text="${post.getContent()}"></div>
 
@@ -53,7 +54,7 @@
                 <label for="comment">Comment </label>
                 <textarea name="comment" id="comment" cols="30" placeholder="Write your Comment Here"
                     required></textarea>
-                <button type="submit">Submit</button>
+                <button class="btn" type="submit">Submit</button>
             </form>
         </div>
     </div>

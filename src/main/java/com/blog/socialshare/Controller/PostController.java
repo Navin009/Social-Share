@@ -37,7 +37,10 @@ public class PostController {
     PostTagService postTagService;
 
     @GetMapping(path = "newpost")
-    public String newPost() {
+    public String newPost(Model model) {
+        User user = new User();
+        user.setName("Navin Kumar");
+        model.addAttribute("author", user);
         return "newpost";
     }
 

@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -24,7 +24,6 @@ public class User {
     private String email;
     private String password;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "author")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Post> post;
@@ -49,10 +48,12 @@ public class User {
         return email;
     }
 
+    @JsonIgnore
     public void setEmail(String email) {
         this.email = email;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -61,6 +62,7 @@ public class User {
         this.password = password;
     }
 
+    @JsonIgnore
     public List<Post> getPost() {
         return post;
     }

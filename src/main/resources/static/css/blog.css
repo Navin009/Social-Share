@@ -1,27 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=PT+Serif&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=PT+Serif&display=swap");
 
 body {
 	display: flex;
-	justify-content: flex-start;
+	justify-content: center;
 }
 
 .post-details {
-	border: 1px solid lightgray;
-	border-radius: 1vh;
 	padding: 1vh;
-	margin: 0 1vw;
-	margin-top: 30vh;
 	display: grid;
 	gap: 1vh;
 	height: max-content;
-	font-family: 'Poppins';
+	font-family: "Poppins";
+}
+
+.post-meta-data {
+	display: flex;
+	justify-content: space-between;
 }
 
 .post-tags::before {
 	position: absolute;
-	content: 'Tags';
+	content: "Tags";
 	background: white;
 	top: -14px;
 	left: 12px;
@@ -31,14 +32,14 @@ body {
 	margin: 2vh 0;
 	padding: 1vh 0;
 	position: relative;
-	display: grid;
-	grid-template-columns: repeat(2, auto);
+	display: flex;
 	border: 1px solid lightgray;
 	border-radius: 1vh;
 }
 
 .post-tag {
 	background-color: lightgray;
+	width: max-content;
 	border-radius: 999px;
 	text-align: center;
 	margin: 1vh;
@@ -46,13 +47,24 @@ body {
 }
 
 .post-update-delete {
-	display: flex;
-	justify-content: space-evenly;
+	display: grid;
+	grid-auto-flow: column;
+	grid-gap: 1vh;
+	justify-content: flex-end;
 }
 
-.post-update-delete button {
+.btn {
 	height: 5vh;
-	width: 5vw;
+	padding: 0 2vw;
+	background: transparent;
+	outline: none;
+	border: 1px solid black;
+	border-left: 8px solid dimgray;
+	overflow: hidden;
+}
+
+.btn:active {
+	transform: scale(0.96);
 }
 
 .container {
@@ -65,7 +77,7 @@ body {
 }
 
 .title {
-	font-family: 'Readex Pro';
+	font-family: "Readex Pro";
 	font-weight: bold;
 	margin-bottom: 20px;
 	font-size: 3em;
@@ -73,12 +85,12 @@ body {
 }
 
 .author-name {
-	font-family: 'Poppins';
+	font-family: "Poppins";
 	text-align: end;
 }
 
 .subtitle {
-	font-family: 'PT Serif';
+	font-family: "PT Serif";
 	font-weight: bold;
 	font-size: 1.5em;
 	color: rgb(0 0 0 / 40%);
@@ -86,7 +98,7 @@ body {
 }
 
 .content {
-	font-family: 'Poppins';
+	font-family: "Poppins";
 	font-size: 1em;
 	white-space: pre-wrap;
 	margin-bottom: 5vh;
@@ -97,7 +109,7 @@ body {
 	background: rgb(0 0 0 / 7%);
 	margin: 3vh 5vw;
 	border-radius: 5px;
-	font-family: 'Poppins';
+	font-family: "Poppins";
 }
 
 .create-comment > form {
@@ -139,7 +151,7 @@ body {
 }
 
 .comment-content {
-	font-family: 'Poppins';
+	font-family: "Poppins";
 	white-space: pre-wrap;
 	border: none;
 	outline: none;

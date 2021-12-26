@@ -31,46 +31,84 @@ function nextPage() {
 	window.location.href = url;
 }
 
-let availableTags = ["Java", "C++"];
-let tagsList = [];
+let availableTags = [];
 
-document.getElementById("tag-input").addEventListener("keydown", (e) => {
+document.getElementById("tag-input").addEventListener("keyup", (e) => {
 	let tagBlock = document.getElementById("tag-block");
+	let tagList = $("#tags-list");
+
 	if (e.code === "Enter" && e.target.value.length > 0) {
-		let tagIndex = availableTags.indexOf(e.target.value);
-		if (tagIndex !== -1) {
-			tagBlock.innerHTML += `<span class='tag'>${e.target.value}</span>`;
-			tagsList.push(availableTags[tagIndex]);
+		let tagId = availableTags.filter((tag) => tag.name === e.target.value)[0].id;
+		if (tagId !== -1) {
+			tagBlock.innerHTML += `<span class='chip'>${e.target.value}</span>`;
 			let url = new URL(window.location);
-			url.searchParams.append("tags", e.target.value);
+			url.searchParams.append("tagId", tagId);
 			window.location.href = url;
 		}
 		e.target.value = "";
 	}
-	// if (e.target.value.length >= 2) {
-	// 	$.ajax({
-	// 		url: "/tag/search",
-	// 		type: "GET",
-	// 		data: {
-	// 			tag: e.target.value,
-	// 		},
-	// 		success: (data) => {
-	// 			console.log(data);
-	// 		},
-	// 	});
-	// }
+	if (e.target.value.length >= 2) {
+		$.ajax({
+			url: "/tag/search",
+			type: "GET",
+			data: {
+				tag: e.target.value,
+			},
+			success: (data) => {
+				availableTags = data.map((tag) => {
+					return { id: tag.id, name: tag.name };
+				});
+				tagList.empty();
+				availableTags.forEach((tag) => {
+					tagList.append(`<option data-value="${tag.id}">${tag.name}</option>`);
+				});
+			},
+		});
+	}
 });
 
-let tagBlock = document.getElementById("tag-block");
-window.addEventListener("load", function (e) {
-	for (let i = 0; i < tagsList.length; i++) {
-		tagBlock.innerHTML = `<span class='tag'>${tagsList[i]}</span>`;
+let availableAuthors = [];
+
+$("#author-input").keyup(function (e) {
+	let authorBlock = $("#author-block");
+	let authorList = $("#authors-list");
+
+	if (e.key === "Enter" && e.target.value.length > 0) {
+		debugger;
+		let authorId = availableAuthors.filter((author) => author.name == e.target.value)[0].id;
+		if (authorId !== -1) {
+			authorBlock.append(`<span class='chip'>${e.target.value}</span>`);
+			let url = new URL(window.location);
+			url.searchParams.set("authorId", authorId);
+			window.location.href = url;
+		}
+		e.target.value = "";
+	}
+
+	if (this.value.length >= 2) {
+		let xhr = new XMLHttpRequest();
+		xhr.open("GET", "user/search/" + "?name=" + this.value);
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.onreadystatechange = function () {
+			if (this.readyState === 4 && this.status === 200) {
+				let data = JSON.parse(this.responseText);
+				availableAuthors = data.map((author) => {
+					return { id: author.id, name: author.name };
+				});
+				authorList.empty();
+				data.forEach((author) => {
+					authorList.append(`<option data-value="${author.id}">${author.name}</option>`);
+				});
+			}
+		};
+		xhr.send();
 	}
 });
 
 function searchSort() {
-	let sortOrder = $("#sort-order").val();
-	let sortField = $("#sort-field").val();
+	let sortFieldOrder = $("#sort-field-order").val();
+	let sortField = sortFieldOrder.split(",")[0];
+	let sortOrder = sortFieldOrder.split(",")[1];
 	let url = new URL(window.location);
 	url.searchParams.set("sortField", sortField);
 	url.searchParams.set("order", sortOrder);

@@ -26,19 +26,15 @@
     </header>
     <nav>
         <div>
-            <a href="/newpost" style="font-family: 'Poppins';">Create Blog</a>
+            <button class="new-post-btn" onclick="location.href= '/newpost'">Create New Blog</button>
         </div>
-        <div>
-            <select onchange="searchSort()" id="sort-field">
-                <option value="none" disabled selected>Select Sort Field </option>
-                <option value="published_date">By Published Date</option>
-                <option value="author_name">By Author Name</option>
-            </select>
-            <select id="sort-order" onchange="searchSort()">
-                <option value="desc">Desc</option>
-                <option value="asc">Asc</option>
-            </select>
-        </div>
+        <select class="nav-select-sort" onchange="searchSort()" id="sort-field-order">
+            <option value="none" disabled selected>Select Sort Field </option>
+            <option value="published_date,asc">By Published Date Asc</option>
+            <option value="published_date,desc">By Published Date Desc</option>
+            <option value="author_name,asc">By Author Name Asc</option>
+            <option value="author_name,desc">By Author Name Desc</option>
+        </select>
     </nav>
     <div class="container">
         <aside class="left-side">
@@ -81,24 +77,27 @@
         </section>
         <aside class="right-aside">
             <div class="right-side-block">
-                <div class="tags-container">
-                    <div class="tag-block" id="tag-block">
+                <div class="chip-container">
+                    <div class="chip-block" id="tag-block">
                     </div>
                 </div>
-                <div class="tags-input-block">
-                    <input type="search" list="tags-list" id="tag-input" placeholder="Tags">
+                <div class="chip-input-block">
+                    <input type="search" list="tags-list" id="tag-input" placeholder="Tags Filter">
                     <datalist id="tags-list">
-                        <option value="Java">
-                        <option value="C++">
-                        <option value="Spring">
-                        <option value="MVC">
                     </datalist>
                 </div>
             </div>
 
             <div class="right-side-block">
-            </div>
-            <div class="right-side-block">
+                <div class="chip-container">
+                    <div class="chip-block" id="author-block">
+                    </div>
+                </div>
+                <div class="chip-input-block">
+                    <input type="search" list="authors-list" id="author-input" placeholder="Authors Filter">
+                    <datalist id="authors-list">
+                    </datalist>
+                </div>
             </div>
         </aside>
     </div>
