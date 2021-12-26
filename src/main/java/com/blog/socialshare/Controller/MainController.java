@@ -37,22 +37,22 @@ public class MainController {
         HashMap<Post, List<String>> postWithTags = new HashMap<>();
         if (authorId.size() == 0) {
             if (tagId.size() == 0) {
-                posts = postService.getPosts(start, limit);
+                posts = postService.getPostsPage(start, limit);
             } else {
-                posts = postService.getPostsByTagId(tagId, start, limit);
+                posts = postService.getPostsPageByTagId(tagId, start, limit);
             }
 
         } else {
 
             if (tagId.size() == 0) {
-                posts = postService.getPostsByAuthorId(authorId, start, limit);
+                posts = postService.getPostsPageByAuthorId(authorId, start, limit);
             } else {
-                posts = postService.getPostsByAuthorIdAndTagId(authorId, tagId, start, limit);
+                posts = postService.getPostsPageByAuthorIdAndTagId(authorId, tagId, start, limit);
             }
         }
 
         for (Post post : posts) {
-            postWithTags.put(post, postService.getTags(post.getId()));
+            postWithTags.put(post, postService.getTagNames(post.getId()));
         }
 
         model.addAttribute("posts", posts);
@@ -72,11 +72,9 @@ public class MainController {
             @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorId,
             Model model) {
         List<Post> posts;
-
-        HashMap<Post, List<String>> postWithTags = new HashMap<>();
+        Map<Post, List<String>> postWithTags = new HashMap<>();
 
         if (authorId.size() == 0) {
-
             if (tagId.size() == 0) {
                 posts = postService.getPostsBySearch(search, start, limit);
             } else {
@@ -91,7 +89,7 @@ public class MainController {
         }
 
         for (Post post : posts) {
-            postWithTags.put(post, postService.getTags(post.getId()));
+            postWithTags.put(post, postService.getTagNames(post.getId()));
         }
 
         model.addAttribute("posts", posts);
@@ -115,29 +113,29 @@ public class MainController {
 
         List<Post> posts;
         Map<Post, List<String>> postWithTags = new HashMap<>();
-        String sortFieldNString = "author.name";
+        String sortFieldColumn = "author.name";
 
         if (sortField.equals("published_date"))
-            sortFieldNString = "publishedAt";
+            sortFieldColumn = "publishedAt";
 
         if (authorIds.size() == 0) {
             if (tagIds.size() == 0) {
-                posts = postService.getPostsAndSorted(start, limit, sortFieldNString, order);
+                posts = postService.getPostsAndSorted(start, limit, sortFieldColumn, order);
             } else {
-                posts = postService.getPostsByTagIdAndSorted(start, limit, sortFieldNString, tagIds, order);
+                posts = postService.getPostsByTagIdAndSorted(start, limit, sortFieldColumn, tagIds, order);
             }
 
         } else {
             if (tagIds.size() == 0) {
-                posts = postService.getPostsByAuthorIdAndSorted(start, limit, sortFieldNString, authorIds, order);
+                posts = postService.getPostsByAuthorIdAndSorted(start, limit, sortFieldColumn, authorIds, order);
             } else {
-                posts = postService.getPostsByAuthorIdAndTagIdAndSorted(start, limit, sortFieldNString, authorIds,
+                posts = postService.getPostsByAuthorIdAndTagIdAndSorted(start, limit, sortFieldColumn, authorIds,
                         tagIds, order);
             }
         }
 
         for (Post post : posts) {
-            postWithTags.put(post, postService.getTags(post.getId()));
+            postWithTags.put(post, postService.getTagNames(post.getId()));
         }
         model.addAttribute("postWithTags", postWithTags);
         model.addAttribute("posts", posts);
@@ -157,32 +155,31 @@ public class MainController {
 
         List<Post> posts;
         HashMap<Post, List<String>> postWithTags = new HashMap<>();
-        String sortFieldNString = "author.name";
+        String sortFieldColumn = "author.name";
 
         if (sortField.equals("published_date"))
-            sortFieldNString = "publishedAt";
+            sortFieldColumn = "publishedAt";
 
         if (authorIds.size() == 0) {
             if (tagIds.size() == 0) {
-                posts = postService.getPostsBySearchAndSorted(searchQuery, start, limit, sortFieldNString, order);
+                posts = postService.getPostsBySearchAndSorted(searchQuery, start, limit, sortFieldColumn, order);
             } else {
-                posts = postService.getPostsBySearchAndTagIdAndSorted(searchQuery, start, limit, sortFieldNString,
+                posts = postService.getPostsBySearchAndTagIdAndSorted(searchQuery, start, limit, sortFieldColumn,
                         tagIds, order);
             }
 
         } else {
             if (tagIds.size() == 0) {
                 posts = postService.getPostsBySearchAndAuthorIdAndSorted(searchQuery, start, limit,
-                        sortFieldNString, authorIds, order);
+                        sortFieldColumn, authorIds, order);
             } else {
                 posts = postService.getPostsBySearchAndAuthorIdAndTagIdAndSorted(searchQuery, start, limit,
-                        sortFieldNString, authorIds,
-                        tagIds, order);
+                        sortFieldColumn, authorIds, tagIds, order);
             }
         }
 
         for (Post post : posts) {
-            postWithTags.put(post, postService.getTags(post.getId()));
+            postWithTags.put(post, postService.getTagNames(post.getId()));
         }
         model.addAttribute("postWithTags", postWithTags);
         model.addAttribute("posts", posts);

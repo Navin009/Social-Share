@@ -46,7 +46,7 @@ public class PostService {
         return postList;
     }
 
-    public List<Post> getPosts(int start, int limit) {
+    public List<Post> getPostsPage(int start, int limit) {
         List<Object[]> posts = postRepository.getPosts(start, limit);
         List<Post> postList = new ArrayList<>();
 
@@ -128,22 +128,22 @@ public class PostService {
         return postRepository.searchPostsByWordAndSort(searchQuery, pageable).getContent();
     }
 
-    public List<String> getTags(Integer postId) {
+    public List<String> getTagNames(Integer postId) {
         List<String> tags = postRepository.getTags(postId);
         return tags;
     }
 
-    public List<Post> getPostsByTagId(List<Integer> tagIds, Integer start, Integer limit) {
+    public List<Post> getPostsPageByTagId(List<Integer> tagIds, Integer start, Integer limit) {
         Pageable pageable = PageRequest.of(start / limit, limit);
         return postRepository.getPostsByTagId(tagIds, pageable).getContent();
     }
 
-    public List<Post> getPostsByAuthorId(List<Integer> authorId, Integer start, Integer limit) {
+    public List<Post> getPostsPageByAuthorId(List<Integer> authorId, Integer start, Integer limit) {
         Pageable pageable = PageRequest.of(start / limit, limit);
         return postRepository.getPostsByAuthorId(authorId, pageable).getContent();
     }
 
-    public List<Post> getPostsByAuthorIdAndTagId(List<Integer> authorId, List<Integer> tagId, Integer start,
+    public List<Post> getPostsPageByAuthorIdAndTagId(List<Integer> authorId, List<Integer> tagId, Integer start,
             Integer limit) {
         Pageable pageable = PageRequest.of(start / limit, limit);
         return postRepository.getPostsByAuthorIdAndTagId(authorId, tagId, pageable).getContent();
