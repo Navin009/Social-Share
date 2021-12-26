@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/")
 public class PostController {
 
     @Autowired
@@ -48,7 +47,7 @@ public class PostController {
         return "redirect:/";
     }
 
-    @GetMapping("blog/{postid}")
+    @GetMapping("/blog/{postid}")
     public String getPostById(@PathVariable("postid") Integer postId, Model model) {
         Post post = postService.getPostById(postId);
         List<Comment> comments = commentService.getCommentsByPostId(post);
@@ -60,7 +59,7 @@ public class PostController {
         return "blog";
     }
 
-    @DeleteMapping("blog/delete/{postid}")
+    @DeleteMapping("/blog/delete/{postid}")
     @ResponseBody
     public String deletePost(@PathVariable("postid") Integer postId) {
         postService.deletePost(postId);
