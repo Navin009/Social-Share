@@ -98,7 +98,7 @@
                     <div class="chip-block" id="author-block">
                         <span class='chip' th:each="author : ${authors}" th:inlne="text">
                             [[${author.getName()}]]
-                            <data th:value="author.getId()" class="far fa-times-circle"
+                            <data th:value="${author.getId()}" class="far fa-times-circle"
                                 onclick="removeAuthor(this.value)"></data>
                         </span>
 
