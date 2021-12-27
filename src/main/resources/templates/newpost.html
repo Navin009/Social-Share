@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Write Blog</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="/css/newpost.css">
 </head>
 
@@ -20,6 +22,26 @@
                 <option value="false">False</option>
             </select>
             <label for="tags">Insert tags with Enter</label>
+            <!-- <div class="tag-insert-block">
+                <div class="chip-input-block">
+                    <input type="search" list="authors-list" id="author-input" placeholder="Tags Insert">
+                    <datalist id="authors-list">
+                        <option value="Java">
+                        <option value="Spring">
+                        <option value="Spring Boot">
+                        <option value="Java Core">
+                        <option value="Hibernate">
+                    </datalist>
+                </div>
+                <div class="chip-container">
+                    <div class="chip-block" id="author-block">
+                        <span class='chip'>
+                            Java
+                            <data class="far fa-times-circle" onclick="removeTag(this.value)"></data>
+                        </span>
+                    </div>
+                </div>
+            </div> -->
             <input type="search" name="" id="tag-input" list="tags-list" placeholder="Enter Tags">
             <datalist id="tags-list">
                 <option value="Java">
@@ -29,6 +51,7 @@
                 <option value="Hibernate">
             </datalist>
             <textarea name="tags" id="tags" cols="30" rows="10" placeholder="Tags" readonly required></textarea>
+        </div>
         </div>
 
         <div class="title">

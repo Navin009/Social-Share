@@ -1,8 +1,8 @@
-package com.blog.socialshare.Repository;
+package com.blog.socialshare.repository;
 
 import java.util.List;
 
-import com.blog.socialshare.Model.Tag;
+import com.blog.socialshare.model.Tag;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

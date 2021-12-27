@@ -2,16 +2,16 @@ package com.blog.socialshare.Controller;
 
 import java.util.List;
 
-import com.blog.socialshare.Model.Comment;
-import com.blog.socialshare.Model.Post;
-import com.blog.socialshare.Model.Tag;
-import com.blog.socialshare.Model.User;
-import com.blog.socialshare.Repository.UserRepository;
-import com.blog.socialshare.Service.CommentService;
-import com.blog.socialshare.Service.PostService;
-import com.blog.socialshare.Service.PostTagService;
-import com.blog.socialshare.Service.TagService;
-import com.blog.socialshare.Service.UserService;
+import com.blog.socialshare.model.Comment;
+import com.blog.socialshare.model.Post;
+import com.blog.socialshare.model.Tag;
+import com.blog.socialshare.model.User;
+import com.blog.socialshare.repository.UserRepository;
+import com.blog.socialshare.service.CommentService;
+import com.blog.socialshare.service.PostService;
+import com.blog.socialshare.service.PostTagService;
+import com.blog.socialshare.service.TagService;
+import com.blog.socialshare.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,10 +1,10 @@
-package com.blog.socialshare.Repository;
+package com.blog.socialshare.repository;
 
 import java.util.Date;
 import java.util.List;
 
-import com.blog.socialshare.Model.Comment;
-import com.blog.socialshare.Model.Post;
+import com.blog.socialshare.model.Comment;
+import com.blog.socialshare.model.Post;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

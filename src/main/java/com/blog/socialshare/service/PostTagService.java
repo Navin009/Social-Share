@@ -1,12 +1,12 @@
-package com.blog.socialshare.Service;
+package com.blog.socialshare.service;
 
 import java.util.Date;
 import java.util.List;
 
-import com.blog.socialshare.Model.Post;
-import com.blog.socialshare.Model.PostTag;
-import com.blog.socialshare.Model.Tag;
-import com.blog.socialshare.Repository.PostTagRepository;
+import com.blog.socialshare.model.Post;
+import com.blog.socialshare.model.PostTag;
+import com.blog.socialshare.model.Tag;
+import com.blog.socialshare.repository.PostTagRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

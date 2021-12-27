@@ -2,7 +2,7 @@ package com.blog.socialshare.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.blog.socialshare.Service.CommentService;
+import com.blog.socialshare.service.CommentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

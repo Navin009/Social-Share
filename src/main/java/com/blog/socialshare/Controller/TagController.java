@@ -2,8 +2,8 @@ package com.blog.socialshare.Controller;
 
 import java.util.List;
 
-import com.blog.socialshare.Model.Tag;
-import com.blog.socialshare.Service.TagService;
+import com.blog.socialshare.model.Tag;
+import com.blog.socialshare.service.TagService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

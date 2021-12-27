@@ -1,6 +1,6 @@
-package com.blog.socialshare.Repository;
+package com.blog.socialshare.repository;
 
-import com.blog.socialshare.Model.PostTag;
+import com.blog.socialshare.model.PostTag;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package com.blog.socialshare.Model;
+package com.blog.socialshare.model;
 
 import java.util.List;
 

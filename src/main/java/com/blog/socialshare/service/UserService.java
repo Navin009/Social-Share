@@ -1,9 +1,9 @@
-package com.blog.socialshare.Service;
+package com.blog.socialshare.service;
 
 import java.util.List;
 
-import com.blog.socialshare.Model.User;
-import com.blog.socialshare.Repository.UserRepository;
+import com.blog.socialshare.model.User;
+import com.blog.socialshare.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

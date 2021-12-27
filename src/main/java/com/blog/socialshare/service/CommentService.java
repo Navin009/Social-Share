@@ -1,11 +1,11 @@
-package com.blog.socialshare.Service;
+package com.blog.socialshare.service;
 
 import java.util.Date;
 import java.util.List;
 
-import com.blog.socialshare.Model.Comment;
-import com.blog.socialshare.Model.Post;
-import com.blog.socialshare.Repository.CommentRepository;
+import com.blog.socialshare.model.Comment;
+import com.blog.socialshare.model.Post;
+import com.blog.socialshare.repository.CommentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

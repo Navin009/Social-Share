@@ -1,13 +1,13 @@
-package com.blog.socialshare.Service;
+package com.blog.socialshare.service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.blog.socialshare.Model.Post;
-import com.blog.socialshare.Model.User;
-import com.blog.socialshare.Repository.PostRepository;
-import com.blog.socialshare.Repository.UserRepository;
+import com.blog.socialshare.model.Post;
+import com.blog.socialshare.model.User;
+import com.blog.socialshare.repository.PostRepository;
+import com.blog.socialshare.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital@0;1&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital@0;1&display=swap");
 
 body {
 	display: grid;
@@ -21,7 +21,7 @@ body {
 	width: 18vw;
 	display: grid;
 	font-size: small;
-	font-family: 'Lora';
+	font-family: "Lora";
 	margin-left: 3px;
 }
 
@@ -30,7 +30,7 @@ body {
 	border: none;
 	border-bottom: 1px solid #000;
 	font-size: 3vh;
-	font-family: 'Poppins', sans-serif;
+	font-family: "Poppins", sans-serif;
 	font-weight: bold;
 	outline: none;
 	margin-bottom: 2vh;
@@ -44,7 +44,7 @@ body {
 }
 
 .input-post-details textarea {
-	font-family: 'Lora';
+	font-family: "Lora";
 	font-size: large;
 	padding: 2vh;
 	resize: none;
@@ -55,7 +55,7 @@ body {
 	width: 100%;
 	border: none;
 	outline: none;
-	font-family: 'Readex Pro';
+	font-family: "Readex Pro";
 	font-size: xx-large;
 	color: #000;
 	text-align: center;
@@ -66,7 +66,7 @@ body {
 	width: 100%;
 	border: none;
 	outline: none;
-	font-family: 'Lora';
+	font-family: "Lora";
 	font-style: italic;
 	font-weight: bold;
 	font-size: x-large;
@@ -81,7 +81,7 @@ body {
 	border: none;
 	padding: 1vh;
 	outline: none;
-	font-family: 'Poppins';
+	font-family: "Poppins";
 	font-size: medium;
 	resize: vertical;
 	border-radius: 1vh;
@@ -99,8 +99,8 @@ body {
 	color: #fff;
 	cursor: pointer;
 	display: inline-block;
-	font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-		'Segoe UI Emoji';
+	font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji";
 	font-size: 14px;
 	font-weight: 600;
 	line-height: 20px;
@@ -139,4 +139,38 @@ body {
 .post-btn:active {
 	background-color: #298e46;
 	box-shadow: rgba(20, 70, 32, 0.2) 0 1px 0 inset;
+}
+
+.chip-container {
+	overflow: auto;
+}
+
+.chip-block {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	overflow: auto;
+	max-height: 15vh;
+}
+
+.chip {
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 99px;
+	width: fit-content;
+	margin: 5px;
+	padding: 3px 1vw;
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.chip-input-block input {
+	font-size: medium;
+	font-style: italic;
+	width: 100%;
+	height: 5vh;
+	border: none;
+	outline: none;
+	font-family: "Lora";
+	background: transparent;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	padding-left: 2vh;
 }

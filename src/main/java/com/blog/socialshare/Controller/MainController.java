@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.blog.socialshare.Model.Post;
-import com.blog.socialshare.Model.Tag;
-import com.blog.socialshare.Model.User;
-import com.blog.socialshare.Service.PostService;
-import com.blog.socialshare.Service.TagService;
-import com.blog.socialshare.Service.UserService;
+import com.blog.socialshare.model.Post;
+import com.blog.socialshare.model.Tag;
+import com.blog.socialshare.model.User;
+import com.blog.socialshare.service.PostService;
+import com.blog.socialshare.service.TagService;
+import com.blog.socialshare.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
