@@ -14,6 +14,10 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public User getUserById(Integer id) {
+        return userRepository.findById(id).get();
+    }
+
     public List<User> findByName(String name) {
         return userRepository.findByNameIgnoreCaseContaining(name);
     }

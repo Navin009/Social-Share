@@ -11,6 +11,7 @@ import com.blog.socialshare.Service.CommentService;
 import com.blog.socialshare.Service.PostService;
 import com.blog.socialshare.Service.PostTagService;
 import com.blog.socialshare.Service.TagService;
+import com.blog.socialshare.Service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,9 @@ public class PostController {
 
     @Autowired
     CommentService commentService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(path = "/blog")
     public String pageblog(Model model) {
@@ -76,7 +80,7 @@ public class PostController {
 
     @PostMapping(path = "newpost/save")
     public String savePost(@ModelAttribute("post") Post post, @RequestParam("tags") String tagsList, Model model) {
-        User user = userRepository.findById(3).get();
+        User user = userService.getUserById(3);
         post.setAuthor(user);
         Post savedPost = postService.savePost(post);
         String[] tagtokens = tagsList.split("\r\n");

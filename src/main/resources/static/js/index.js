@@ -10,6 +10,14 @@ searchInput.addEventListener("keyup", (e) => {
 	}
 });
 
+function searchPost() {
+	let searchTerm = searchInput.value;
+	if (searchTerm.length > 0) {
+		let url = new URL(window.location.origin);
+		window.location.href = url + `?start=0&limit=10&search=${searchTerm}`;
+	}
+}
+
 function openPost(postId) {
 	window.location.href = `/blog/${postId}`;
 }
