@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends CrudRepository<User, Integer> {
 
     List<User> findByNameIgnoreCaseContaining(String name);
+
+    User findByEmail(String email);
 }

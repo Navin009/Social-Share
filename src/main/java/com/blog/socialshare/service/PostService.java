@@ -10,6 +10,7 @@ import com.blog.socialshare.repository.PostRepository;
 import com.blog.socialshare.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -66,7 +67,8 @@ public class PostService {
 
     public List<Post> getPostsBySearch(String query, Integer start, Integer limit) {
         Pageable pageable = PageRequest.of(start / limit, limit);
-        return postRepository.searchPostsByWord(query, pageable).getContent();
+        Page<Post> posts = postRepository.searchPostsByWord(query, pageable);
+        return posts.getContent();
     }
 
     public Post savePost(Post post) {

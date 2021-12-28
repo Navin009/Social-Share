@@ -78,12 +78,13 @@ public class PostController {
         return "newpost";
     }
 
-    @PostMapping(path = "newpost/save")
-    public String savePost(@ModelAttribute("post") Post post, @RequestParam("tags") String tagsList, Model model) {
+    @PostMapping(path = "/newpost/save")
+    public String savePost(@ModelAttribute("post") Post post, @RequestParam("tagsData") String tagsList, Model model) {
         User user = userService.getUserById(3);
         post.setAuthor(user);
         Post savedPost = postService.savePost(post);
-        String[] tagtokens = tagsList.split("\r\n");
+        String[] tagtokens = tagsList.split(",");
+        System.out.println(tagtokens);
         List<Tag> tags = tagService.saveTag(tagtokens, savedPost.getId());
         postTagService.savePostTag(tags, savedPost);
         model.addAttribute("postSaved", true);
