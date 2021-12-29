@@ -11,7 +11,6 @@ import com.blog.socialshare.service.CommentService;
 import com.blog.socialshare.service.PostService;
 import com.blog.socialshare.service.PostTagService;
 import com.blog.socialshare.service.TagService;
-import com.blog.socialshare.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 public class PostController {
@@ -42,9 +42,6 @@ public class PostController {
 
     @Autowired
     CommentService commentService;
-
-    @Autowired
-    private UserService userService;
 
     @RequestMapping(path = "/blog")
     public String pageblog(Model model) {
@@ -71,16 +68,14 @@ public class PostController {
     }
 
     @GetMapping(path = "newpost")
-    public String newPost(Model model) {
-        User user = new User();
-        user.setName("Navin Kumar");
+    public String newPost(@SessionAttribute("loggedUser") User user, Model model) {
         model.addAttribute("author", user);
         return "newpost";
     }
 
     @PostMapping(path = "/newpost/save")
-    public String savePost(@ModelAttribute("post") Post post, @RequestParam("tagsData") String tagsList, Model model) {
-        User user = userService.getUserById(3);
+    public String savePost(@ModelAttribute("post") Post post, @SessionAttribute("loggedUser") User user,
+            @RequestParam("tagsData") String tagsList, Model model) {
         post.setAuthor(user);
         Post savedPost = postService.savePost(post);
         String[] tagtokens = tagsList.split(",");

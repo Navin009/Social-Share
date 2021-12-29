@@ -30,4 +30,8 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public void registerUser(User user) {
+        userRepository.save(user);
+    }
+
 }
