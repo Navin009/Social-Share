@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Write Blog</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="/css/newpost.css">
+    <script th:src="@{/js/jquery-3.6.0.js}"></script>
 </head>
 
 <body>
@@ -39,7 +42,7 @@
         <button class="post-btn" type="submit">Update
             Post</button>
     </form>
-    <script th:src="@{/js/newpost.js}"></script>
+    <script th:src="@{/js/post.js}"></script>
 </body>
 
 </html>

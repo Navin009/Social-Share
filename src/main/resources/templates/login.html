@@ -7,11 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 </head>
 
 <body>
     <div class="container">
-        <form action="logincustom" method="post" th:object="${userForm}">
+        <form action="" method="post" th:object="${userForm}">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
@@ -20,12 +22,12 @@
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
             </div>
-            <button type="submit" class="form-btn">Login</button>
-            <div>
-                <img src="" alt="google">
-                <img src="" alt="github">
+            <button type="submit" class="btn">Login</button>
+            <div class="login-option">
+                <i class="fab fa-google"></i>
+                <i class="fab fa-github"></i>
             </div>
-            <span>No Account?<a href="#">Signup</a> </span>
+            <span>No Account?<a href="/signup"> Signup</a> </span>
         </form>
     </div>
 </body>
