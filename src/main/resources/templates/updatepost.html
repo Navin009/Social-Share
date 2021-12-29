@@ -23,8 +23,18 @@
                 <option value="true" th:selected="${post.isPublished() == true}">True</option>
                 <option value="false" th:selected="${post.isPublished() == false}">False</option>
             </select>
-            <!-- <label for="tags">Enter tags with newline</label> -->
-            <!-- <textarea name="tags0" id="tags" cols="30" rows="10" placeholder="Tags" required></textarea> -->
+            <label for="tags">Insert tags with Enter</label>
+            <div class="tag-insert-block">
+                <div class="chip-input-block">
+                    <input type="search" list="tags-list" id="tag-input" placeholder="Tags Insert">
+                    <datalist id="tags-list"></datalist>
+                </div>
+                <div class="chip-container">
+                    <div class="chip-block" id="tag-block">
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="tagsdata" name="tagsData">
         </div>
 
         <div class="title">

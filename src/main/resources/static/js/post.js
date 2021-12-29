@@ -13,10 +13,11 @@ const tags = document.getElementById("tagsdata");
 let availableTags = [];
 
 let tagSet = new Set();
+
 document.getElementById("tag-input").addEventListener("keyup", (e) => {
 	let tagList = $("#tags-list");
 	if (e.key === "Enter" && tagSet.has(tagInput.value) === false) {
-		tagBlock.innerHTML += `  <span class='chip'>${tagInput.value}
+		tagBlock.innerHTML += `<span class='chip'>${tagInput.value}
                             <data value="${tagInput.value}" class="far fa-times-circle" onclick="removeTag(this)"></data>
                         	</span>`;
 		tags.value += `${tagInput.value},`;

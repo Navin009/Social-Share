@@ -26,21 +26,31 @@ body {
 }
 
 .input-post-details input {
-	width: 100%;
+	font-size: medium;
+	font-style: italic;
+	height: 5vh;
 	border: none;
-	border-bottom: 1px solid #000;
-	font-size: 3vh;
-	font-family: "Poppins", sans-serif;
-	font-weight: bold;
 	outline: none;
-	margin-bottom: 2vh;
+	font-family: "Lora";
+	background: transparent;
+	border: 1px solid rgb(192, 192, 192);
+	border-radius: 5px;
+	padding-left: 2vh;
+	margin-bottom: 3vh;
 }
 
 .input-post-details select {
-	margin-bottom: 2vh;
+	font-size: medium;
+	font-style: italic;
+	height: 5vh;
 	border: none;
-	padding: 0.5vh;
 	outline: none;
+	font-family: "Lora";
+	background: transparent;
+	border: 1px solid rgb(192, 192, 192);
+	border-radius: 5px;
+	padding-left: 2vh;
+	margin-bottom: 3vh;
 }
 
 .input-post-details textarea {
@@ -105,7 +115,6 @@ body {
 	font-weight: 600;
 	line-height: 20px;
 	padding: 6px 16px;
-	/* position: relative; */
 	text-align: center;
 	text-decoration: none;
 	user-select: none;

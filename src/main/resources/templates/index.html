@@ -20,7 +20,7 @@
             <button onclick="searchPost()">Search</button>
         </div>
         <div class="header-option">
-            <i class="fas fa-user"></i>
+            <i class="fas fa-user" onclick="location.href='/login'"></i>
             <i class="fas fa-sign-out-alt" onclick="location.href='/logout'"></i>
         </div>
     </header>
@@ -110,11 +110,18 @@
                     </datalist>
                 </div>
             </div>
+            <div class="right-side-block date-block">
+                <div>
+                    <label>Post From : </label>
+                    <input class="date-input" type="date" name="" id="">
+                </div>
+                <div>
+                    <label>Post To : </label>
+                    <input class="date-input" type="date" name="" id="">
+                </div>
+            </div>
         </aside>
     </div>
-    <footer>
-        this is footer
-    </footer>
     <script th:src="@{/js/index.js}"></script>
 </body>
 

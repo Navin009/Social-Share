@@ -75,29 +75,10 @@ nav {
 	border: 1px solid black;
 	border-left: 8px solid dimgray;
 	overflow: hidden;
-	animation: newpostbtn 4s infinite;
 }
 
 .new-post-btn:active {
 	transform: scale(0.96);
-}
-
-@keyframes newpostbtn {
-	0% {
-		border-left-color: dimgray;
-		border-top-right-radius: 99px;
-		border-bottom-right-radius: 99px;
-	}
-	50% {
-		border-left-color: lightgray;
-		border-top-right-radius: 0px;
-		border-bottom-right-radius: 0px;
-	}
-	100% {
-		border-left-color: dimgray;
-		border-top-right-radius: 99px;
-		border-bottom-right-radius: 99px;
-	}
 }
 
 .nav-select-sort {
@@ -238,11 +219,6 @@ nav {
 	height: 100%;
 }
 
-footer {
-	background: rgb(75, 83, 91);
-	height: 40vh;
-}
-
 .chip-container {
 	overflow: auto;
 }
@@ -275,4 +251,31 @@ footer {
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	border-radius: 5px;
 	padding-left: 2vh;
+}
+
+.date-block {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.date-block > div {
+	display: grid;
+	grid-template-columns: 4fr 8fr;
+	align-items: center;
+	font-family: "Poppins";
+	font-size: large;
+}
+
+.date-input {
+	font-size: medium;
+	font-style: italic;
+	height: 5vh;
+	border: none;
+	outline: none;
+	font-family: "Lora";
+	background: transparent;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	padding-left: 2vh;
+	width: fit-content;
 }
