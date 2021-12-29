@@ -1,4 +1,4 @@
-package com.blog.socialshare.Controller;
+package com.blog.socialshare.controller;
 
 import java.util.List;
 
