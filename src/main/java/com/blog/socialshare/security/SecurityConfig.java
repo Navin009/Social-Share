@@ -1,4 +1,4 @@
-package com.blog.socialshare;
+package com.blog.socialshare.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -18,11 +18,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
 
@@ -35,7 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
-                .loginPage("/login").loginProcessingUrl("/logincustom").permitAll()
+                .loginPage("/login")
+                .successHandler(loginSuccessHandler)
+                .permitAll()
                 .and().logout().permitAll()
                 .clearAuthentication(true);
     }
