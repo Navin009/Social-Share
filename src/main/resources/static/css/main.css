@@ -3,7 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital@0;1&display=swap");
 
 body {
-	background: rgb(236, 236, 236);
+	background: rgb(243, 243, 243);
 	margin: 0;
 }
 
@@ -194,7 +194,7 @@ nav {
 
 .blog-post:active {
 	transform: scale(0.98);
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+	box-shadow: 0 0 10px rgb(0 0 0 / 5%);
 }
 
 .right-aside {

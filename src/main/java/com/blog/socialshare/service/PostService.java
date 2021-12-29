@@ -86,25 +86,19 @@ public class PostService {
         return null;
     }
 
-    public boolean deletePost(Integer id) {
-
+    public void deletePost(Integer id) {
         if (postRepository.findById(id).isPresent()) {
             postRepository.deleteById(id);
-            return true;
         }
-        return false;
     }
 
-    public boolean updatePost(Post post) {
+    public void updatePost(Post updatedPost) {
+        Post post = postRepository.findById(updatedPost.getId()).get();
         post.setUpdatedAt(new Date());
-        postRepository.updatePost(post.getId(),
-                post.getTitle(),
-                post.getExcerpt(),
-                post.getContent(),
-                post.isPublished(),
-                post.getUpdatedAt());
-        return true;
-
+        post.setTitle(updatedPost.getTitle());
+        post.setExcerpt(updatedPost.getExcerpt());
+        post.setContent(updatedPost.getContent());
+        postRepository.save(post);
     }
 
     public List<Post> getPostsAndSorted(Integer start, Integer limit, String sortField, String order) {

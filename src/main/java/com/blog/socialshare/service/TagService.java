@@ -16,9 +16,9 @@ public class TagService {
     @Autowired
     private TagRepository tagRepository;
 
-    public List<Tag> saveTag(String[] tagNames, Integer PostId) {
+    public List<Tag> saveTags(List<String> tagNames, Integer PostId) {
+        
         List<Tag> tags = new ArrayList<>();
-
         for (String tagName : tagNames) {
             Tag searchedTag = tagRepository.findOneByName(tagName);
             if (searchedTag == null) {

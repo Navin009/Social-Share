@@ -32,7 +32,10 @@ public class PostTagService {
         List<Tag> tags = post.getPostTags()
                 .stream().map(postTag -> postTag.getTagId())
                 .collect(java.util.stream.Collectors.toList());
-
         return tags;
+    }
+
+    public void deletePostTags(Post post) {
+        postTagRepository.deleteAllByPostId(post);
     }
 }

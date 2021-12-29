@@ -20,12 +20,12 @@ public class PostTag {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post postId;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "tag_id")
+    @JoinColumn(name = "tag_id", referencedColumnName = "id")
     private Tag tagId;
 
     private Date createdAt;

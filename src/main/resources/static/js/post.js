@@ -8,14 +8,21 @@ document.addEventListener("keypress", function (e) {
 const tagInput = document.getElementById("tag-input");
 const tagsList = document.getElementById("tags");
 const tagBlock = document.getElementById("tag-block");
-const tags = document.getElementById("tagsdata");
+const tags = document.getElementById("tags-data");
 
 let availableTags = [];
 
 let tagSet = new Set();
+tagBlock.innerText.split("\n").map((tag) => {
+	if (tag.length > 0) {
+		tags.value += tag.trimEnd() + ",";
+		tagSet.add(tag);
+	}
+});
 
 document.getElementById("tag-input").addEventListener("keyup", (e) => {
 	let tagList = $("#tags-list");
+	console.log(tags.value);
 	if (e.key === "Enter" && tagSet.has(tagInput.value) === false) {
 		tagBlock.innerHTML += `<span class='chip'>${tagInput.value}
                             <data value="${tagInput.value}" class="far fa-times-circle" onclick="removeTag(this)"></data>

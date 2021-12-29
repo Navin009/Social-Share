@@ -1,6 +1,8 @@
 package com.blog.socialshare.controller;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.blog.socialshare.model.Comment;
 import com.blog.socialshare.model.Post;
@@ -78,9 +80,9 @@ public class PostController {
             @RequestParam("tagsData") String tagsList, Model model) {
         post.setAuthor(user);
         Post savedPost = postService.savePost(post);
-        String[] tagtokens = tagsList.split(",");
-        System.out.println(tagtokens);
-        List<Tag> tags = tagService.saveTag(tagtokens, savedPost.getId());
+        List<String> tagtokens = Arrays.stream(tagsList.split(","))
+                .filter(tag -> (tag.length() >= 1)).collect(Collectors.toList());
+        List<Tag> tags = tagService.saveTags(tagtokens, savedPost.getId());
         postTagService.savePostTag(tags, savedPost);
         model.addAttribute("postSaved", true);
         return "redirect:/";
@@ -89,13 +91,20 @@ public class PostController {
     @GetMapping(path = "updatepost/{postId}")
     public String updatePost(@PathVariable("postId") Integer postId, Model model) {
         Post post = postService.getPostById(postId);
+        List<Tag> tags = postTagService.getTagsByPostId(post);
+        model.addAttribute("tags", tags);
         model.addAttribute("post", post);
         return "updatepost";
     }
 
     @PostMapping(path = "updatepost/update")
-    public String updatePost(@ModelAttribute("post") Post post, Model model) {
+    public String updatePost(@ModelAttribute Post post, @RequestParam("tagsData") String tags, Model model) {
+        List<String> tagtokens = Arrays.stream(tags.split(","))
+                .filter(tag -> (tag.length() >= 1)).collect(Collectors.toList());
+        List<Tag> tagsList = tagService.saveTags(tagtokens, post.getId());
+        postTagService.deletePostTags(post);
         postService.updatePost(post);
+        postTagService.savePostTag(tagsList, post);
         return "redirect:/blog/" + post.getId();
     }
 
