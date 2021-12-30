@@ -68,3 +68,15 @@ body {
 .container form span {
 	text-align: right;
 }
+
+.user-role-block {
+	display: flex;
+	justify-content: space-around;
+	border-radius: 5px;
+	border: 1px solid rgb(0 0 0/ 10%);
+}
+
+.user-role-block div {
+	display: flex;
+	align-items: center;
+}

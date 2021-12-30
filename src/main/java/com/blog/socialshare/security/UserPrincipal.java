@@ -1,4 +1,4 @@
-package com.blog.socialshare.service;
+package com.blog.socialshare.security;
 
 import java.util.Collection;
 

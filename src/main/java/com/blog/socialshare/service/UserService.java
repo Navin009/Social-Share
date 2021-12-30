@@ -30,7 +30,8 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public void registerUser(User user) {
+    public void registerUser(User user, List<Integer> roles) {
+        
         userRepository.save(user);
     }
 

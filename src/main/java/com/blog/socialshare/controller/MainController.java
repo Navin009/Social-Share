@@ -52,9 +52,7 @@ public class MainController {
             } else {
                 posts = postService.getPostsPageByTagId(tagIds, start, limit);
             }
-
         } else {
-
             if (tagIds.size() == 0) {
                 posts = postService.getPostsPageByAuthorId(authorIds, start, limit);
             } else {

@@ -1,4 +1,4 @@
-package com.blog.socialshare.service;
+package com.blog.socialshare.security;
 
 import com.blog.socialshare.model.User;
 import com.blog.socialshare.repository.UserRepository;

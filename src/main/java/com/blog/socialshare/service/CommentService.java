@@ -31,12 +31,7 @@ public class CommentService {
     }
 
     public List<Comment> getCommentsByPostId(Post postId) {
-        try {
-            return commentRepository.getCommentsByPostId(postId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return commentRepository.getCommentsByPostId(postId);
     }
 
     public void updateComment(Integer commentId, String comment) {
