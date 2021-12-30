@@ -1,27 +1,28 @@
 package com.blog.socialshare;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import com.blog.socialshare.model.Role;
 import com.blog.socialshare.repository.PostRepository;
+import com.blog.socialshare.repository.RoleRepository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 @SpringBootTest
 public class RepositoryTest {
     @Autowired
     PostRepository postRepository;
 
+    @Autowired
+    RoleRepository roleRepository;
+
     @Test
     public void testFun() {
-        List<Integer> inputList = new ArrayList<>(Arrays.asList(8, 9));
-        Pageable pageable = PageRequest.of(0, 10);
-        System.out.println(postRepository.getPostsByAuthorId(inputList, pageable).getContent());
+        Role user = new Role(0, "author");
+        Role admin = new Role(1, "admin");
+        roleRepository.saveAll(List.of(user, admin));
     }
 
 }
