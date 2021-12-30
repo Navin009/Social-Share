@@ -41,6 +41,7 @@ public class MainController {
             @RequestParam("limit") Integer limit,
             @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagIds,
             @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorIds,
+            @RequestParam(value = "Date", required = false, defaultValue = "0001-01-01,9999-12-30") String dateFilter,
             Model model) {
         List<Post> posts;
 
@@ -85,6 +86,7 @@ public class MainController {
             @RequestParam("search") String search,
             @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagIds,
             @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorIds,
+            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String DateFilter,
             Model model) {
         List<Post> posts;
         Map<Post, List<String>> postWithTags = new HashMap<>();
@@ -129,6 +131,7 @@ public class MainController {
             @RequestParam(value = "order", required = false, defaultValue = "desc") String order,
             @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagIds,
             @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorIds,
+            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String DateFilter,
             Model model) {
 
         List<Post> posts;
@@ -177,6 +180,7 @@ public class MainController {
             @RequestParam(value = "order", required = false, defaultValue = "desc") String order,
             @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagIds,
             @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorIds,
+            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String DateFilter,
             Model model) {
 
         List<Post> posts;

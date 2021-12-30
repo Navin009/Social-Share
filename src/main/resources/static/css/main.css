@@ -253,19 +253,6 @@ nav {
 	padding-left: 2vh;
 }
 
-.date-block {
-	display: flex;
-	justify-content: space-evenly;
-}
-
-.date-block > div {
-	display: grid;
-	grid-template-columns: 4fr 8fr;
-	align-items: center;
-	font-family: "Poppins";
-	font-size: large;
-}
-
 .date-input {
 	font-size: medium;
 	font-style: italic;
@@ -277,5 +264,21 @@ nav {
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	border-radius: 5px;
 	padding-left: 2vh;
+	margin-left: 5vw;
 	width: fit-content;
+}
+
+.date-filter-btn {
+	border: none;
+	outline: none;
+	font-family: "Poppins";
+	font-size: medium;
+	border-radius: 5px;
+	padding: 6px;
+	margin-left: 1vh;
+}
+
+.date-filter-btn:active {
+	transform: scale(0.96);
+	background: rgba(0 0 0 / 15%);
 }
