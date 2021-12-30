@@ -17,7 +17,7 @@ public class PostTagService {
     @Autowired
     private PostTagRepository postTagRepository;
 
-    public void savePostTag(List<Tag> tags, Post post) {
+    public void savePostTags(List<Tag> tags, Post post) {
         for (Tag tag : tags) {
             PostTag postTag = new PostTag();
             postTag.setTagId(tag);

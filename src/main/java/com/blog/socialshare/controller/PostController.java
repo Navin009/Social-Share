@@ -8,7 +8,6 @@ import com.blog.socialshare.model.Comment;
 import com.blog.socialshare.model.Post;
 import com.blog.socialshare.model.Tag;
 import com.blog.socialshare.model.User;
-import com.blog.socialshare.repository.UserRepository;
 import com.blog.socialshare.service.CommentService;
 import com.blog.socialshare.service.PostService;
 import com.blog.socialshare.service.PostTagService;
@@ -31,22 +30,19 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 public class PostController {
 
     @Autowired
-    PostService postService;
+    private PostService postService;
 
     @Autowired
-    UserRepository userRepository;
+    private TagService tagService;
 
     @Autowired
-    TagService tagService;
+    private PostTagService postTagService;
 
     @Autowired
-    PostTagService postTagService;
-
-    @Autowired
-    CommentService commentService;
+    private CommentService commentService;
 
     @RequestMapping(path = "/blog")
-    public String pageblog(Model model) {
+    public String blogPage(Model model) {
         return "redirect:/";
     }
 
@@ -80,10 +76,10 @@ public class PostController {
             @RequestParam("tagsData") String tagsList, Model model) {
         post.setAuthor(user);
         Post savedPost = postService.savePost(post);
-        List<String> tagtokens = Arrays.stream(tagsList.split(","))
+        List<String> tagTokens = Arrays.stream(tagsList.split(","))
                 .filter(tag -> (tag.length() >= 1)).collect(Collectors.toList());
-        List<Tag> tags = tagService.saveTags(tagtokens, savedPost.getId());
-        postTagService.savePostTag(tags, savedPost);
+        List<Tag> tags = tagService.saveTags(tagTokens, savedPost.getId());
+        postTagService.savePostTags(tags, savedPost);
         model.addAttribute("postSaved", true);
         return "redirect:/";
     }
@@ -99,12 +95,12 @@ public class PostController {
 
     @PostMapping(path = "updatepost/update")
     public String updatePost(@ModelAttribute Post post, @RequestParam("tagsData") String tags, Model model) {
-        List<String> tagtokens = Arrays.stream(tags.split(","))
+        List<String> tagTokens = Arrays.stream(tags.split(","))
                 .filter(tag -> (tag.length() >= 1)).collect(Collectors.toList());
-        List<Tag> tagsList = tagService.saveTags(tagtokens, post.getId());
+        List<Tag> tagsList = tagService.saveTags(tagTokens, post.getId());
         postTagService.deletePostTags(post);
         postService.updatePost(post);
-        postTagService.savePostTag(tagsList, post);
+        postTagService.savePostTags(tagsList, post);
         return "redirect:/blog/" + post.getId();
     }
 

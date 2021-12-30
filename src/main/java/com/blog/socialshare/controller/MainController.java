@@ -30,7 +30,7 @@ public class MainController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(path = "")
+    @GetMapping("")
     public String indexPage(Model model) {
         return "redirect:/?start=0&limit=10";
     }
@@ -44,8 +44,8 @@ public class MainController {
             @RequestParam(value = "Date", required = false, defaultValue = "0001-01-01,9999-12-30") String dateFilter,
             Model model) {
         List<Post> posts;
-
         HashMap<Post, List<String>> postWithTags = new HashMap<>();
+
         if (authorIds.size() == 0) {
             if (tagIds.size() == 0) {
                 posts = postService.getPostsPage(start, limit);
@@ -114,6 +114,7 @@ public class MainController {
         model.addAttribute("authors", authors);
         model.addAttribute("posts", posts);
         model.addAttribute("postWithTags", postWithTags);
+
         int currentPage = start / limit + 1;
         model.addAttribute("page", currentPage);
         model.addAttribute("prevDisabled", currentPage <= 1);

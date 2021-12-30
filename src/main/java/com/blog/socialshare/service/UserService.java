@@ -31,7 +31,6 @@ public class UserService {
     }
 
     public void registerUser(User user, List<Integer> roles) {
-        
         userRepository.save(user);
     }
 

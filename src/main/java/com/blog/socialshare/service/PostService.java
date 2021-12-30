@@ -25,7 +25,7 @@ public class PostService {
     private static final int CREATED_AT = 4;
 
     @Autowired
-    PostRepository postRepository;
+    private PostRepository postRepository;
 
     @Autowired
     private UserRepository userRepository;

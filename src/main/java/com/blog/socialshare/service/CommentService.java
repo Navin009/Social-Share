@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommentService {
     @Autowired
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
 
-    public boolean saveComment(Integer postId, String name, String email, String commentData) {
+    public void saveComment(Integer postId, String name, String email, String commentData) {
         Comment comment = new Comment();
         Post post = new Post();
         post.setId(postId);
@@ -27,7 +27,6 @@ public class CommentService {
         comment.setUpdatedAt(new Date());
 
         commentRepository.save(comment);
-        return true;
     }
 
     public List<Comment> getCommentsByPostId(Post postId) {
