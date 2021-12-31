@@ -2,7 +2,9 @@ package com.blog.socialshare.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
+import com.blog.socialshare.dto.PostSummery;
 import com.blog.socialshare.model.Post;
 
 import org.springframework.data.domain.Page;
@@ -105,5 +107,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
         Page<Post> getPostsBySearchAndAuthorIdAndTagId(@Param("search") String search,
                         @Param("authorIds") List<Integer> authorId,
                         @Param("tagIds") List<Integer> tagId, Pageable pageable);
+
 
 }
