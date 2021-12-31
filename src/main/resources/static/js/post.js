@@ -22,7 +22,6 @@ tagBlock.innerText.split("\n").map((tag) => {
 
 document.getElementById("tag-input").addEventListener("keyup", (e) => {
 	let tagList = $("#tags-list");
-	console.log(tags.value);
 	if (e.key === "Enter" && tagSet.has(tagInput.value) === false) {
 		tagBlock.innerHTML += `<span class='chip'>${tagInput.value}
                             <data value="${tagInput.value}" class="far fa-times-circle" onclick="removeTag(this)"></data>

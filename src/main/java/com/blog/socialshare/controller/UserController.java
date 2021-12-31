@@ -37,10 +37,10 @@ public class UserController {
     }
 
     @PostMapping("user/register")
-    public String register(@ModelAttribute User user, @RequestParam("userRole") List<Integer> roles) {
+    public String register(@ModelAttribute User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
-        userService.registerUser(user, roles);
+        userService.registerUser(user);
         return "redirect:/login";
     }
 

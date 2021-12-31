@@ -2,6 +2,7 @@ package com.blog.socialshare.service;
 
 import java.util.List;
 
+import com.blog.socialshare.model.Role;
 import com.blog.socialshare.model.User;
 import com.blog.socialshare.repository.UserRepository;
 
@@ -30,7 +31,9 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public void registerUser(User user, List<Integer> roles) {
+    public void registerUser(User user) {
+        Role role = new Role(0, "author");
+        user.setRoles(role);
         userRepository.save(user);
     }
 

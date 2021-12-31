@@ -102,6 +102,6 @@ public class PostController {
         postService.updatePost(post);
         postTagService.savePostTags(tagsList, post);
         return "redirect:/blog/" + post.getId();
-    }
+    }   
 
 }

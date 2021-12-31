@@ -21,7 +21,7 @@ header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	border-radius: 999px;
+	border-radius: 9px;
 	background: rgb(212, 210, 213);
 	border: 1px solid rgba(212, 210, 213, 0.5);
 	overflow: hidden;
