@@ -63,17 +63,11 @@ public class PostService {
     }
 
     public Post getPostById(Integer id) {
-
-        if (postRepository.findById(id).isPresent()) {
-            return postRepository.findById(id).get();
-        }
-        return null;
+        return postRepository.findById(id).get();
     }
 
     public void deletePost(Integer id) {
-        if (postRepository.findById(id).isPresent()) {
-            postRepository.deleteById(id);
-        }
+        postRepository.deleteById(id);
     }
 
     public void updatePost(Post updatedPost) {
@@ -214,8 +208,8 @@ public class PostService {
             sort = Sort.by(string).descending();
         }
         Pageable pageable = PageRequest.of(start / limit, limit, sort);
-        return postRepository.getPostsBySearchAndAuthorIdAndTagId(searchQuery, authorIds, tagIds, pageable)
-                .getContent();
+        return postRepository.getPostsBySearchAndAuthorIdAndTagId(searchQuery,
+                authorIds, tagIds, pageable).getContent();
     }
 
     public List<PostSummery> getPostSummeries() {
