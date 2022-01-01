@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.blog.socialshare.dto.PostSummery;
 import com.blog.socialshare.model.Post;
 import com.blog.socialshare.model.User;
 import com.blog.socialshare.repository.PostRepository;
@@ -29,23 +30,6 @@ public class PostService {
 
     @Autowired
     private UserRepository userRepository;
-
-    public List<Post> getPosts() {
-        List<Object[]> posts = postRepository.getAllPosts();
-        List<Post> postList = new ArrayList<>();
-
-        for (Object[] post : posts) {
-            Post p = new Post();
-            p.setId((int) post[ID]);
-            p.setTitle((String) post[TITLE]);
-            p.setExcerpt((String) post[EXCERPT]);
-            User user = userRepository.findById((Integer) post[AUTHOR]).get();
-            p.setAuthor(user);
-            p.setCreatedAt((Date) post[CREATED_AT]);
-            postList.add(p);
-        }
-        return postList;
-    }
 
     public List<Post> getPostsPage(int start, int limit) {
         List<Object[]> posts = postRepository.getPosts(start, limit);
@@ -232,6 +216,10 @@ public class PostService {
         Pageable pageable = PageRequest.of(start / limit, limit, sort);
         return postRepository.getPostsBySearchAndAuthorIdAndTagId(searchQuery, authorIds, tagIds, pageable)
                 .getContent();
+    }
+
+    public List<PostSummery> getPostSummeries() {
+        return postRepository.getAllPosts_new();
     }
 
 }

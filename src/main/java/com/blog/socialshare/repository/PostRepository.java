@@ -2,7 +2,6 @@ package com.blog.socialshare.repository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import com.blog.socialshare.dto.PostSummery;
 import com.blog.socialshare.model.Post;
@@ -21,6 +20,9 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
         @Query("SELECT title, author.name , excerpt, content, createdAt FROM Post where isPublished = true ")
         List<Object[]> getAllPosts();
+
+        @Query("SELECT p.id as id ,p.title as title, p.author as author , p.excerpt as excerpt, p.publishedAt as publishedAt FROM Post p where p.isPublished = true")
+        List<PostSummery> getAllPosts_new();
 
         @Query(value = "select id, title , excerpt , author,  created_at from post " +
                         " where is_published = true " +
@@ -107,6 +109,5 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
         Page<Post> getPostsBySearchAndAuthorIdAndTagId(@Param("search") String search,
                         @Param("authorIds") List<Integer> authorId,
                         @Param("tagIds") List<Integer> tagId, Pageable pageable);
-
 
 }

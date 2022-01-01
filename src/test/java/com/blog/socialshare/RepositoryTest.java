@@ -1,15 +1,11 @@
 package com.blog.socialshare;
 
-import com.blog.socialshare.dto.PostSummery;
-import com.blog.socialshare.model.Post;
 import com.blog.socialshare.repository.PostRepository;
 import com.blog.socialshare.repository.RoleRepository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 @SpringBootTest
 public class RepositoryTest {

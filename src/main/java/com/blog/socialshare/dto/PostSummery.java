@@ -1,18 +1,21 @@
 package com.blog.socialshare.dto;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.sql.Timestamp;
 
 public interface PostSummery {
     Integer getId();
+
     String getTitle();
+
     String getExcerpt();
+
+    Timestamp getPublishedAt();
 
     User getAuthor();
 
-    interface User {
-        @Value("#{target.author.id}")
-        String getId();
-        @Value("#{target.author.name}")
+    public interface User {
+        Integer getId();
+
         String getName();
     }
 }
