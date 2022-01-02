@@ -14,7 +14,9 @@ import com.blog.socialshare.service.PostTagService;
 import com.blog.socialshare.service.TagService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +25,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-@Controller
+@RestController
 public class PostController {
 
     @Autowired
@@ -42,8 +44,8 @@ public class PostController {
     private CommentService commentService;
 
     @RequestMapping(path = "/blog")
-    public String blogPage(Model model) {
-        return "redirect:/";
+    public ResponseEntity<String> blogPage() {
+        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, "/").build();
     }
 
     @GetMapping("/blog/{postid}")
@@ -59,10 +61,9 @@ public class PostController {
     }
 
     @DeleteMapping("/blog/delete/{postid}")
-    @ResponseBody
-    public String deletePost(@PathVariable("postid") Integer postId) {
+    public ResponseEntity<String> deletePost(@PathVariable("postid") Integer postId) {
         postService.deletePost(postId);
-        return "success";
+        return ResponseEntity.ok("Post deleted successfully");
     }
 
     @GetMapping(path = "newpost")
@@ -102,6 +103,6 @@ public class PostController {
         postService.updatePost(post);
         postTagService.savePostTags(tagsList, post);
         return "redirect:/blog/" + post.getId();
-    }   
+    }
 
 }
