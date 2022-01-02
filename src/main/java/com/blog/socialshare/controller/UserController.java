@@ -6,42 +6,41 @@ import com.blog.socialshare.model.User;
 import com.blog.socialshare.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping(value = "user/search", params = { "name" })
-    @ResponseBody
-    public List<User> search(@RequestParam("name") String name) {
-        return userService.findByName(name);
+    public ResponseEntity<List<User>> search(@RequestParam("name") String name) {
+        return ResponseEntity.ok(userService.findByName(name));
     }
 
     @GetMapping("/login")
-    public String login() {
-        return "login";
+    public ResponseEntity<String> login() {
+        return ResponseEntity.ok("Login Page");
     }
 
     @GetMapping("/signup")
-    public String signup() {
-        return "signup";
+    public ResponseEntity<String> signup() {
+        return ResponseEntity.ok("Signup Page");
     }
 
     @PostMapping("user/register")
-    public String register(@ModelAttribute User user) {
+    public ResponseEntity<String> register(@ModelAttribute User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
         userService.registerUser(user);
-        return "redirect:/login";
+        return ResponseEntity.ok("User Registered Successfully");
     }
 
 }
