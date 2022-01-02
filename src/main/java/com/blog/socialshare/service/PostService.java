@@ -3,6 +3,7 @@ package com.blog.socialshare.service;
 import java.util.Date;
 import java.util.List;
 
+import com.blog.socialshare.dto.PostDTO;
 import com.blog.socialshare.dto.PostSummery;
 import com.blog.socialshare.model.Post;
 import com.blog.socialshare.repository.PostRepository;
@@ -39,8 +40,8 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Post getPostById(Integer id) {
-        return postRepository.findById(id).get();
+    public PostDTO getPostById(Integer id) {
+        return postRepository.findPostDTOById(id);
     }
 
     public void deletePost(Integer id) {
@@ -118,7 +119,8 @@ public class PostService {
     public List<Post> getPostsBySearchAndAuthorIdAndTagId(String search,
             List<Integer> authorId, List<Integer> tagId, Integer start, Integer limit, Date startDate, Date endDate) {
         Pageable pageable = PageRequest.of(start / limit, limit);
-        return postRepository.getPostsBySearchAndAuthorIdAndTagId(search, authorId, tagId, startDate, endDate, pageable).getContent();
+        return postRepository.getPostsBySearchAndAuthorIdAndTagId(search, authorId, tagId, startDate, endDate, pageable)
+                .getContent();
     }
 
     public List<Post> getPostsByTagIdAndSorted(Integer start, Integer limit,
@@ -178,7 +180,8 @@ public class PostService {
             sort = Sort.by(string).descending();
         }
         Pageable pageable = PageRequest.of(start / limit, limit, sort);
-        return postRepository.getPostsBySearchAndAuthorId(searchQuery, authorIds, startDate, endDate, pageable).getContent();
+        return postRepository.getPostsBySearchAndAuthorId(searchQuery, authorIds, startDate, endDate, pageable)
+                .getContent();
     }
 
     public List<Post> getPostsBySearchAndAuthorIdAndTagIdAndSorted(String searchQuery, Integer start, Integer limit,

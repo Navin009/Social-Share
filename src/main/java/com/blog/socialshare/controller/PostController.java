@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.blog.socialshare.model.Comment;
+import com.blog.socialshare.dto.CommentDTO;
+import com.blog.socialshare.dto.PostDTO;
+import com.blog.socialshare.dto.TagDTO;
 import com.blog.socialshare.model.Post;
 import com.blog.socialshare.model.Tag;
 import com.blog.socialshare.model.User;
@@ -49,15 +51,13 @@ public class PostController {
     }
 
     @GetMapping("/blog/{postid}")
-    public String getPostById(@PathVariable("postid") Integer postId, Model model) {
-        Post post = postService.getPostById(postId);
-        List<Comment> comments = commentService.getCommentsByPostId(post);
-        List<Tag> tags = postTagService.getTagsByPostId(post);
-        model.addAttribute("postid", postId);
-        model.addAttribute("post", post);
-        model.addAttribute("comments", comments);
-        model.addAttribute("tags", tags);
-        return "blog";
+    public PostDTO getPostById(@PathVariable("postid") Integer postId, Model model) {
+        PostDTO post = postService.getPostById(postId);
+        List<CommentDTO> comments = commentService.getCommentsByPostId(postId);
+        List<TagDTO> tags = tagService.getTagsByPostId(postId);
+        post.setComments(comments);
+        post.setTags(tags);
+        return post;
     }
 
     @DeleteMapping("/blog/delete/{postid}")
@@ -66,14 +66,8 @@ public class PostController {
         return ResponseEntity.ok("Post deleted successfully");
     }
 
-    @GetMapping(path = "newpost")
-    public String newPost(@SessionAttribute("loggedUser") User user, Model model) {
-        model.addAttribute("author", user);
-        return "newpost";
-    }
-
     @PostMapping(path = "/newpost/save")
-    public String savePost(@ModelAttribute("post") Post post, @SessionAttribute("loggedUser") User user,
+    public ResponseEntity<String> savePost(@ModelAttribute("post") Post post, @SessionAttribute("loggedUser") User user,
             @RequestParam("tagsData") String tagsList, Model model) {
         post.setAuthor(user);
         Post savedPost = postService.savePost(post);
@@ -81,28 +75,19 @@ public class PostController {
                 .filter(tag -> (tag.length() >= 1)).collect(Collectors.toList());
         List<Tag> tags = tagService.saveTags(tagTokens, savedPost.getId());
         postTagService.savePostTags(tags, savedPost);
-        model.addAttribute("postSaved", true);
-        return "redirect:/";
-    }
-
-    @GetMapping(path = "updatepost/{postId}")
-    public String updatePost(@PathVariable("postId") Integer postId, Model model) {
-        Post post = postService.getPostById(postId);
-        List<Tag> tags = postTagService.getTagsByPostId(post);
-        model.addAttribute("tags", tags);
-        model.addAttribute("post", post);
-        return "updatepost";
+        return ResponseEntity.ok("Post save Successfully");
     }
 
     @PostMapping(path = "updatepost/update")
-    public String updatePost(@ModelAttribute Post post, @RequestParam("tagsData") String tags, Model model) {
+    public ResponseEntity<String> updatePost(@ModelAttribute Post post, @RequestParam("tagsData") String tags,
+            Model model) {
         List<String> tagTokens = Arrays.stream(tags.split(","))
                 .filter(tag -> (tag.length() >= 1)).collect(Collectors.toList());
         List<Tag> tagsList = tagService.saveTags(tagTokens, post.getId());
         postTagService.deletePostTags(post);
         postService.updatePost(post);
         postTagService.savePostTags(tagsList, post);
-        return "redirect:/blog/" + post.getId();
+        return ResponseEntity.ok("Post update Successfully!");
     }
 
 }

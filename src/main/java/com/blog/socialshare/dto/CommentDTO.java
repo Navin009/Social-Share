@@ -1,18 +1,19 @@
 package com.blog.socialshare.dto;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
-public interface CommentDTO {
-    Integer getId();
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-    String getName();
+@Data
+@AllArgsConstructor
+public class CommentDTO {
 
-    String getEmail();
-
-    String getComment();
-
-    Timestamp getUpdatedAt();
-
-    Timestamp getCreatedAt();
+    Integer id;
+    String name;
+    String email;
+    String comment;
+    Date updatedAt;
+    Date createdAt;
 
 }

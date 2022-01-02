@@ -3,6 +3,7 @@ package com.blog.socialshare.repository;
 import java.util.Date;
 import java.util.List;
 
+import com.blog.socialshare.dto.PostDTO;
 import com.blog.socialshare.dto.PostSummery;
 import com.blog.socialshare.model.Post;
 
@@ -15,6 +16,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
+
+        @Query("select new com.blog.socialshare.dto.PostDTO(p.id, p.title, " +
+                        "p.excerpt , p.content , p.author.id, p.author.name, " +
+                        "p.author.email, p.isPublished) from Post p where p.id = :id ")
+        PostDTO findPostDTOById(@Param("id") Integer id);
 
         @Query("SELECT p.id as id ,p.title as title, p.author as author , p.excerpt as excerpt, p.publishedAt as publishedAt FROM Post p where p.isPublished = true")
         List<PostSummery> getAllPosts(Pageable pageable);

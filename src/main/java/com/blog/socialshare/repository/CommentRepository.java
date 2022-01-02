@@ -3,8 +3,8 @@ package com.blog.socialshare.repository;
 import java.util.Date;
 import java.util.List;
 
+import com.blog.socialshare.dto.CommentDTO;
 import com.blog.socialshare.model.Comment;
-import com.blog.socialshare.model.Post;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface CommentRepository extends CrudRepository<Comment, Integer> {
 
-    @Query("select c from Comment c where postId = :post_id")
-    List<Comment> getCommentsByPostId(@Param("post_id") Post postId);
+    @Query("select new com.blog.socialshare.dto.CommentDTO(c.id, c.name , c.email, c.comment, c.updatedAt, c.createdAt ) from Comment c where postId.id = :post_id")
+    List<CommentDTO> getCommentsByPostId(@Param("post_id") Integer postId);
 
     @Modifying
     @Transactional

@@ -2,18 +2,30 @@ package com.blog.socialshare.dto;
 
 import java.util.List;
 
-public interface PostDTO {
-    Integer getId();
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-    String getTitle();
+@Data
+@AllArgsConstructor
+public class PostDTO {
+    private Integer id;
+    private String title;
+    private String excerpt;
+    private String content;
+    private UserDTO author;
+    private boolean isPublished;
 
-    String getExcerpt();
+    List<TagDTO> tags;
+    List<CommentDTO> comments;
 
-    String getContent();
-    
-    UserDTO getAuthor();
+    public PostDTO(Integer id, String title, String excerpt, String content, Integer authorId, String authorName,
+            String authorEmail, boolean isPublished) {
+        this.id = id;
+        this.title = title;
+        this.excerpt = excerpt;
+        this.content = content;
+        this.author = new UserDTO(authorId, authorName, authorEmail);
+        this.isPublished = isPublished;
+    }
 
-    List<CommentDTO> getComments();
-
-    List<TagDTO> getTags();
 }

@@ -1,21 +1,29 @@
 package com.blog.socialshare.dto;
 
-import java.sql.Timestamp;
+import java.util.List;
 
-public interface PostSummery {
-    Integer getId();
+public class PostSummery {
+    Integer id;
+    String title;
+    String excerpt;
+    String content;
+    String author;
+    List<TagDTO> tags;
 
-    String getTitle();
-
-    String getExcerpt();
-
-    Timestamp getPublishedAt();
-
-    User getAuthor();
-
-    public interface User {
-        Integer getId();
-
-        String getName();
+    public PostSummery(Integer id, String title, String excerpt, String content, String author) {
+        this.id = id;
+        this.title = title;
+        this.excerpt = excerpt;
+        this.content = content;
+        this.author = author;
     }
+
+    public List<TagDTO> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<TagDTO> tags) {
+        this.tags = tags;
+    }
+
 }

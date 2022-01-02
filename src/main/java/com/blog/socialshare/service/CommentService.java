@@ -3,6 +3,7 @@ package com.blog.socialshare.service;
 import java.util.Date;
 import java.util.List;
 
+import com.blog.socialshare.dto.CommentDTO;
 import com.blog.socialshare.model.Comment;
 import com.blog.socialshare.model.Post;
 import com.blog.socialshare.repository.CommentRepository;
@@ -29,7 +30,7 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public List<Comment> getCommentsByPostId(Post postId) {
+    public List<CommentDTO> getCommentsByPostId(Integer postId) {
         return commentRepository.getCommentsByPostId(postId);
     }
 

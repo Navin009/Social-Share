@@ -1,6 +1,11 @@
 package com.blog.socialshare.dto;
 
-public interface TagDTO {
-    Integer getId();
-    String getName();
+import lombok.AllArgsConstructor;
+import lombok.Value;
+
+@Value
+@AllArgsConstructor
+public class TagDTO {
+    Integer id;
+    String name;
 }

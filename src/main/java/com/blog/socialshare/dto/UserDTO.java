@@ -1,10 +1,12 @@
 package com.blog.socialshare.dto;
 
-public interface UserDTO {
-    Integer getId();
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-    String getName();
-
-    String getEmail();
-
+@Data
+@AllArgsConstructor
+public class UserDTO {
+    Integer id;
+    String name;
+    String email;
 }

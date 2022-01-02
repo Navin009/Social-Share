@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.blog.socialshare.dto.TagDTO;
 import com.blog.socialshare.model.Tag;
 import com.blog.socialshare.repository.TagRepository;
 
@@ -38,6 +39,10 @@ public class TagService {
 
     public List<Tag> getTags(List<Integer> tagIds) {
         return tagRepository.findAllById(tagIds);
+    }
+
+    public List<TagDTO> getTagsByPostId(Integer postId) {
+        return tagRepository.getTagsByPostId(postId);
     }
 
 }
