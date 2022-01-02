@@ -60,9 +60,10 @@ public class MainController {
                 }
             } else {
                 if (tagIds.size() == 0) {
-                    posts = postService.getPostsPageByAuthorId(authorIds, start, limit);
+                    posts = postService.getPostsPageByAuthorId(authorIds, start, limit, startDate, endDate);
                 } else {
-                    posts = postService.getPostsPageByAuthorIdAndTagId(authorIds, tagIds, start, limit);
+                    posts = postService.getPostsPageByAuthorIdAndTagId(authorIds, tagIds, start, limit, startDate,
+                            endDate);
                 }
             }
 
@@ -93,41 +94,49 @@ public class MainController {
             @RequestParam("search") String search,
             @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagIds,
             @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorIds,
-            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String DateFilter,
+            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String dateFilter,
             Model model) {
         List<Post> posts;
         Map<Post, List<String>> postWithTags = new HashMap<>();
-
-        if (authorIds.size() == 0) {
-            if (tagIds.size() == 0) {
-                posts = postService.getPostsBySearch(search, start, limit);
+        String[] dates = dateFilter.split(",");
+        try {
+            Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(dates[0]);
+            Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(dates[1]);
+            if (authorIds.size() == 0) {
+                if (tagIds.size() == 0) {
+                    posts = postService.getPostsBySearch(search, start, limit, startDate, endDate);
+                } else {
+                    posts = postService.getPostsBySearchAndTagId(search, tagIds, start, limit, startDate, endDate);
+                }
             } else {
-                posts = postService.getPostsBySearchAndTagId(search, tagIds, start, limit);
+                if (tagIds.size() == 0) {
+                    posts = postService.getPostsBySearchAndAuthorId(search, authorIds, start, limit, startDate,
+                            endDate);
+                } else {
+                    posts = postService.getPostsBySearchAndAuthorIdAndTagId(search, authorIds, tagIds, start, limit,
+                            startDate, endDate);
+                }
             }
-        } else {
-            if (tagIds.size() == 0) {
-                posts = postService.getPostsBySearchAndAuthorId(search, authorIds, start, limit);
-            } else {
-                posts = postService.getPostsBySearchAndAuthorIdAndTagId(search, authorIds, tagIds, start, limit);
+
+            for (Post post : posts) {
+                postWithTags.put(post, postService.getTagNames(post.getId()));
             }
+
+            List<Tag> tags = tagService.getTags(tagIds);
+            Iterable<User> authors = userService.getUsers(authorIds);
+
+            model.addAttribute("tags", tags);
+            model.addAttribute("authors", authors);
+            model.addAttribute("posts", posts);
+            model.addAttribute("postWithTags", postWithTags);
+
+            int currentPage = start / limit + 1;
+            model.addAttribute("page", currentPage);
+            model.addAttribute("prevDisabled", currentPage <= 1);
+            model.addAttribute("nextDisabled", currentPage >= 3);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-
-        for (Post post : posts) {
-            postWithTags.put(post, postService.getTagNames(post.getId()));
-        }
-
-        List<Tag> tags = tagService.getTags(tagIds);
-        Iterable<User> authors = userService.getUsers(authorIds);
-
-        model.addAttribute("tags", tags);
-        model.addAttribute("authors", authors);
-        model.addAttribute("posts", posts);
-        model.addAttribute("postWithTags", postWithTags);
-
-        int currentPage = start / limit + 1;
-        model.addAttribute("page", currentPage);
-        model.addAttribute("prevDisabled", currentPage <= 1);
-        model.addAttribute("nextDisabled", currentPage >= 3);
         return "index";
     }
 
@@ -154,17 +163,19 @@ public class MainController {
 
             if (authorIds.size() == 0) {
                 if (tagIds.size() == 0) {
-                    posts = postService.getPostsAndSorted(start, limit, sortFieldColumn, order);
+                    posts = postService.getPostsAndSorted(start, limit, sortFieldColumn, order, startDate, endDate);
                 } else {
-                    posts = postService.getPostsByTagIdAndSorted(start, limit, sortFieldColumn, tagIds, order, startDate, endDate);
+                    posts = postService.getPostsByTagIdAndSorted(start, limit, sortFieldColumn, tagIds, order,
+                            startDate, endDate);
                 }
 
             } else {
                 if (tagIds.size() == 0) {
-                    posts = postService.getPostsByAuthorIdAndSorted(start, limit, sortFieldColumn, authorIds, order);
+                    posts = postService.getPostsByAuthorIdAndSorted(start, limit, sortFieldColumn, authorIds, order,
+                            startDate, endDate);
                 } else {
                     posts = postService.getPostsByAuthorIdAndTagIdAndSorted(start, limit, sortFieldColumn, authorIds,
-                            tagIds, order);
+                            tagIds, order, startDate, endDate);
                 }
             }
 
@@ -194,7 +205,7 @@ public class MainController {
             @RequestParam(value = "order", required = false, defaultValue = "desc") String order,
             @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagIds,
             @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorIds,
-            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String DateFilter,
+            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String dateFilter,
             Model model) {
 
         List<Post> posts;
@@ -204,35 +215,44 @@ public class MainController {
         if (sortField.equals("published_date"))
             sortFieldColumn = "publishedAt";
 
-        if (authorIds.size() == 0) {
-            if (tagIds.size() == 0) {
-                posts = postService.getPostsBySearchAndSorted(searchQuery, start, limit, sortFieldColumn, order);
+        String[] dates = dateFilter.split(",");
+        try {
+            Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(dates[0]);
+            Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(dates[1]);
+
+            if (authorIds.size() == 0) {
+                if (tagIds.size() == 0) {
+                    posts = postService.getPostsBySearchAndSorted(searchQuery, start, limit, sortFieldColumn, order,
+                            startDate, endDate);
+                } else {
+                    posts = postService.getPostsBySearchAndTagIdAndSorted(searchQuery, start, limit, sortFieldColumn,
+                            tagIds, order, startDate, endDate);
+                }
+
             } else {
-                posts = postService.getPostsBySearchAndTagIdAndSorted(searchQuery, start, limit, sortFieldColumn,
-                        tagIds, order);
+                if (tagIds.size() == 0) {
+                    posts = postService.getPostsBySearchAndAuthorIdAndSorted(searchQuery, start, limit,
+                            sortFieldColumn, authorIds, order, startDate, endDate);
+                } else {
+                    posts = postService.getPostsBySearchAndAuthorIdAndTagIdAndSorted(searchQuery, start, limit,
+                            sortFieldColumn, authorIds, tagIds, order, startDate, endDate);
+                }
             }
 
-        } else {
-            if (tagIds.size() == 0) {
-                posts = postService.getPostsBySearchAndAuthorIdAndSorted(searchQuery, start, limit,
-                        sortFieldColumn, authorIds, order);
-            } else {
-                posts = postService.getPostsBySearchAndAuthorIdAndTagIdAndSorted(searchQuery, start, limit,
-                        sortFieldColumn, authorIds, tagIds, order);
+            for (Post post : posts) {
+                postWithTags.put(post, postService.getTagNames(post.getId()));
             }
+
+            List<Tag> tags = tagService.getTags(tagIds);
+            Iterable<User> authors = userService.getUsers(authorIds);
+
+            model.addAttribute("tags", tags);
+            model.addAttribute("authors", authors);
+            model.addAttribute("postWithTags", postWithTags);
+            model.addAttribute("posts", posts);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-
-        for (Post post : posts) {
-            postWithTags.put(post, postService.getTagNames(post.getId()));
-        }
-
-        List<Tag> tags = tagService.getTags(tagIds);
-        Iterable<User> authors = userService.getUsers(authorIds);
-
-        model.addAttribute("tags", tags);
-        model.addAttribute("authors", authors);
-        model.addAttribute("postWithTags", postWithTags);
-        model.addAttribute("posts", posts);
         return "index";
     }
 
