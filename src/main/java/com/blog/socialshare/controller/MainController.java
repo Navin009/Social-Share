@@ -1,5 +1,8 @@
 package com.blog.socialshare.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,36 +48,43 @@ public class MainController {
             Model model) {
         List<Post> posts;
         HashMap<Post, List<String>> postWithTags = new HashMap<>();
-
-        if (authorIds.size() == 0) {
-            if (tagIds.size() == 0) {
-                posts = postService.getPostsPage(start, limit);
+        String[] dates = dateFilter.split(",");
+        try {
+            Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(dates[0]);
+            Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(dates[1]);
+            System.out.println(startDate + " " + endDate);
+            if (authorIds.size() == 0) {
+                if (tagIds.size() == 0) {
+                    posts = postService.getPostsPage(start, limit, startDate, endDate);
+                } else {
+                    posts = postService.getPostsPageByTagId(tagIds, start, limit);
+                }
             } else {
-                posts = postService.getPostsPageByTagId(tagIds, start, limit);
+                if (tagIds.size() == 0) {
+                    posts = postService.getPostsPageByAuthorId(authorIds, start, limit);
+                } else {
+                    posts = postService.getPostsPageByAuthorIdAndTagId(authorIds, tagIds, start, limit);
+                }
             }
-        } else {
-            if (tagIds.size() == 0) {
-                posts = postService.getPostsPageByAuthorId(authorIds, start, limit);
-            } else {
-                posts = postService.getPostsPageByAuthorIdAndTagId(authorIds, tagIds, start, limit);
+
+            for (Post post : posts) {
+                postWithTags.put(post, postService.getTagNames(post.getId()));
             }
+
+            List<Tag> tags = tagService.getTags(tagIds);
+            Iterable<User> authors = userService.getUsers(authorIds);
+
+            model.addAttribute("tags", tags);
+            model.addAttribute("authors", authors);
+            model.addAttribute("posts", posts);
+            model.addAttribute("postWithTags", postWithTags);
+            int currentPage = start / limit + 1;
+            model.addAttribute("page", currentPage);
+            model.addAttribute("prevDisabled", currentPage <= 1);
+            model.addAttribute("nextDisabled", currentPage >= 3);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-
-        for (Post post : posts) {
-            postWithTags.put(post, postService.getTagNames(post.getId()));
-        }
-
-        List<Tag> tags = tagService.getTags(tagIds);
-        Iterable<User> authors = userService.getUsers(authorIds);
-
-        model.addAttribute("tags", tags);
-        model.addAttribute("authors", authors);
-        model.addAttribute("posts", posts);
-        model.addAttribute("postWithTags", postWithTags);
-        int currentPage = start / limit + 1;
-        model.addAttribute("page", currentPage);
-        model.addAttribute("prevDisabled", currentPage <= 1);
-        model.addAttribute("nextDisabled", currentPage >= 3);
         return "index";
     }
 

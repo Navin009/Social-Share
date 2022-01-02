@@ -1,14 +1,11 @@
 package com.blog.socialshare.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.blog.socialshare.dto.PostSummery;
 import com.blog.socialshare.model.Post;
-import com.blog.socialshare.model.User;
 import com.blog.socialshare.repository.PostRepository;
-import com.blog.socialshare.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,33 +16,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PostService {
-    private static final int ID = 0;
-    private static final int TITLE = 1;
-    private static final int EXCERPT = 2;
-    private static final int AUTHOR = 3;
-    private static final int CREATED_AT = 4;
 
     @Autowired
     private PostRepository postRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    public List<Post> getPostsPage(int start, int limit) {
-        List<Object[]> posts = postRepository.getPosts(start, limit);
-        List<Post> postList = new ArrayList<>();
-
-        for (Object[] post : posts) {
-            Post p = new Post();
-            p.setId((int) post[ID]);
-            p.setTitle((String) post[TITLE]);
-            p.setExcerpt((String) post[EXCERPT]);
-
-            User user = userRepository.findById((Integer) post[AUTHOR]).get();
-            p.setAuthor(user);
-            p.setCreatedAt((Date) post[CREATED_AT]);
-            postList.add(p);
-        }
+    public List<Post> getPostsPage(int start, int limit, Date startDate, Date endDate) {
+        Pageable pageable = PageRequest.of(start, limit);
+        List<Post> postList = postRepository.getPosts(startDate, endDate, pageable);
         return postList;
     }
 
@@ -213,7 +190,8 @@ public class PostService {
     }
 
     public List<PostSummery> getPostSummeries() {
-        return postRepository.getAllPosts_new();
+        Pageable pageable = PageRequest.of(0, 10);
+        return postRepository.getAllPosts(pageable);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.blog.socialshare.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import com.blog.socialshare.dto.PostSummery;
@@ -18,11 +19,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
         @Query("SELECT p.id as id ,p.title as title, p.author as author , p.excerpt as excerpt, p.publishedAt as publishedAt FROM Post p where p.isPublished = true")
         List<PostSummery> getAllPosts(Pageable pageable);
 
-        @Query(value = "select id, title , excerpt , author,  created_at from post " +
-                        " where is_published = true " +
-                        " limit :limit offset :start", nativeQuery = true)
-        List<Object[]> getPosts(@Param("start") int start, @Param("limit") int limit);
-
+        @Query("select p from Post p where p.isPublished = true and (p.publishedAt between :startDate and :endDate) ")
+        List<Post> getPosts(@Param("startDate") Date startDate, @Param("endDate") Date endDate, Pageable pageable);
 
         @Query("select distinct p from Post p where lower(p.title) like lower(concat('%',:query,'%')) " +
                         "or lower(p.content) like lower(concat('%',:query,'%')) " +

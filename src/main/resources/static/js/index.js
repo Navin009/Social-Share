@@ -136,3 +136,27 @@ function removeParam(sourceURL, key, value) {
 	params = params.filter((param) => param !== removeParam);
 	return "/?" + params.join("&");
 }
+
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1;
+var yyyy = today.getFullYear();
+if (dd < 10) {
+	dd = "0" + dd;
+}
+if (mm < 10) {
+	mm = "0" + mm;
+}
+today = yyyy + "-" + mm + "-" + dd;
+document.getElementById("start-date").setAttribute("max", today);
+document.getElementById("end-date").setAttribute("min", today);
+
+function filterByDate() {
+	let startDate = document.getElementById("start-date").value;
+	let endDate = document.getElementById("end-date").value;
+	let url = new URL(window.location);
+	if (startDate !== "" || endDate !== "") {
+		url.searchParams.set("Date", startDate + "," + endDate);
+		window.location.href = url;
+	}
+}
