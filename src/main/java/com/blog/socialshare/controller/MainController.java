@@ -52,12 +52,11 @@ public class MainController {
         try {
             Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(dates[0]);
             Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(dates[1]);
-            System.out.println(startDate + " " + endDate);
             if (authorIds.size() == 0) {
                 if (tagIds.size() == 0) {
                     posts = postService.getPostsPage(start, limit, startDate, endDate);
                 } else {
-                    posts = postService.getPostsPageByTagId(tagIds, start, limit);
+                    posts = postService.getPostsPageByTagId(tagIds, start, limit, startDate, endDate);
                 }
             } else {
                 if (tagIds.size() == 0) {
@@ -140,43 +139,49 @@ public class MainController {
             @RequestParam(value = "order", required = false, defaultValue = "desc") String order,
             @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagIds,
             @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorIds,
-            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String DateFilter,
+            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String dateFilter,
             Model model) {
 
         List<Post> posts;
         Map<Post, List<String>> postWithTags = new HashMap<>();
         String sortFieldColumn = "author.name";
+        String[] dates = dateFilter.split(",");
+        try {
+            Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(dates[0]);
+            Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(dates[1]);
+            if (sortField.equals("published_date"))
+                sortFieldColumn = "publishedAt";
 
-        if (sortField.equals("published_date"))
-            sortFieldColumn = "publishedAt";
+            if (authorIds.size() == 0) {
+                if (tagIds.size() == 0) {
+                    posts = postService.getPostsAndSorted(start, limit, sortFieldColumn, order);
+                } else {
+                    posts = postService.getPostsByTagIdAndSorted(start, limit, sortFieldColumn, tagIds, order, startDate, endDate);
+                }
 
-        if (authorIds.size() == 0) {
-            if (tagIds.size() == 0) {
-                posts = postService.getPostsAndSorted(start, limit, sortFieldColumn, order);
             } else {
-                posts = postService.getPostsByTagIdAndSorted(start, limit, sortFieldColumn, tagIds, order);
+                if (tagIds.size() == 0) {
+                    posts = postService.getPostsByAuthorIdAndSorted(start, limit, sortFieldColumn, authorIds, order);
+                } else {
+                    posts = postService.getPostsByAuthorIdAndTagIdAndSorted(start, limit, sortFieldColumn, authorIds,
+                            tagIds, order);
+                }
             }
 
-        } else {
-            if (tagIds.size() == 0) {
-                posts = postService.getPostsByAuthorIdAndSorted(start, limit, sortFieldColumn, authorIds, order);
-            } else {
-                posts = postService.getPostsByAuthorIdAndTagIdAndSorted(start, limit, sortFieldColumn, authorIds,
-                        tagIds, order);
+            for (Post post : posts) {
+                postWithTags.put(post, postService.getTagNames(post.getId()));
             }
+
+            List<Tag> tags = tagService.getTags(tagIds);
+            Iterable<User> authors = userService.getUsers(authorIds);
+
+            model.addAttribute("tags", tags);
+            model.addAttribute("authors", authors);
+            model.addAttribute("postWithTags", postWithTags);
+            model.addAttribute("posts", posts);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-
-        for (Post post : posts) {
-            postWithTags.put(post, postService.getTagNames(post.getId()));
-        }
-
-        List<Tag> tags = tagService.getTags(tagIds);
-        Iterable<User> authors = userService.getUsers(authorIds);
-
-        model.addAttribute("tags", tags);
-        model.addAttribute("authors", authors);
-        model.addAttribute("postWithTags", postWithTags);
-        model.addAttribute("posts", posts);
         return "index";
     }
 

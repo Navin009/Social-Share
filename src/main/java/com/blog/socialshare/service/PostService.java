@@ -21,7 +21,7 @@ public class PostService {
     private PostRepository postRepository;
 
     public List<Post> getPostsPage(int start, int limit, Date startDate, Date endDate) {
-        Pageable pageable = PageRequest.of(start, limit);
+        Pageable pageable = PageRequest.of(start / limit, limit);
         List<Post> postList = postRepository.getPosts(startDate, endDate, pageable);
         return postList;
     }
@@ -84,9 +84,10 @@ public class PostService {
         return tags;
     }
 
-    public List<Post> getPostsPageByTagId(List<Integer> tagIds, Integer start, Integer limit) {
+    public List<Post> getPostsPageByTagId(List<Integer> tagIds, Integer start, Integer limit, Date startDate,
+            Date endDate) {
         Pageable pageable = PageRequest.of(start / limit, limit);
-        return postRepository.getPostsByTagId(tagIds, pageable).getContent();
+        return postRepository.getPostsByTagId(tagIds, startDate, endDate, pageable).getContent();
     }
 
     public List<Post> getPostsPageByAuthorId(List<Integer> authorId, Integer start, Integer limit) {
@@ -117,7 +118,7 @@ public class PostService {
     }
 
     public List<Post> getPostsByTagIdAndSorted(Integer start, Integer limit,
-            String sortField, List<Integer> tagIds, String order) {
+            String sortField, List<Integer> tagIds, String order, Date startDate, Date endDate) {
         Sort sort;
         if (order.equals("asc")) {
             sort = Sort.by(sortField).ascending();
@@ -125,7 +126,7 @@ public class PostService {
             sort = Sort.by(sortField).descending();
         }
         Pageable pageable = PageRequest.of(start / limit, limit, sort);
-        return postRepository.getPostsByTagId(tagIds, pageable).getContent();
+        return postRepository.getPostsByTagId(tagIds, startDate, endDate, pageable).getContent();
     }
 
     public List<Post> getPostsByAuthorIdAndSorted(Integer start, Integer limit,

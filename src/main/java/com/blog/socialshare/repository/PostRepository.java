@@ -43,8 +43,9 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
         List<String> getTags(@Param("postId") Integer postId);
 
         @Query("select p from Post p, PostTag pt, Tag t where p.id = pt.postId and "
-                        + "pt.tagId = t.id and t.id in (:tagids) group by p.id, p.author.name")
-        Page<Post> getPostsByTagId(@Param("tagids") List<Integer> tagIds, Pageable pageable);
+                        + "pt.tagId = t.id and (p.publishedAt between :startDate and :endDate) and t.id in (:tagids) group by p.id, p.author.name")
+        Page<Post> getPostsByTagId(@Param("tagids") List<Integer> tagIds,
+                        @Param("startDate") Date startDate, @Param("endDate") Date endDate, Pageable pageable);
 
         @Query("select p from Post p, PostTag pt, Tag t where p.id = pt.postId and " +
                         "pt.tagId = t.id and p.author.id in (:authorIds) group by p.id, p.author.name")
