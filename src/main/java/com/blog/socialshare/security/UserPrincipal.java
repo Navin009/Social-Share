@@ -20,6 +20,10 @@ public class UserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         HashSet<SimpleGrantedAuthority> authorities = new HashSet<>();
+        String[] userRoles = user.getRoles().stream().map(role -> role.getRole()).toArray(String[]::new);
+        for (String role : userRoles) {
+            authorities.add(new SimpleGrantedAuthority(role));
+        }
         authorities.add(new SimpleGrantedAuthority("author"));
         return authorities;
     }
