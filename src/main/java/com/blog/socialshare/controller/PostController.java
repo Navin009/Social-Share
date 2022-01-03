@@ -85,12 +85,16 @@ public class PostController {
     }
 
     @GetMapping(path = "updatepost/{postId}")
-    public String updatePost(@PathVariable("postId") Integer postId, Model model) {
+    public String updatePost(@PathVariable("postId") Integer postId, @SessionAttribute("loggedUser") User user,
+            Model model) {
         Post post = postService.getPostById(postId);
-        List<Tag> tags = postTagService.getTagsByPostId(post);
-        model.addAttribute("tags", tags);
-        model.addAttribute("post", post);
-        return "updatepost";
+        if (post.getAuthor().getId() == user.getId()) {
+            List<Tag> tags = postTagService.getTagsByPostId(post);
+            model.addAttribute("tags", tags);
+            model.addAttribute("post", post);
+            return "updatepost";
+        }
+        return "redirect:/blog/" + postId;
     }
 
     @PostMapping(path = "updatepost/update")
@@ -102,6 +106,6 @@ public class PostController {
         postService.updatePost(post);
         postTagService.savePostTags(tagsList, post);
         return "redirect:/blog/" + post.getId();
-    }   
+    }
 
 }
