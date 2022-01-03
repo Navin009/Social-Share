@@ -24,7 +24,6 @@ public class PostTag {
     private Post postId;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "tag_id", referencedColumnName = "id")
     private Tag tagId;
 

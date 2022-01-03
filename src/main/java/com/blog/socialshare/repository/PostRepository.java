@@ -23,27 +23,29 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
         PostDTO findPostDTOById(@Param("id") Integer id);
 
         @Query("SELECT p.id as id ,p.title as title, p.author as author , p.excerpt as excerpt, p.publishedAt as publishedAt FROM Post p where p.isPublished = true")
-        List<PostSummery> getAllPosts(Pageable pageable);
+        List<Post> getAllPosts(Pageable pageable);
 
-        @Query("select p from Post p where p.isPublished = true and (p.publishedAt between :startDate and :endDate) ")
-        List<Post> getPosts(@Param("startDate") Date startDate, @Param("endDate") Date endDate, Pageable pageable);
+        @Query("select new com.blog.socialshare.dto.PostSummery(p.id, p.title, p.excerpt , p.publishedAt , p.author.id, p.author.name, p.author.email) from Post p where p.isPublished = true and (p.publishedAt between :startDate and :endDate) ")
+        List<PostSummery> getPosts(@Param("startDate") Date startDate, @Param("endDate") Date endDate,
+                        Pageable pageable);
 
         @Query("select distinct p from Post p where lower(p.title) like lower(concat('%',:query,'%')) " +
                         "or lower(p.content) like lower(concat('%',:query,'%')) " +
                         "or lower(p.excerpt) like lower(concat('%',:query,'%')) " +
                         "or lower(p.author.name) like lower(concat('%',:query,'%')) and " +
                         "(p.publishedAt between :startDate and :endDate)")
-        Page<Post> searchPostsByWord(@Param("query") String query, @Param("startDate") Date startDate,
+        Page<PostSummery> searchPostsByWord(@Param("query") String query, @Param("startDate") Date startDate,
                         @Param("endDate") Date endDate, Pageable pageable);
 
-        Page<Post> findAll(Pageable pageable);
+        @Query("select p from Post p ")
+        Page<PostSummery> findAllPosts(Pageable pageable);
 
         @Query("select distinct(p) from Post p where lower(p.title) like lower(concat('%',:query,'%')) " +
                         "or lower(p.content) like lower(concat('%',:query,'%')) " +
                         "or lower(p.excerpt) like lower(concat('%',:query,'%')) " +
                         "or lower(p.author.name) like lower(concat('%',:query,'%')) and " +
                         "(p.publishedAt between :startDate and :endDate) ")
-        Page<Post> searchPostsByWordAndSort(@Param("query") String query, @Param("startDate") Date startDate,
+        Page<PostSummery> searchPostsByWordAndSort(@Param("query") String query, @Param("startDate") Date startDate,
                         @Param("endDate") Date endDate, Pageable pageable);
 
         @Query(value = "select distinct tag.name from post " +
@@ -54,20 +56,21 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
         @Query("select p from Post p, PostTag pt, Tag t where p.id = pt.postId and "
                         + "pt.tagId = t.id and (p.publishedAt between :startDate and :endDate) and t.id in (:tagids) group by p.id, p.author.name")
-        Page<Post> getPostsByTagId(@Param("tagids") List<Integer> tagIds,
+        Page<PostSummery> getPostsByTagId(@Param("tagids") List<Integer> tagIds,
                         @Param("startDate") Date startDate, @Param("endDate") Date endDate, Pageable pageable);
 
         @Query("select p from Post p, PostTag pt, Tag t where p.id = pt.postId and " +
                         "(p.publishedAt between :startDate and :endDate) and " +
                         "pt.tagId = t.id and p.author.id in (:authorIds) group by p.id, p.author.name")
-        Page<Post> getPostsByAuthorId(@Param("authorIds") List<Integer> authorId, @Param("startDate") Date startDate,
+        Page<PostSummery> getPostsByAuthorId(@Param("authorIds") List<Integer> authorId,
+                        @Param("startDate") Date startDate,
                         @Param("endDate") Date endDate, Pageable pageable);
 
         @Query("select p from Post p, PostTag pt, Tag t " +
                         "where p.id = pt.postId and pt.tagId = t.id and " +
                         " (p.publishedAt between :startDate and :endDate) and " +
                         " p.author.id = (:authorIds) and t.id in (:tagIds) group by p.id, p.author.name")
-        Page<Post> getPostsByAuthorIdAndTagId(@Param("authorIds") List<Integer> authorId,
+        Page<PostSummery> getPostsByAuthorIdAndTagId(@Param("authorIds") List<Integer> authorId,
                         @Param("tagIds") List<Integer> tagId,
                         @Param("startDate") Date startDate, @Param("endDate") Date endDate,
                         Pageable pageable);
@@ -80,7 +83,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         "lower(p.excerpt) like lower(concat('%', :search,'%')) ) and " +
                         "(p.publishedAt between :startDate and :endDate) and " +
                         "t.id in (:tagIds) group by p.id, p.author.id")
-        Page<Post> getPostsBySearchAndTagId(@Param("search") String search,
+        Page<PostSummery> getPostsBySearchAndTagId(@Param("search") String search,
                         @Param("tagIds") List<Integer> tagId, @Param("startDate") Date startDate,
                         @Param("endDate") Date endDate, Pageable pageable);
 
@@ -92,7 +95,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         "lower(p.excerpt) like lower(concat('%', :search,'%')) ) and " +
                         "(p.publishedAt between :startDate and :endDate) and " +
                         "p.author.id in (:authorIds) group by p.id, p.author.id")
-        Page<Post> getPostsBySearchAndAuthorId(@Param("search") String search,
+        Page<PostSummery> getPostsBySearchAndAuthorId(@Param("search") String search,
                         @Param("authorIds") List<Integer> authorId, @Param("startDate") Date startDate,
                         @Param("endDate") Date endDate, Pageable pageable);
 
@@ -104,7 +107,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         "lower(p.excerpt) like lower(concat('%', :search,'%')) ) and " +
                         "(p.publishedAt between :startDate and :endDate) and " +
                         "p.author.id in (:authorIds) and t.id in (:tagIds) group by p.id, p.author.id")
-        Page<Post> getPostsBySearchAndAuthorIdAndTagId(@Param("search") String search,
+        Page<PostSummery> getPostsBySearchAndAuthorIdAndTagId(@Param("search") String search,
                         @Param("authorIds") List<Integer> authorId,
                         @Param("tagIds") List<Integer> tagId, @Param("startDate") Date startDate,
                         @Param("endDate") Date endDate, Pageable pageable);

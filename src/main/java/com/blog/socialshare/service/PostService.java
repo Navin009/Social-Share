@@ -21,22 +21,21 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-    public List<Post> getPostsPage(int start, int limit, Date startDate, Date endDate) {
+    public List<PostSummery> getPostsPage(int start, int limit, Date startDate, Date endDate) {
         Pageable pageable = PageRequest.of(start / limit, limit);
-        List<Post> postList = postRepository.getPosts(startDate, endDate, pageable);
+        List<PostSummery> postList = postRepository.getPosts(startDate, endDate, pageable);
         return postList;
     }
 
-    public List<Post> getPostsBySearch(String query, Integer start, Integer limit, Date startDate, Date endDate) {
+    public List<PostSummery> getPostsBySearch(String query, Integer start, Integer limit, Date startDate, Date endDate) {
         Pageable pageable = PageRequest.of(start / limit, limit);
-        Page<Post> posts = postRepository.searchPostsByWord(query, startDate, endDate, pageable);
+        Page<PostSummery> posts = postRepository.searchPostsByWord(query, startDate, endDate, pageable);
         return posts.getContent();
     }
 
     public Post savePost(Post post) {
         post.setCreatedAt(new Date());
         post.setPublishedAt(new Date());
-        post.setUpdatedAt(new Date());
         return postRepository.save(post);
     }
 
@@ -57,7 +56,7 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public List<Post> getPostsAndSorted(Integer start, Integer limit, String sortField,
+    public List<PostSummery> getPostsAndSorted(Integer start, Integer limit, String sortField,
             String order, Date startDate, Date endDate) {
         Sort sort;
         if (order.equals("asc")) {
@@ -66,10 +65,10 @@ public class PostService {
             sort = Sort.by(sortField).descending();
         }
         Pageable pageable = PageRequest.of(start / limit, limit, sort);
-        return postRepository.findAll(pageable).getContent();
+        return postRepository.findAllPosts(pageable).getContent();
     }
 
-    public List<Post> getPostsBySearchAndSorted(String searchQuery, Integer start,
+    public List<PostSummery> getPostsBySearchAndSorted(String searchQuery, Integer start,
             Integer limit, String sortField, String order, Date startDate, Date endDate) {
         Sort sort;
         if (order.equals("asc")) {
@@ -86,44 +85,44 @@ public class PostService {
         return tags;
     }
 
-    public List<Post> getPostsPageByTagId(List<Integer> tagIds, Integer start, Integer limit,
+    public List<PostSummery> getPostsPageByTagId(List<Integer> tagIds, Integer start, Integer limit,
             Date startDate, Date endDate) {
         Pageable pageable = PageRequest.of(start / limit, limit);
         return postRepository.getPostsByTagId(tagIds, startDate, endDate, pageable).getContent();
     }
 
-    public List<Post> getPostsPageByAuthorId(List<Integer> authorId, Integer start, Integer limit,
+    public List<PostSummery> getPostsPageByAuthorId(List<Integer> authorId, Integer start, Integer limit,
             Date startDate, Date endDate) {
         Pageable pageable = PageRequest.of(start / limit, limit);
         return postRepository.getPostsByAuthorId(authorId, startDate, endDate, pageable).getContent();
     }
 
-    public List<Post> getPostsPageByAuthorIdAndTagId(List<Integer> authorId, List<Integer> tagId, Integer start,
+    public List<PostSummery> getPostsPageByAuthorIdAndTagId(List<Integer> authorId, List<Integer> tagId, Integer start,
             Integer limit, Date startDate, Date endDate) {
         Pageable pageable = PageRequest.of(start / limit, limit);
         return postRepository.getPostsByAuthorIdAndTagId(authorId, tagId, startDate, endDate, pageable).getContent();
     }
 
-    public List<Post> getPostsBySearchAndTagId(String search, List<Integer> tagIds, Integer start, Integer limit,
+    public List<PostSummery> getPostsBySearchAndTagId(String search, List<Integer> tagIds, Integer start, Integer limit,
             Date startDate, Date endDate) {
         Pageable pageable = PageRequest.of(start / limit, limit);
         return postRepository.getPostsBySearchAndTagId(search, tagIds, startDate, endDate, pageable).getContent();
     }
 
-    public List<Post> getPostsBySearchAndAuthorId(String search, List<Integer> authorId, Integer start, Integer limit,
+    public List<PostSummery> getPostsBySearchAndAuthorId(String search, List<Integer> authorId, Integer start, Integer limit,
             Date startDate, Date endDate) {
         Pageable pageable = PageRequest.of(start / limit, limit);
         return postRepository.getPostsBySearchAndAuthorId(search, authorId, startDate, endDate, pageable).getContent();
     }
 
-    public List<Post> getPostsBySearchAndAuthorIdAndTagId(String search,
+    public List<PostSummery> getPostsBySearchAndAuthorIdAndTagId(String search,
             List<Integer> authorId, List<Integer> tagId, Integer start, Integer limit, Date startDate, Date endDate) {
         Pageable pageable = PageRequest.of(start / limit, limit);
         return postRepository.getPostsBySearchAndAuthorIdAndTagId(search, authorId, tagId, startDate, endDate, pageable)
                 .getContent();
     }
 
-    public List<Post> getPostsByTagIdAndSorted(Integer start, Integer limit,
+    public List<PostSummery> getPostsByTagIdAndSorted(Integer start, Integer limit,
             String sortField, List<Integer> tagIds, String order, Date startDate, Date endDate) {
         Sort sort;
         if (order.equals("asc")) {
@@ -135,7 +134,7 @@ public class PostService {
         return postRepository.getPostsByTagId(tagIds, startDate, endDate, pageable).getContent();
     }
 
-    public List<Post> getPostsByAuthorIdAndSorted(Integer start, Integer limit,
+    public List<PostSummery> getPostsByAuthorIdAndSorted(Integer start, Integer limit,
             String sortField, List<Integer> authorIds, String order, Date startDate, Date endDate) {
         Sort sort;
         if (order.equals("asc")) {
@@ -147,7 +146,7 @@ public class PostService {
         return postRepository.getPostsByAuthorId(authorIds, startDate, endDate, pageable).getContent();
     }
 
-    public List<Post> getPostsByAuthorIdAndTagIdAndSorted(Integer start, Integer limit, String string,
+    public List<PostSummery> getPostsByAuthorIdAndTagIdAndSorted(Integer start, Integer limit, String string,
             List<Integer> authorIds, List<Integer> tagIds, String order, Date startDate, Date endDate) {
         Sort sort;
         if (order.equals("asc")) {
@@ -159,7 +158,7 @@ public class PostService {
         return postRepository.getPostsByAuthorIdAndTagId(authorIds, tagIds, startDate, endDate, pageable).getContent();
     }
 
-    public List<Post> getPostsBySearchAndTagIdAndSorted(String searchQuery, Integer start, Integer limit, String string,
+    public List<PostSummery> getPostsBySearchAndTagIdAndSorted(String searchQuery, Integer start, Integer limit, String string,
             List<Integer> tagIds, String order, Date startDate, Date endDate) {
         Sort sort;
         if (order.equals("asc")) {
@@ -171,7 +170,7 @@ public class PostService {
         return postRepository.getPostsBySearchAndTagId(searchQuery, tagIds, startDate, endDate, pageable).getContent();
     }
 
-    public List<Post> getPostsBySearchAndAuthorIdAndSorted(String searchQuery, Integer start, Integer limit,
+    public List<PostSummery> getPostsBySearchAndAuthorIdAndSorted(String searchQuery, Integer start, Integer limit,
             String string, List<Integer> authorIds, String order, Date startDate, Date endDate) {
         Sort sort;
         if (order.equals("asc")) {
@@ -184,7 +183,7 @@ public class PostService {
                 .getContent();
     }
 
-    public List<Post> getPostsBySearchAndAuthorIdAndTagIdAndSorted(String searchQuery, Integer start, Integer limit,
+    public List<PostSummery> getPostsBySearchAndAuthorIdAndTagIdAndSorted(String searchQuery, Integer start, Integer limit,
             String string, List<Integer> authorIds, List<Integer> tagIds, String order, Date startDate, Date endDate) {
         Sort sort;
         if (order.equals("asc")) {
@@ -197,7 +196,7 @@ public class PostService {
                 authorIds, tagIds, startDate, endDate, pageable).getContent();
     }
 
-    public List<PostSummery> getPostSummeries() {
+    public List<Post> getPostSummeries() {
         Pageable pageable = PageRequest.of(0, 10);
         return postRepository.getAllPosts(pageable);
     }
