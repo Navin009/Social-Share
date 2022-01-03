@@ -3,7 +3,6 @@ package com.blog.socialshare.repository;
 import java.util.Date;
 import java.util.List;
 
-import com.blog.socialshare.dto.PostSummery;
 import com.blog.socialshare.model.Post;
 
 import org.springframework.data.domain.Page;
@@ -15,9 +14,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
-
-        @Query("SELECT p.id as id ,p.title as title, p.author as author , p.excerpt as excerpt, p.publishedAt as publishedAt FROM Post p where p.isPublished = true")
-        List<PostSummery> getAllPosts(Pageable pageable);
 
         @Query("select p from Post p where p.isPublished = true and (p.publishedAt between :startDate and :endDate) ")
         List<Post> getPosts(@Param("startDate") Date startDate, @Param("endDate") Date endDate, Pageable pageable);

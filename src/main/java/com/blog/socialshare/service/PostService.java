@@ -3,7 +3,6 @@ package com.blog.socialshare.service;
 import java.util.Date;
 import java.util.List;
 
-import com.blog.socialshare.dto.PostSummery;
 import com.blog.socialshare.model.Post;
 import com.blog.socialshare.repository.PostRepository;
 
@@ -192,11 +191,6 @@ public class PostService {
         Pageable pageable = PageRequest.of(start / limit, limit, sort);
         return postRepository.getPostsBySearchAndAuthorIdAndTagId(searchQuery,
                 authorIds, tagIds, startDate, endDate, pageable).getContent();
-    }
-
-    public List<PostSummery> getPostSummeries() {
-        Pageable pageable = PageRequest.of(0, 10);
-        return postRepository.getAllPosts(pageable);
     }
 
 }
