@@ -22,14 +22,13 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         "p.author.email, p.isPublished) from Post p where p.id = :id ")
         PostDTO findPostDTOById(@Param("id") Integer id);
 
-        @Query("SELECT p.id as id ,p.title as title, p.author as author , p.excerpt as excerpt, p.publishedAt as publishedAt FROM Post p where p.isPublished = true")
-        List<Post> getAllPosts(Pageable pageable);
-
         @Query("select new com.blog.socialshare.dto.PostSummery(p.id, p.title, p.excerpt , p.publishedAt , p.author.id, p.author.name, p.author.email) from Post p where p.isPublished = true and (p.publishedAt between :startDate and :endDate) ")
         List<PostSummery> getPosts(@Param("startDate") Date startDate, @Param("endDate") Date endDate,
                         Pageable pageable);
 
-        @Query("select distinct p from Post p where lower(p.title) like lower(concat('%',:query,'%')) " +
+        @Query("select new com.blog.socialshare.dto.PostSummery(p.id, " +
+                        "p.title, p.excerpt , p.publishedAt , p.author.id, p.author.name, " +
+                        "p.author.email) from Post p where lower(p.title) like lower(concat('%',:query,'%')) " +
                         "or lower(p.content) like lower(concat('%',:query,'%')) " +
                         "or lower(p.excerpt) like lower(concat('%',:query,'%')) " +
                         "or lower(p.author.name) like lower(concat('%',:query,'%')) and " +
@@ -37,10 +36,10 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
         Page<PostSummery> searchPostsByWord(@Param("query") String query, @Param("startDate") Date startDate,
                         @Param("endDate") Date endDate, Pageable pageable);
 
-        @Query("select p from Post p ")
+        @Query("select new com.blog.socialshare.dto.PostSummery(p.id, p.title, p.excerpt , p.publishedAt , p.author.id, p.author.name, p.author.email) from Post p ")
         Page<PostSummery> findAllPosts(Pageable pageable);
 
-        @Query("select distinct(p) from Post p where lower(p.title) like lower(concat('%',:query,'%')) " +
+        @Query("select new com.blog.socialshare.dto.PostSummery(p.id, p.title, p.excerpt , p.publishedAt , p.author.id, p.author.name, p.author.email) from Post p where lower(p.title) like lower(concat('%',:query,'%')) " +
                         "or lower(p.content) like lower(concat('%',:query,'%')) " +
                         "or lower(p.excerpt) like lower(concat('%',:query,'%')) " +
                         "or lower(p.author.name) like lower(concat('%',:query,'%')) and " +
@@ -54,19 +53,19 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         "where post.id= :postId", nativeQuery = true)
         List<String> getTags(@Param("postId") Integer postId);
 
-        @Query("select p from Post p, PostTag pt, Tag t where p.id = pt.postId and "
+        @Query("select new com.blog.socialshare.dto.PostSummery(p.id, p.title, p.excerpt , p.publishedAt , p.author.id, p.author.name, p.author.email) from Post p, PostTag pt, Tag t where p.id = pt.postId and "
                         + "pt.tagId = t.id and (p.publishedAt between :startDate and :endDate) and t.id in (:tagids) group by p.id, p.author.name")
         Page<PostSummery> getPostsByTagId(@Param("tagids") List<Integer> tagIds,
                         @Param("startDate") Date startDate, @Param("endDate") Date endDate, Pageable pageable);
 
-        @Query("select p from Post p, PostTag pt, Tag t where p.id = pt.postId and " +
+        @Query("select new com.blog.socialshare.dto.PostSummery(p.id, p.title, p.excerpt , p.publishedAt , p.author.id, p.author.name, p.author.email) from Post p, PostTag pt, Tag t where p.id = pt.postId and " +
                         "(p.publishedAt between :startDate and :endDate) and " +
                         "pt.tagId = t.id and p.author.id in (:authorIds) group by p.id, p.author.name")
         Page<PostSummery> getPostsByAuthorId(@Param("authorIds") List<Integer> authorId,
                         @Param("startDate") Date startDate,
                         @Param("endDate") Date endDate, Pageable pageable);
 
-        @Query("select p from Post p, PostTag pt, Tag t " +
+        @Query("select new com.blog.socialshare.dto.PostSummery(p.id, p.title, p.excerpt , p.publishedAt , p.author.id, p.author.name, p.author.email) from Post p, PostTag pt, Tag t " +
                         "where p.id = pt.postId and pt.tagId = t.id and " +
                         " (p.publishedAt between :startDate and :endDate) and " +
                         " p.author.id = (:authorIds) and t.id in (:tagIds) group by p.id, p.author.name")
@@ -75,7 +74,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         @Param("startDate") Date startDate, @Param("endDate") Date endDate,
                         Pageable pageable);
 
-        @Query("select p from Post p, PostTag pt, Tag t " +
+        @Query("select new com.blog.socialshare.dto.PostSummery(p.id, p.title, p.excerpt , p.publishedAt , p.author.id, p.author.name, p.author.email) from Post p, PostTag pt, Tag t " +
                         "where p.id = pt.postId and t.id = pt.tagId and " +
                         "(lower(p.author.name) like lower(concat('%', :search,'%')) or " +
                         "lower(p.title) like lower(concat('%', :search,'%')) or " +
@@ -87,7 +86,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         @Param("tagIds") List<Integer> tagId, @Param("startDate") Date startDate,
                         @Param("endDate") Date endDate, Pageable pageable);
 
-        @Query("select p from Post p, PostTag pt, Tag t " +
+        @Query("select new com.blog.socialshare.dto.PostSummery(p.id, p.title, p.excerpt , p.publishedAt , p.author.id, p.author.name, p.author.email) from Post p, PostTag pt, Tag t " +
                         "where p.id = pt.postId and t.id = pt.tagId and " +
                         "(lower(p.author.name) like lower(concat('%', :search,'%')) or " +
                         "lower(p.title) like lower(concat('%', :search,'%')) or " +
@@ -99,7 +98,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         @Param("authorIds") List<Integer> authorId, @Param("startDate") Date startDate,
                         @Param("endDate") Date endDate, Pageable pageable);
 
-        @Query("select p from Post p, PostTag pt, Tag t " +
+        @Query("select new com.blog.socialshare.dto.PostSummery(p.id, p.title, p.excerpt , p.publishedAt , p.author.id, p.author.name, p.author.email) from Post p, PostTag pt, Tag t " +
                         "where p.id = pt.postId and t.id = pt.tagId and " +
                         "(lower(p.author.name) like lower(concat('%', :search,'%')) or " +
                         "lower(p.title) like lower(concat('%', :search,'%')) or " +

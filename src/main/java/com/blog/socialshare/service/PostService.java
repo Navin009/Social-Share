@@ -196,9 +196,4 @@ public class PostService {
                 authorIds, tagIds, startDate, endDate, pageable).getContent();
     }
 
-    public List<Post> getPostSummeries() {
-        Pageable pageable = PageRequest.of(0, 10);
-        return postRepository.getAllPosts(pageable);
-    }
-
 }

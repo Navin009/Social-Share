@@ -7,7 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.blog.socialshare.dto.PostSummery;
+import com.blog.socialshare.dto.TagDTO;
 import com.blog.socialshare.service.PostService;
+import com.blog.socialshare.service.TagService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,9 @@ public class MainController {
 
     @Autowired
     PostService postService;
+
+    @Autowired
+    private TagService tagService;
 
     @GetMapping("")
     public ResponseEntity<String> indexPage(Model model) {
@@ -57,6 +62,10 @@ public class MainController {
                         startDate, endDate);
             }
         }
+        for (PostSummery postSummery : postSummeries) {
+            List<TagDTO> tags = tagService.getTagsByPostId(postSummery.getId());
+            postSummery.setTags(tags);
+        }
         return postSummeries;
     }
 
@@ -88,7 +97,10 @@ public class MainController {
                         startDate, endDate);
             }
         }
-
+        for (PostSummery postSummery : postSummeries) {
+            List<TagDTO> tags = tagService.getTagsByPostId(postSummery.getId());
+            postSummery.setTags(tags);
+        }
         return postSummeries;
     }
 
@@ -123,9 +135,14 @@ public class MainController {
                 postSummeries = postService.getPostsByAuthorIdAndSorted(start, limit, sortFieldColumn, authorIds, order,
                         startDate, endDate);
             } else {
-                postSummeries = postService.getPostsByAuthorIdAndTagIdAndSorted(start, limit, sortFieldColumn, authorIds,
+                postSummeries = postService.getPostsByAuthorIdAndTagIdAndSorted(start, limit, sortFieldColumn,
+                        authorIds,
                         tagIds, order, startDate, endDate);
             }
+        }
+        for (PostSummery postSummery : postSummeries) {
+            List<TagDTO> tags = tagService.getTagsByPostId(postSummery.getId());
+            postSummery.setTags(tags);
         }
         return postSummeries;
     }
@@ -157,7 +174,8 @@ public class MainController {
                 postSummeries = postService.getPostsBySearchAndSorted(searchQuery, start, limit, sortFieldColumn, order,
                         startDate, endDate);
             } else {
-                postSummeries = postService.getPostsBySearchAndTagIdAndSorted(searchQuery, start, limit, sortFieldColumn,
+                postSummeries = postService.getPostsBySearchAndTagIdAndSorted(searchQuery, start, limit,
+                        sortFieldColumn,
                         tagIds, order, startDate, endDate);
             }
 
@@ -170,7 +188,10 @@ public class MainController {
                         sortFieldColumn, authorIds, tagIds, order, startDate, endDate);
             }
         }
-
+        for (PostSummery postSummery : postSummeries) {
+            List<TagDTO> tags = tagService.getTagsByPostId(postSummery.getId());
+            postSummery.setTags(tags);
+        }
         return postSummeries;
     }
 
