@@ -23,7 +23,8 @@
         <div class="header-option">
             <img src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/32/000000/external-private-web-login-interface-with-signin-information-login-color-tal-revivo.png"
                 onclick="location.href='/login'" />
-            <img src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/32/000000/external-online-account-logout-with-arrow-direction-mark-login-color-tal-revivo.png"
+            <img th:if="${session.loggedUser != null}"
+                src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/32/000000/external-online-account-logout-with-arrow-direction-mark-login-color-tal-revivo.png"
                 onclick="location.href='/logout'" />
         </div>
     </header>
