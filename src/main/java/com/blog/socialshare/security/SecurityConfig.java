@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -36,17 +37,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().ignoringAntMatchers("/logout**", "/blog/delete/**", "updatecomment/**", "deletecomment/**")
-                .and().authorizeRequests()
-                .antMatchers("/login", "/css/*", "/js/*", "/signup", "/user/register*",
+        http
+                .csrf().ignoringAntMatchers("/blog/delete/**", "/deletecomment/**", "/updatecomment/**")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/login**", "/css/*", "/js/*", "/signup", "/user/register*",
                         "/", "/tag/search", "/user/search/", "/images/*", "/blog/*", "/comment/save")
                 .permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin()
-                .loginPage("/login")
-                .successHandler(loginSuccessHandler)
-                .permitAll()
-                .and().logout().permitAll()
+                .and()
+                .formLogin().loginPage("/login")
+                .usernameParameter("email")
+                .successHandler(loginSuccessHandler).permitAll()
+                .and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                .deleteCookies("JSESSIONID").permitAll()
                 .clearAuthentication(true);
     }
 

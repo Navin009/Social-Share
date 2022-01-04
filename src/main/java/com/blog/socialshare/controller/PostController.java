@@ -60,8 +60,8 @@ public class PostController {
 
     @DeleteMapping("/blog/delete/{postid}")
     @ResponseBody
-    public String deletePost(@PathVariable("postid") Integer postId) {
-        postService.deletePost(postId);
+    public String deletePost(@PathVariable("postid") Integer postId, @SessionAttribute("loggedUser") User user) {
+        postService.deletePost(postId, user);
         return "success";
     }
 
