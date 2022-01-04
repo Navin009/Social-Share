@@ -10,14 +10,17 @@
     <script th:src="@{/js/jquery-3.6.0.js}"></script>
 </head>
 
-<body>    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<form class="container" action="/updatepost/update" method="post">
+    <form class="container" action="/updatepost/update" method="post">
         <input type="hidden" name="id" th:value="${post.id}">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <div class="input-post-details">
-            <input type="text" name="authorName" id="author" placeholder="Author Name"
-                th:value="${post.author.name}" readonly required>
+            <input type="text" name="authorName" id="author" placeholder="Author Name" th:value="${post.author.name}"
+                readonly required>
             <label for="is_published">Do you want to publish this post?</label>
             <select name="published" id="is_published">
                 <option value="true" th:selected="${post.isPublished() == true}">True</option>
@@ -32,8 +35,7 @@
                 <div class="chip-container">
                     <div class="chip-block" id="tag-block">
                         <span th:each="tag : ${tags}" class='chip' th:inline="text">[[${tag.getName()}]]
-                            <data th:value="${tag.name}" class="far fa-times-circle"
-                                onclick="removeTag(this)"></data>
+                            <data th:value="${tag.name}" class="far fa-times-circle" onclick="removeTag(this)"></data>
                         </span>
                     </div>
                 </div>
@@ -42,19 +44,16 @@
         </div>
 
         <div class="title">
-            <textarea type="text" name="title" id="" placeholder="Title" th:text="${post.title}"
-                required></textarea>
+            <textarea type="text" name="title" id="" placeholder="Title" th:text="${post.title}" required></textarea>
         </div>
         <div class="subtitle">
-            <textarea type="text" name="excerpt" placeholder="Sub-title" th:text="${post.excerpt}"
-                required></textarea>
+            <textarea type="text" name="excerpt" placeholder="Sub-title" th:text="${post.excerpt}" required></textarea>
         </div>
         <div class="content">
             <textarea name="content" id="blog-content" cols="30" rows="1" placeholder="Write you Content"
                 th:text="${post.content}" required></textarea>
         </div>
-        <button class="post-btn" type="submit">Update
-            Post</button>
+        <button class="post-btn" type="submit">Update Post</button>
     </form>
     <script th:src="@{/js/post.js}"></script>
 </body>
