@@ -3,6 +3,8 @@ package com.blog.socialshare.repository;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import com.blog.socialshare.model.Comment;
 import com.blog.socialshare.model.Post;
 
@@ -11,7 +13,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface CommentRepository extends CrudRepository<Comment, Integer> {
