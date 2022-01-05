@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +22,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private LoginSuccessHandler loginSuccessHandler;
+
+     @Autowired
+     private JWTRequestFilter jwtRequestFilter;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -44,11 +49,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
-                .loginPage("/api/login")
+                .usernameParameter("email")
+                .loginProcessingUrl("/api/login")
                 .successHandler(loginSuccessHandler)
                 .permitAll()
-                .and().logout().permitAll()
+                .and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/api/logout", "GET"))
+                .permitAll()
                 .clearAuthentication(true);
+         http.addFilterBefore(jwtRequestFilter , UsernamePasswordAuthenticationFilter.class);
     }
 
 }
