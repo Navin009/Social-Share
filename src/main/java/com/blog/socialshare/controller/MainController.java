@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("api")
 public class MainController {
     private static final int START_DATE = 0;
     private static final int END_DATE = 1;

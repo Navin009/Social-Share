@@ -11,10 +11,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("api")
 public class UserController {
 
     @Autowired
@@ -35,7 +37,7 @@ public class UserController {
         return ResponseEntity.ok("Signup Page");
     }
 
-    @PostMapping("user/register")
+    @PostMapping("/signup")
     public ResponseEntity<String> register(@ModelAttribute User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
