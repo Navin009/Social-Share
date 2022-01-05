@@ -16,10 +16,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/")
 public class MainController {
     private static final int START_DATE = 0;
     private static final int END_DATE = 1;
@@ -32,7 +34,7 @@ public class MainController {
 
     @GetMapping("")
     public ResponseEntity<String> indexPage(Model model) {
-        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/?start=0&limit=10")).build();
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("?start=0&limit=10")).build();
     }
 
     @GetMapping(params = { "start", "limit" })
