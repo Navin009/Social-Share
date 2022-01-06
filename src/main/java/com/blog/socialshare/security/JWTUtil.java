@@ -3,6 +3,7 @@ package com.blog.socialshare.security;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import javax.crypto.SecretKey;
 
@@ -34,7 +35,7 @@ public class JWTUtil {
     }
 
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(secret).parseClaimsJws(token).getBody();
+        return Jwts.parserBuilder().setSigningKey(secret.getBytes()).build().parseClaimsJws(token).getBody();
     }
 
     public String generateToken(UserDetails userDetails) {
@@ -50,7 +51,17 @@ public class JWTUtil {
                 .signWith(key).compact();
     }
 
-    public boolean validateToken(String token) {
-        return false;
+    public Date getExpirationDateFromToken(String token) {
+        return getClaimFromToken(token, Claims::getExpiration);
+    }
+
+    private Boolean isTokenExpired(String token) {
+        final Date expiration = getExpirationDateFromToken(token);
+        return expiration.before(new Date());
+    }
+
+    public boolean validateToken(String token, String requestUsername) {
+        final String username = getUsernameFromToken(token);
+        return (username.equals(requestUsername) && !isTokenExpired(token));
     }
 }

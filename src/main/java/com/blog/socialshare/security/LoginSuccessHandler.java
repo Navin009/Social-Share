@@ -35,10 +35,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         session.setAttribute("loggedUser", user);
         final String token = jwtUtil.generateToken((UserDetails) authentication.getPrincipal());
         Cookie cookie = new Cookie("Authorization", token);
-        cookie.setHttpOnly(true);
         cookie.setMaxAge(60 * 60 * 24);
+        cookie.setHttpOnly(true);
         response.addCookie(cookie);
-        response.sendRedirect("/api/");
     }
 
 }

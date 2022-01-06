@@ -23,8 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginSuccessHandler loginSuccessHandler;
 
-     @Autowired
-     private JWTRequestFilter jwtRequestFilter;
+    @Autowired
+    private JWTRequestFilter jwtRequestFilter;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
+                .loginPage("/api/login")
                 .usernameParameter("email")
                 .loginProcessingUrl("/api/login")
                 .successHandler(loginSuccessHandler)
@@ -57,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/api/logout", "GET"))
                 .permitAll()
                 .clearAuthentication(true);
-         http.addFilterBefore(jwtRequestFilter , UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 }
