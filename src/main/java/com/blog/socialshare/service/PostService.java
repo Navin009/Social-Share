@@ -6,6 +6,7 @@ import java.util.List;
 import com.blog.socialshare.dto.PostDTO;
 import com.blog.socialshare.dto.PostSummery;
 import com.blog.socialshare.model.Post;
+import com.blog.socialshare.model.User;
 import com.blog.socialshare.repository.PostRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,8 @@ public class PostService {
         return postList;
     }
 
-    public List<PostSummery> getPostsBySearch(String query, Integer start, Integer limit, Date startDate, Date endDate) {
+    public List<PostSummery> getPostsBySearch(String query, Integer start, Integer limit, Date startDate,
+            Date endDate) {
         Pageable pageable = PageRequest.of(start / limit, limit);
         Page<PostSummery> posts = postRepository.searchPostsByWord(query, startDate, endDate, pageable);
         return posts.getContent();
@@ -43,8 +45,13 @@ public class PostService {
         return postRepository.findPostDTOById(id);
     }
 
-    public void deletePost(Integer id) {
-        postRepository.deleteById(id);
+    public void deletePost(Integer id, User user) {
+        User postUser = postRepository.findById(id).get().getAuthor();
+        if (postUser.getId() == user.getId()) {
+            postRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("You are not the author of this post");
+        }
     }
 
     public void updatePost(Post updatedPost) {
@@ -109,7 +116,8 @@ public class PostService {
         return postRepository.getPostsBySearchAndTagId(search, tagIds, startDate, endDate, pageable).getContent();
     }
 
-    public List<PostSummery> getPostsBySearchAndAuthorId(String search, List<Integer> authorId, Integer start, Integer limit,
+    public List<PostSummery> getPostsBySearchAndAuthorId(String search, List<Integer> authorId, Integer start,
+            Integer limit,
             Date startDate, Date endDate) {
         Pageable pageable = PageRequest.of(start / limit, limit);
         return postRepository.getPostsBySearchAndAuthorId(search, authorId, startDate, endDate, pageable).getContent();
@@ -158,7 +166,8 @@ public class PostService {
         return postRepository.getPostsByAuthorIdAndTagId(authorIds, tagIds, startDate, endDate, pageable).getContent();
     }
 
-    public List<PostSummery> getPostsBySearchAndTagIdAndSorted(String searchQuery, Integer start, Integer limit, String string,
+    public List<PostSummery> getPostsBySearchAndTagIdAndSorted(String searchQuery, Integer start, Integer limit,
+            String string,
             List<Integer> tagIds, String order, Date startDate, Date endDate) {
         Sort sort;
         if (order.equals("asc")) {
@@ -183,7 +192,8 @@ public class PostService {
                 .getContent();
     }
 
-    public List<PostSummery> getPostsBySearchAndAuthorIdAndTagIdAndSorted(String searchQuery, Integer start, Integer limit,
+    public List<PostSummery> getPostsBySearchAndAuthorIdAndTagIdAndSorted(String searchQuery, Integer start,
+            Integer limit,
             String string, List<Integer> authorIds, List<Integer> tagIds, String order, Date startDate, Date endDate) {
         Sort sort;
         if (order.equals("asc")) {

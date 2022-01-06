@@ -62,8 +62,9 @@ public class PostController {
     }
 
     @DeleteMapping("/blog/delete/{postid}")
-    public ResponseEntity<String> deletePost(@PathVariable("postid") Integer postId) {
-        postService.deletePost(postId);
+    public ResponseEntity<String> deletePost(@PathVariable("postid") Integer postId,
+            @SessionAttribute("loggedUser") User user) {
+        postService.deletePost(postId, user);
         return ResponseEntity.ok("Post deleted successfully");
     }
 
