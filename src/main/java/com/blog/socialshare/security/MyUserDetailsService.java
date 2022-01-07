@@ -1,6 +1,6 @@
 package com.blog.socialshare.security;
 
-import com.blog.socialshare.model.User;
+import com.blog.socialshare.model.Users;
 import com.blog.socialshare.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
+        Users user = userRepository.findByEmail(email);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");

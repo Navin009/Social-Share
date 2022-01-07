@@ -2,7 +2,7 @@ package com.blog.socialshare.controller;
 
 import java.util.List;
 
-import com.blog.socialshare.model.User;
+import com.blog.socialshare.model.Users;
 import com.blog.socialshare.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(value = "user/search", params = { "name" })
-    public ResponseEntity<List<User>> search(@RequestParam("name") String name) {
+    public ResponseEntity<List<Users>> search(@RequestParam("name") String name) {
         return ResponseEntity.ok(userService.findByName(name));
     }
 
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> register(@ModelAttribute User user) {
+    public ResponseEntity<String> register(@ModelAttribute Users user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
         userService.registerUser(user);

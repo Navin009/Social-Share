@@ -6,7 +6,7 @@ import java.util.List;
 import com.blog.socialshare.dto.PostDTO;
 import com.blog.socialshare.dto.PostSummery;
 import com.blog.socialshare.model.Post;
-import com.blog.socialshare.model.User;
+import com.blog.socialshare.model.Users;
 import com.blog.socialshare.repository.PostRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +45,8 @@ public class PostService {
         return postRepository.findPostDTOById(id);
     }
 
-    public void deletePost(Integer id, User user) {
-        User postUser = postRepository.findById(id).get().getAuthor();
+    public void deletePost(Integer id, Users user) {
+        Users postUser = postRepository.findById(id).get().getAuthor();
         if (postUser.getId() == user.getId()) {
             postRepository.deleteById(id);
         } else {

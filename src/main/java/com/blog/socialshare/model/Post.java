@@ -35,7 +35,7 @@ public class Post {
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "author", referencedColumnName = "id")
-    private User author;
+    private Users author;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "postId", cascade = CascadeType.PERSIST)
@@ -85,11 +85,11 @@ public class Post {
         this.content = content;
     }
 
-    public User getAuthor() {
+    public Users getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(Users author) {
         this.author = author;
     }
 

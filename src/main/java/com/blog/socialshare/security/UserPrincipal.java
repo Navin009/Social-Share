@@ -3,7 +3,7 @@ package com.blog.socialshare.security;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.blog.socialshare.model.User;
+import com.blog.socialshare.model.Users;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,9 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserPrincipal implements UserDetails {
 
-    private User user;
+    private Users user;
 
-    public UserPrincipal(User user) {
+    public UserPrincipal(Users user) {
         this.user = user;
     }
 
