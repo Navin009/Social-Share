@@ -9,7 +9,7 @@ import com.blog.socialshare.dto.PostDTO;
 import com.blog.socialshare.dto.TagDTO;
 import com.blog.socialshare.model.Post;
 import com.blog.socialshare.model.Tag;
-import com.blog.socialshare.model.Users;
+import com.blog.socialshare.model.User;
 import com.blog.socialshare.service.CommentService;
 import com.blog.socialshare.service.PostService;
 import com.blog.socialshare.service.PostTagService;
@@ -62,13 +62,13 @@ public class PostController {
 
     @DeleteMapping("/blog/delete/{postid}")
     public ResponseEntity<String> deletePost(@PathVariable("postid") Integer postId,
-            @SessionAttribute("loggedUser") Users user) {
+            @SessionAttribute("loggedUser") User user) {
         postService.deletePost(postId, user);
         return ResponseEntity.ok("Post deleted successfully");
     }
 
     @PostMapping(path = "/newpost/save")
-    public ResponseEntity<String> savePost(@ModelAttribute("post") Post post, @SessionAttribute("loggedUser") Users user,
+    public ResponseEntity<String> savePost(@ModelAttribute("post") Post post, @SessionAttribute("loggedUser") User user,
             @RequestParam("tagsData") String tagsList) {
         post.setAuthor(user);
         Post savedPost = postService.savePost(post);

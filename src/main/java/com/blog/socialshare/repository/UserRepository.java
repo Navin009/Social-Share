@@ -2,15 +2,15 @@ package com.blog.socialshare.repository;
 
 import java.util.List;
 
-import com.blog.socialshare.model.Users;
+import com.blog.socialshare.model.User;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends CrudRepository<Users, Integer> {
+public interface UserRepository extends CrudRepository<User, Integer> {
 
-    List<Users> findByNameIgnoreCaseContaining(String name);
+    List<User> findByNameIgnoreCaseContaining(String name);
 
-    Users findByEmail(String email);
+    User findByEmail(String email);
 }
