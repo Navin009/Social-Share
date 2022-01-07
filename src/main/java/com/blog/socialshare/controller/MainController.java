@@ -78,8 +78,8 @@ public class MainController {
             @RequestParam("search") String search,
             @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagIds,
             @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorIds,
-            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String dateFilter,
-            Model model) throws ParseException {
+            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String dateFilter)
+            throws ParseException {
         List<PostSummery> postSummeries;
         String[] dates = dateFilter.split(",");
 
@@ -115,8 +115,8 @@ public class MainController {
             @RequestParam(value = "order", required = false, defaultValue = "desc") String order,
             @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagIds,
             @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorIds,
-            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String dateFilter,
-            Model model) throws ParseException {
+            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String dateFilter)
+            throws ParseException {
 
         List<PostSummery> postSummeries;
         String sortFieldColumn = "author.name";
@@ -159,8 +159,8 @@ public class MainController {
             @RequestParam(value = "order", required = false, defaultValue = "desc") String order,
             @RequestParam(value = "tagId", required = false, defaultValue = "") List<Integer> tagIds,
             @RequestParam(value = "authorId", required = false, defaultValue = "") List<Integer> authorIds,
-            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String dateFilter,
-            Model model) throws ParseException {
+            @RequestParam(value = "Date", required = false, defaultValue = "0001-12-01,9999-12-30") String dateFilter)
+            throws ParseException {
 
         List<PostSummery> postSummeries;
         String sortFieldColumn = "author.name";

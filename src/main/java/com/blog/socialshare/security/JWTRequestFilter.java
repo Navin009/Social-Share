@@ -61,14 +61,14 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                 System.out.println("JWT Token has expired");
             }
         } else {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
         if (username != null) {
             UserDetails userDetails = this.myUserDetailsService.loadUserByUsername(username);
             if (!jwtUtil.validateToken(jwtToken, userDetails.getUsername())) {
                 logger.warn("JWT Token validation failed");
-                response.sendError(HttpServletResponse.SC_FORBIDDEN);
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }
         doFilter(request, response, filterChain);

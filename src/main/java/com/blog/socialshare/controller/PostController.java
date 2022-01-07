@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -52,7 +51,7 @@ public class PostController {
     }
 
     @GetMapping("/blog/{postid}")
-    public PostDTO getPostById(@PathVariable("postid") Integer postId, Model model) {
+    public PostDTO getPostById(@PathVariable("postid") Integer postId) {
         PostDTO post = postService.getPostById(postId);
         List<CommentDTO> comments = commentService.getCommentsByPostId(postId);
         List<TagDTO> tags = tagService.getTagsByPostId(postId);
@@ -70,7 +69,7 @@ public class PostController {
 
     @PostMapping(path = "/newpost/save")
     public ResponseEntity<String> savePost(@ModelAttribute("post") Post post, @SessionAttribute("loggedUser") User user,
-            @RequestParam("tagsData") String tagsList, Model model) {
+            @RequestParam("tagsData") String tagsList) {
         post.setAuthor(user);
         Post savedPost = postService.savePost(post);
         List<String> tagTokens = Arrays.stream(tagsList.split(","))
@@ -81,8 +80,7 @@ public class PostController {
     }
 
     @PostMapping(path = "updatepost/update")
-    public ResponseEntity<String> updatePost(@ModelAttribute Post post, @RequestParam("tagsData") String tags,
-            Model model) {
+    public ResponseEntity<String> updatePost(@ModelAttribute Post post, @RequestParam("tagsData") String tags) {
         List<String> tagTokens = Arrays.stream(tags.split(","))
                 .filter(tag -> (tag.length() >= 1)).collect(Collectors.toList());
         List<Tag> tagsList = tagService.saveTags(tagTokens, post.getId());
